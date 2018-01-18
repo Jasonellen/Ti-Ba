@@ -1,21 +1,21 @@
 
 let url={}  //导出url
 let __host__ = '';
-let __host1__ = '';
+// let __host1__ = '';
 let _dev_api = false
 global._dev_api = _dev_api
 
 if(process.env.NODE_ENV == 'development'){
 	if(_dev_api){
 		__host__= 'http://scnc.mdslife.com/api/v1/'
-		__host1__ = 'http://scnc.mdslife.com/'
+		// __host1__ = 'http://scnc.mdslife.com/'
 	}else{
 		__host__= 'https://m.scnc-sh.com/api/v1/'
-		__host1__ = 'https://m.scnc-sh.com/'
+		// __host1__ = 'https://m.scnc-sh.com/'
 	}
 }else{
 	__host__= location.origin+'/api/v1/'
-	__host1__ = location.origin+'/'
+	// __host1__ = location.origin+'/'
 }
 
 Object.defineProperties(url, {

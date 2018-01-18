@@ -1,18 +1,34 @@
-import React, {Component} from 'react';
-import {Router, Route, browserHistory, IndexRoute} from 'react-router';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Link,
+  Redirect
+} from 'react-router-dom'
+import asyncComponent from "@/components/AsyncComponent";
+const Home = asyncComponent(() => import("~/Home"));
+const About = asyncComponent(() => import("~/About"));
+const Topics = asyncComponent(() => import("~/Topics"));
 
+export default function Routers(){
+	return (
+		<Router>
+			<div>
+				<ul>
+					<li><Link to="/home">Home</Link></li>
+					<li><Link to="/about">About</Link></li>
+					<li><Link to="/topics">Topics</Link></li>
+				</ul>
 
-const Home = (location, cb) => {require.ensure([], require => {cb(null, require('~/Home').default)})}; //主页Tab
-
-
-export default class Routers extends Component {
-
-	render() {
-
-		return (
-			<Router history={browserHistory}>
-				<Route path='/' getComponent={Home}></Route>
-			</Router>
-		)
-	}
+				<hr/>
+				<Switch>
+					<Redirect exact from='/' to='/home'/>
+					<Route path="/home" component={Home}/>
+					<Route path="/about" component={About}/>
+					<Route path="/topics" component={Topics}/>
+				</Switch>
+			</div>
+		</Router>
+	)
 }

@@ -1,34 +1,41 @@
 import React, {Component} from 'react';
 import { Button, Pagination, Modal, Icon } from 'antd';
 import './index.scss'
+import About from '~/About'
+import {
+  Route,
+  Link,
+} from 'react-router-dom'
+
 // import { bindActionCreators } from 'redux'
 // import {connect} from 'react-redux';
 // import { browserHistory} from 'react-router'
 // import * as addAddressAction from '@/actions/addAddress.js';
 
-export default class AddAddress extends Component {
+
+export default class Home extends Component {
+	
 	state = { visible: false }
 	showModal = () => {
 		this.setState({
 			visible: true,
 		});
 	}
-	handleOk = (e) => {
+	handleOk = () => {
 		this.setState({
 			visible: false,
 		});
 	}
-	handleCancel = (e) => {
+	handleCancel = () => {
 		this.setState({
 			visible: false,
 		});
 	}
 	render() {
 		return (
-			<div className="AddAddress">
+			<div className="Home">
 				<Button type="primary" onClick={this.showModal}>Primary</Button>
-				<Button>Default</Button>
-				<Button type="dashed">Dashed</Button>
+				<Link to='/home/1'><Button>Default</Button></Link>
 				<Button type="danger">Danger</Button>
 				<Pagination defaultCurrent={1} total={50} />
 				<Modal
@@ -42,6 +49,7 @@ export default class AddAddress extends Component {
 					<p>Some contents...</p>
 				</Modal>
 				<Icon type="question-circle" spin/>
+				<Route path="/home/:id" component={About}/>
 			</div>
 		);
 	}

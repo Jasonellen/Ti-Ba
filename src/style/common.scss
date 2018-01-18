@@ -15,7 +15,6 @@ address, caption, cite, code, dfn, em, strong, th, var,i {
 // a:hover {  text-decoration: none;  }
 img {  border: none;  vertical-align: middle;  display: inline-block;  }
 
-
 .pull-left {  float: left;  }
 .pull-right {  float: right;  }
 .clearfix::after {
@@ -23,4 +22,7 @@ img {  border: none;  vertical-align: middle;  display: inline-block;  }
   content: "";
   clear: both;
 }
+
+
+
 

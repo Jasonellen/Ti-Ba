@@ -1,6 +1,4 @@
 import '@/style/common.scss'
-// import '@/service/flexible'
-// import '@/lib/iscroll-probe'
 import _fetch from '@/service/fetch'
 import url from '@/api'
 import fetchJsonp from 'fetch-jsonp'  //全局的跨域请求
