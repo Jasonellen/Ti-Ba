@@ -5,9 +5,12 @@
 	box-sizing:border-box;
 	margin: 0;
  	padding: 0;
- 	font-size: 16px;
 }
-ol, ul, li {  list-style: none;  }
+body,html{
+	font-size: 16px !important;
+	min-width: 1200px;
+	ol, ul, li, p,h1, h2, h3, h4, h5, h6{  list-style: none; margin:0;padding:0 }
+}
 address, caption, cite, code, dfn, em, strong, th, var,i {
   font-style: normal;
   font-weight: normal;
@@ -15,14 +18,18 @@ address, caption, cite, code, dfn, em, strong, th, var,i {
 // a:hover {  text-decoration: none;  }
 img {  border: none;  vertical-align: middle;  display: inline-block;  }
 
-.pull-left {  float: left;  }
-.pull-right {  float: right;  }
+.left {  float: left;  }
+.right {  float: right;  }
 .clearfix::after {
   display: block;
   content: "";
   clear: both;
 }
 
-
-
-
+.contentCenter{
+	width: 1200px;
+	margin: 0 auto;
+}
+#root{
+	padding-bottom: 290px;
+}

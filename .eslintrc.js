@@ -33,8 +33,9 @@ module.exports = {
 			"IScroll":true,
 			"fetchJsonp":true,
 			"WeixinJSBridge":true,
-            "wx":true,
-             "_dev_api":true
+      "wx":true,
+      "_dev_api":true,
+			"Swiper":true
     },
     rules: {
 		'indent': ['error', 'tab'],
@@ -47,5 +48,6 @@ module.exports = {
 		 'no-console':0,
 		 'no-unused-labels':0,
 		 'react/no-direct-mutation-state':0,
+         'no-mixed-spaces-and-tabs':0
     }
 }

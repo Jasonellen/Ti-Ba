@@ -1,4 +1,6 @@
 
+$c : #ff9600; //主色调 橙色
+$f : #fff; //白色
 // 设置文字的大小和颜色
 @mixin font($font-size,$color:#222) {
 	font-size: $font-size;
@@ -27,4 +29,17 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+@mixin more($count:2){
+	display: -webkit-box;
+	text-overflow:ellipsis;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: $count;
+	overflow: hidden;
+}
+@mixin moreOne{
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
 }

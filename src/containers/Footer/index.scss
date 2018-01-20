@@ -1,0 +1,22 @@
+.Footer{
+	background: #474443;
+	height: 200px;
+	padding-top: 50px;
+	font-size: 12px;
+	text-align: center;
+	color: $f;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	min-width: 1200px;
+	z-index: 999;
+	ul{
+		li{
+			display: inline-block;
+			margin:0 15px;
+		}
+	}
+	p{
+		line-height: 2;
+	}
+}

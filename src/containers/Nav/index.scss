@@ -1,0 +1,114 @@
+.Nav{
+	.ant-menu{
+	    border: 1px solid #e8e8e8;
+	}
+	.ant-menu-item-selected,.ant-menu-submenu-title:hover,.ant-menu-submenu-active,.ant-menu-item-active,.ant-menu-item-open,.ant-menu-submenu-selected{
+		background: #1890ff !important;
+		color: #fff !important;
+	}
+	.NavAll{
+		width: 224px;
+		background:$c;
+		line-height: 46px;
+	    border: 1px solid $c;
+	    font-size: 16px;
+	    color:#fff;
+	    text-align: center;
+	}
+	.NavAll:hover{
+		cursor: pointer;
+	}
+
+	.NavBar{
+		position:relative;
+		.search{
+		    position: absolute;
+		    top: 8px;
+		    right: 10px;
+		}
+		.ant-input-group-addon{
+			cursor:pointer;
+		}
+	}
+	.head{
+		height: 42px;
+		background:#f5f5f5;
+		.contentCenter{
+			height:100%;
+			img{
+				height:100%;
+			}
+		}
+		.right{
+			line-height:42px;
+			color:$c;
+			font-size:12px;
+			img{
+			    vertical-align: middle;
+			    margin-right: 5px;
+			    width: 17px;
+			}
+		}
+	}
+	.login{
+		padding: 15px 0;
+		span{
+			width:50px;
+			height:28px;
+			line-height:28px;
+			display:inline-block;
+			text-align:center;
+			margin-left: 10px;
+			border-radius: 5px;
+			cursor:pointer;
+		}
+		span.active{
+			background:$c;
+			color:#fff;
+		}
+	}
+	.fixed{
+		width:110px;
+		border-radius:10px;
+		background:$c;
+		font-size:12px;
+		padding:0 5px;
+		position:fixed;
+		right:0;
+		top:200px;
+	  color: #fff;
+		z-index: 9999;
+		.anticon{
+			margin-right:5px;
+		}
+		li{
+		    padding: 6px 0;
+	        padding-left: 9px;
+			border-bottom:1px solid #fff;
+		}
+	}
+
+	.item-list{
+		width: 224px;
+		height: 400px;
+		padding: 14px 18px 10px;
+		background: rgba(0,0,0,.5);
+		z-index: 10;
+		box-shadow: 0 0 5px #ccc;
+		position: absolute;
+		color: $f;
+    font-size: 14px;
+		h3{
+			color: $f;
+		}
+		span{
+			display: inline-block;
+			padding:0 5px 5px 0;
+			cursor: pointer;
+		}
+		span:hover{
+			color: $c;
+		}
+	}
+
+}
