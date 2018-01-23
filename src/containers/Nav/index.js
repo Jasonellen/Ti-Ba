@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
-import { Menu, Dropdown, Button, Pagination, Modal, Icon, Input, Select } from 'antd';
+import { Menu, Dropdown, Modal, Icon, Input, Select,Form, Button, Checkbox } from 'antd';
+const FormItem = Form.Item;
 import './index.scss'
-import About from '~/About'
-import {
-	Route,
-	Link,
-} from 'react-router-dom'
 const SubMenu = Menu.SubMenu;
 const Option = Select.Option;
 import phone_in_talk from 'static/phone-in-talk.svg'
@@ -14,9 +10,75 @@ import phone_in_talk from 'static/phone-in-talk.svg'
 // import { browserHistory} from 'react-router'
 // import * as addAddressAction from '@/actions/addAddress.js';
 
-
-export default class Nav extends Component {
+const menu = (
+	<Menu>
+		<Menu.Item key="0">
+			<a target="_blank">1st menu item</a>
+		</Menu.Item>
+		<Menu.Item key="1">
+			<a target="_blank">2nd menu item</a>
+		</Menu.Item>
+		<Menu.Divider />
+		<Menu.Item key="3">3rd menu </Menu.Item>
+	</Menu>
+);
+const menu1 = (
+	<Menu>
+		<Menu.Item key="0">
+			<a target="_blank">1st menu item</a>
+		</Menu.Item>
+		<Menu.Item key="1">
+			<a target="_blank">2nd menu item</a>
+		</Menu.Item>
+		<Menu.Divider />
+		<Menu.Item key="3">3rd menu </Menu.Item>
+	</Menu>
+);
+const formItemLayout = {
+	labelCol: {
+		xs: { span: 24 },
+		sm: { span: 6 },
+	},
+	wrapperCol: {
+		xs: { span: 24 },
+		sm: { span: 16 },
+	},
+};
+export default Form.create()(class Nav extends Component {
+	constructor(){
+		super()
+		this.state={
+			title:'登陆',
+			visible1:false,
+			visible2:true,
+			visible3:false
+		}
+	}
+	handleSubmit1 = (e) => {
+	 e.preventDefault();
+	 this.props.form.validateFields((err, values) => {
+		 if (!err) {
+			 console.log('Received values of form: ', values);
+		 }
+	 });
+	}
+	handleLogin = ()=>{
+		this.setState({visible1:true})
+	}
+	handleRegister = ()=>{
+		this.setState({visible2:true})
+	}
+	handleSubmit = (e)=>{
+		e.preventDefault();
+		this.props.form.validateFields((err, values) => {
+			if (!err) {
+				console.log('Received values of form: ', values);
+			}
+		});
+	}
 	render() {
+		const { getFieldDecorator } = this.props.form;
+		const { visible1, visible2, visible3 } = this.state
 		return (
 			<div className="Nav">
 				<div className="head">
@@ -30,16 +92,17 @@ export default class Nav extends Component {
 				</div>
 				<div className="login contentCenter clearfix">
 					<div className="right">
-						<span className='active'>登陆</span><span>注册</span>
+						<span onClick={this.handleLogin}>登陆</span>
+						<span onClick={this.handleRegister}>注册</span>
+						<Dropdown overlay={menu}>
+					    <div>欢迎，张三<Icon type="down" /></div>
+					  </Dropdown>
 					</div>
 				</div>
+				{/* 导航菜单 */}
 				<div className="NavBar contentCenter clearfix">
 					<div className='NavAll left' onMouseOver={()=>{}}>全部课程</div>
-					<Menu
-		        // onClick={this.handleClick}
-		        // selectedKeys={[this.state.current]}
-		        mode="horizontal"
-			    >
+					<Menu mode="horizontal">
 		        <Menu.Item key="home">网站首页</Menu.Item>
 		        <SubMenu title={<span>手动组卷</span>}>
 		          	<Menu.Item key="setting:1">Option 1</Menu.Item>
@@ -90,19 +153,158 @@ export default class Nav extends Component {
 								</Select>}
 						 	addonAfter={<Icon type="search"/>}
 						 />
-				    </div>
-			    </div>
-			    <ul className="fixed">
-			    	<li><Icon type='rocket'/>激活vip</li>
-			    	<li><Icon type="pay-circle-o" />购买vip</li>
-			    	<li><Icon type="form" />申请试用</li>
-			    	<li><Icon type="exclamation-circle-o" />客服帮助</li>
-			    	<li><Icon type="flag" />学校服务</li>
-			    </ul>
+				  </div>
+			  </div>
+				{/* 固定导航 */}
+		    <ul className="fixed">
+					<li><Icon type='rocket'/>激活vip</li>
+					<li><Icon type="pay-circle-o" />购买vip</li>
+					<li><Icon type="form" />申请试用</li>
+					<li><Icon type="exclamation-circle-o" />客服帮助</li>
+					<li className='last'><Icon type="flag" />学校服务</li>
+		    </ul>
+				{/* 登陆 */}
+				<Modal
+					title='登陆'
+					width={350}
+					visible={visible1}
+					footer={null}
+					onCancel={()=>this.setState({visible1:false})}
+				>
+					<Form onSubmit={this.handleSubmit1} className="login-form">
+						<FormItem>
+							{getFieldDecorator('userName', {
+								rules: [{ required: true, message: '请输入用户名！' }],
+							})(
+								<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+							)}
+						</FormItem>
+						<FormItem>
+							{getFieldDecorator('password', {
+								rules: [{ required: true, message: '请输入密码!' }],
+							})(
+								<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+							)}
+						</FormItem>
+						<FormItem>
+							{getFieldDecorator('remember', {
+								valuePropName: 'checked',
+								initialValue: true,
+							})(
+								<Checkbox>自动登陆</Checkbox>
+							)}
+							<a style={{float:'right'}}>忘记密码</a>
+							<Button type="primary" htmlType="submit" className="login_button">登陆</Button>
+							<div className='clearfix otherLogin'>
+								<span className="left">其他登陆方式：<Icon type="wechat" style={{fontSize:25,marginRight:5}}/><Icon type="qq" style={{fontSize:25}}/></span>
+								<span className="right">免费注册<Icon type="login" /></span>
+							</div>
+						</FormItem>
+					</Form>
+				</Modal>
+				{/* 注册 */}
+				<Modal
+					title='注册'
+					visible={visible2}
+					footer={null}
+					onCancel={()=>this.setState({visible2:false})}
+				>
+					<Form onSubmit={this.handleSubmit2} className="login-form">
+						<FormItem
+							{...formItemLayout}
+							label="注册用户"
+						>
+							{getFieldDecorator('remember')(
+								<Dropdown.Button overlay={menu1}>
+							    老师
+							  </Dropdown.Button>
+							)}
+						</FormItem>
+						<FormItem
+							{...formItemLayout}
+							label="手机号码"
+						>
+							{getFieldDecorator('userName', {
+								rules: [{ required: true, message: '请输入手机号码' }],
+							})(
+								<Input prefix={<Icon type="mobile" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请输入手机号码" />
+							)}
+						</FormItem>
+						<FormItem
+							{...formItemLayout}
+							label="登录密码"
+						>
+							{getFieldDecorator('password', {
+								rules: [{ required: true, message: '请输入登录密码' }],
+							})(
+								<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="请输入登录密码" />
+							)}
+						</FormItem>
+						<FormItem
+							{...formItemLayout}
+							label="确认密码"
+						>
+							{getFieldDecorator('password1', {
+								rules: [{ required: true, message: '两次密码不一致!' }],
+							})(
+								<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="请再次输入密码" />
+							)}
+						</FormItem>
+						<FormItem
+							{...formItemLayout}
+							label="手机验证码"
+						>
+							{getFieldDecorator('password2', {
+								rules: [{ required: true, message: '请输入验证码!' }],
+							})(
+								<Input prefix={<Icon type="barcode" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="请输入验证码" addonAfter={<span className='getYanzhenma'>获取验证码</span>}/>
+							)}
+						</FormItem>
+						<FormItem>
+							{getFieldDecorator('remember', {
+								valuePropName: 'checked',
+								initialValue: true,
+							})(
+								<Checkbox style={{marginLeft:115}}>我同意<a href="">《xx注册协议》</a></Checkbox>
+							)}
+							<Button type="primary" htmlType="submit" className="register_button">登陆</Button>
+						</FormItem>
+					</Form>
+				</Modal>
+				{/* 忘记密码 */}
+				<Modal
+					title='找回密码'
+					visible={visible3}
+					width={350}
+					footer={null}
+					onCancel={()=>this.setState({visible2:false})}
+				>
+					<Form onSubmit={this.handleSubmit2} className="login-form">
+						<FormItem
+							label="手机号码"
+						>
+							{getFieldDecorator('userName', {
+								rules: [{ required: true, message: '请输入手机号码' }],
+							})(
+								<Input prefix={<Icon type="mobile" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="请输入手机号码" />
+							)}
+						</FormItem>
+						<FormItem
+							label="手机验证码"
+						>
+							{getFieldDecorator('password', {
+								rules: [{ required: true, message: '请输入验证码!' }],
+							})(
+								<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="请输入验证码" addonAfter={<span className='getYanzhenma'>获取验证码</span>}/>
+							)}
+						</FormItem>
+						<Button type="primary" htmlType="submit" className="login_button">立即找回</Button>
+					</Form>
+				</Modal>
 			</div>
 		);
 	}
-}
+})
 // const mapStateToProps = (state) => {
 // 	return {
 // 		state:state.addAddress

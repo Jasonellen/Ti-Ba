@@ -1,4 +1,7 @@
 .Nav{
+	.ant-dropdown-trigger{
+		text-align: right;
+	}
 	.ant-menu{
 	    border: 1px solid #e8e8e8;
 	}
@@ -62,7 +65,7 @@
 			border-radius: 5px;
 			cursor:pointer;
 		}
-		span.active{
+		span:hover{
 			background:$c;
 			color:#fff;
 		}
@@ -82,9 +85,23 @@
 			margin-right:5px;
 		}
 		li{
-		    padding: 6px 0;
-	        padding-left: 9px;
+	    padding: 6px 0;
+      padding-left: 9px;
 			border-bottom:1px solid #fff;
+			cursor: pointer;
+			transition: .3s;
+			.anticon{
+				transition: 3s ease-in-out;
+			}
+		}
+		li.last{
+			border: none;
+		}
+		li:hover{
+			line-height: 4;
+			.anticon{
+				transform: rotate(3600deg);
+			}
 		}
 	}
 
@@ -110,5 +127,37 @@
 			color: $c;
 		}
 	}
-
+}
+.login_button{
+	display: block;
+	width: 100%;
+	margin: 10px 0;
+}
+.register_button{
+	display: block;
+	width: 68%;
+	margin: 10px 0;
+	margin-left: 115px;
+}
+.getYanzhenma{
+	cursor: pointer;
+}
+.otherLogin{
+	.left{
+		.anticon{
+			font-size: 25px;
+			margin-right: 5px;
+			cursor: pointer;
+		}
+		.anticon:hover{
+			color: $c;
+		}
+	}
+	.right{
+		color: $c;
+		cursor: pointer;
+		.anticon{
+			margin-left: 5px;
+		}
+	}
 }

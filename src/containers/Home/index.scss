@@ -81,6 +81,10 @@
 			height:100%;
 		}
 	}
+	.swiper2{
+    padding-bottom: 40px;
+    padding-top: 40px;
+	}
 
 	.moudleTitle{
 		padding:40px 0 20px;
@@ -154,6 +158,11 @@
 		}
 	}
 	.bulletin{
+		text-align: center;
+		padding-bottom: 16px;
+		.contentCenter{
+			text-align: left;
+		}
 		h1{
 			font-size: 48px;
 			color: $c;
@@ -180,10 +189,69 @@
 			border: 1px solid $c;
 			color: $c;
 			margin-top: 20px;
+			cursor: pointer;
 		}
 		div:hover{
 			background: $c;
 			color: $f;
+		}
+		.anticon{
+			transform: rotate(90deg);
+			color: $c;
+			font-size: 25px;
+			cursor: pointer;
+		}
+	}
+	.site{
+		text-align: center;
+		background: $f;
+		img{
+			height: 190px;
+		}
+		h2{
+			font-size: 16px;
+			line-height: 46px;
+		}
+		span{
+			margin:0 5px;
+			font-size: 14px;
+			color: #999;
+			cursor: pointer;
+		}
+		span:hover{
+			color: $c;
+		}
+	}
+	.school{
+		padding-bottom:10px;
+		.content{
+			width: 220px;
+			height: 160px;
+			border-radius: 10px;
+			overflow: hidden;
+			position: relative;
+			img{
+				width: 100%;
+				height: 100%;
+			}
+			.text{
+				display: none;
+				line-height: 160px;
+				color: $f;
+				text-align: center;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height:100%;
+				background: rgba(0,0,0,.6);
+			}
+		}
+		.content:hover{
+			transform: scale(1.2);
+			.text{
+				display: block;
+			}
 		}
 	}
 }

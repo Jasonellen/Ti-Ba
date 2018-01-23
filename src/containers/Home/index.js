@@ -1,14 +1,9 @@
 import React, {Component} from 'react';
-import { Button, Pagination, Modal, Icon } from 'antd';
+import { Modal, Icon } from 'antd';
 import './index.scss'
 import About from '~/About'
-import {
-	Route,
-	Link,
-} from 'react-router-dom'
-import smallSchool from 'static/smallSchool.png'
-import middleSchool from 'static/middleSchool.png'
-import heightSchool from 'static/heightSchool.png'
+import {Route,Link,} from 'react-router-dom'
+
 
 export default class Home extends Component {
 	constructor(props){
@@ -20,6 +15,7 @@ export default class Home extends Component {
 	componentDidMount() {
 		new Swiper ('.swiper', {
 			loop: true,
+			autoplay:true,
 			pagination: {
 				el: '.swiper-pagination',
 			},
@@ -45,6 +41,17 @@ export default class Home extends Component {
 				navigation: {
 					nextEl: '.next1',
 					prevEl: '.prev1',
+				},
+			});
+
+			new Swiper('.swiper2', {
+				loop: true,
+				autoplay:true,
+				slidesPerView: 5,
+	      spaceBetween: 30,
+				pagination: {
+					el: '.pagination2',
+					dynamicBullets:true,
 				},
 			});
 		},500)
@@ -234,7 +241,93 @@ export default class Home extends Component {
 						</li>
 					</ul>
 					<Icon type="double-right"/>
-					<p>组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面</p>
+				</div>
+				<div className="moudleTitle">
+					<h3>网站特色</h3>
+					<p>Site characteristics</p>
+				</div>
+				<div className="beike site">
+					<ul className="contentCenter clearfix">
+						<li className='left'>
+							<img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1281781512,2150938712&fm=27&gp=0.jpg" alt=""/>
+							<h2>为老师用户提供</h2>
+							<p>
+								<span>优质试题</span>
+								<span>海量试卷</span>
+								<span>精品专题</span>
+								<span>在线组卷</span>
+							</p>
+						</li>
+						<li className='left'>
+							<img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1281781512,2150938712&fm=27&gp=0.jpg" alt=""/>
+							<h2>为老师用户提供</h2>
+							<p>
+								<span>优质试题</span>
+								<span>海量试卷</span>
+								<span>精品专题</span>
+								<span>在线组卷</span>
+							</p>
+						</li>
+						<li className='left'>
+							<img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1281781512,2150938712&fm=27&gp=0.jpg" alt=""/>
+							<h2>为老师用户提供</h2>
+							<p>
+								<span>优质试题</span>
+								<span>海量试卷</span>
+								<span>精品专题</span>
+								<span>在线组卷</span>
+							</p>
+						</li>
+					</ul>
+				</div>
+				<div className="moudleTitle">
+					<h3>校园合作</h3>
+					<p>Cooperation colleges and Universities</p>
+				</div>
+				<div className="beike school">
+					<div className="contentCenter">
+						<div className="swiper-container swiper2">
+					    <div className="swiper-wrapper">
+					      <div className="swiper-slide">
+									<div className="content">
+										<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3375177454,1868030626&fm=27&gp=0.jpg" alt=""/>
+										<div className="text">傻逼中学</div>
+									</div>
+					      </div>
+								<div className="swiper-slide">
+									<div className="content">
+										<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3375177454,1868030626&fm=27&gp=0.jpg" alt=""/>
+										<div className="text">傻逼中学</div>
+									</div>
+					      </div>
+								<div className="swiper-slide">
+									<div className="content">
+										<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3375177454,1868030626&fm=27&gp=0.jpg" alt=""/>
+										<div className="text">傻逼中学</div>
+									</div>
+					      </div>
+								<div className="swiper-slide">
+									<div className="content">
+										<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3375177454,1868030626&fm=27&gp=0.jpg" alt=""/>
+										<div className="text">傻逼中学</div>
+									</div>
+					      </div>
+								<div className="swiper-slide">
+									<div className="content">
+										<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3375177454,1868030626&fm=27&gp=0.jpg" alt=""/>
+										<div className="text">傻逼中学</div>
+									</div>
+					      </div>
+								<div className="swiper-slide">
+									<div className="content">
+										<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3375177454,1868030626&fm=27&gp=0.jpg" alt=""/>
+										<div className="text">傻逼中学</div>
+									</div>
+					      </div>
+					    </div>
+					    <div className="swiper-pagination pagination2"></div>
+					  </div>
+					</div>
 				</div>
 			</div>
 		);

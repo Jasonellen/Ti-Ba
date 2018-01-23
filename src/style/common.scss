@@ -33,3 +33,15 @@ img {  border: none;  vertical-align: middle;  display: inline-block;  }
 #root{
 	padding-bottom: 290px;
 }
+
+.swiper-pagination-bullet-active{
+	background: $c;
+}
+.ant-btn-primary{
+	background-color:$c !important;
+	border-color:$c !important
+}
+.ant-checkbox-checked .ant-checkbox-inner, .ant-checkbox-indeterminate .ant-checkbox-inner{
+	background-color:$c !important;
+	border-color:$c !important
+}
