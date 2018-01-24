@@ -15,7 +15,7 @@ module.exports = {
 		bundleAnalyzerReport: false // 文件分布浏览器中可视化显示
 	},
 	dev: {
-		port: 8081,
+		port: 8090,
 		autoOpenBrowser: true,
 		staticPath: 'static',
 		cssSourceMap: true
