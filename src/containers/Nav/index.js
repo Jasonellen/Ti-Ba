@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Menu, Dropdown, Modal, Icon, Input, Select,Form, Button, Checkbox } from 'antd';
+import { Menu, Dropdown, Modal, Icon, Input, Select,Form, Button, Checkbox, BackTop } from 'antd';
 const FormItem = Form.Item;
 import './index.scss'
 const SubMenu = Menu.SubMenu;
@@ -314,6 +314,8 @@ export default Form.create()(class Nav extends Component {
 						<Button type="primary" htmlType="submit" className="login_button">立即找回</Button>
 					</Form>
 				</Modal>
+
+				<BackTop ></BackTop>
 			</div>
 		);
 	}
