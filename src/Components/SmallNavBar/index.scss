@@ -1,0 +1,22 @@
+.SmallNavBar{
+	background: #eee;
+	.first{
+		width: 70px;
+		line-height: 40px;
+		text-align: right;
+	}
+	ul{
+		width: calc(100% - 70px);
+	}
+	li{
+		margin:5px;
+		padding:0 10px;
+		line-height: 30px;
+		cursor: pointer;
+	}
+	li.active,li:hover{
+		background: $c;
+		border-radius: 5px;
+		color: $f;
+	}
+}

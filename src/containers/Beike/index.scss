@@ -1,0 +1,40 @@
+.beike{
+	padding-bottom: 60px;
+	.textContainer{
+		margin-right: -30px;
+		margin: 50px -30px 100px 0;
+		li{
+			width: 380px;
+			margin:0 30px 30px 0;
+			background: #55c3b1;
+			color: $f;
+			cursor: pointer;
+			img{
+				width: 100px;
+				height: 150px;
+			}
+			h3,h4{
+				@include more();
+				color: $f;
+			}
+			.main{
+				width: 280px;
+				height: 150px;
+				padding:10px;
+				position: relative;
+				font-size: 14px;
+				.bottom{
+					font-size: 12px;
+					width: 100%;
+					position: absolute;
+					bottom: 5px;
+					left: 0;
+					padding:0 10px;
+				}
+			}
+		}
+		li:hover{
+			box-shadow: 0 0 50px #000;
+		}
+	}
+}

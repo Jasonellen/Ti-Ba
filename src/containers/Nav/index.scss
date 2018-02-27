@@ -1,3 +1,6 @@
+.NavBarWarp{
+	background: #33a9fc;
+}
 .Nav{
 	.ant-dropdown-trigger{
 		text-align: right;
@@ -78,7 +81,7 @@
 		padding:0 5px;
 		position:fixed;
 		right:0;
-		top:200px;
+		top:100px;
 	  color: #fff;
 		z-index: 9999;
 		.anticon{
@@ -91,7 +94,7 @@
 			cursor: pointer;
 			transition: .3s;
 			.anticon{
-				transition: 3s ease-in-out;
+				transition: line-height 3s ease-in-out;
 			}
 		}
 		li.last{
@@ -99,9 +102,6 @@
 		}
 		li:hover{
 			line-height: 4;
-			.anticon{
-				transform: rotate(3600deg);
-			}
 		}
 	}
 
@@ -128,6 +128,16 @@
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
 .login_button{
 	display: block;
 	width: 100%;
@@ -160,4 +170,35 @@
 			margin-left: 5px;
 		}
 	}
+}
+
+
+
+
+
+
+.ant-breadcrumb{
+  margin: 10px 0 !important;
+}
+.ant-pagination {
+	text-align: center;
+	.ant-pagination-item:focus, .ant-pagination-item:hover{
+		border-color:$c;
+	}
+	.ant-pagination-item-active{
+		border-color:$c;
+	}
+	.ant-pagination-item:focus a, .ant-pagination-item:hover a{
+		color: $c;
+	}
+	.ant-pagination-item-active a{
+		color: $c;
+	}
+	.ant-pagination-prev:focus .ant-pagination-item-link, .ant-pagination-next:focus .ant-pagination-item-link, .ant-pagination-prev:hover .ant-pagination-item-link, .ant-pagination-next:hover .ant-pagination-item-link{
+		border-color: $c;
+		color: $c;
+	}
+}
+.ant-card-actions > li > span:hover{
+	color: $c;
 }

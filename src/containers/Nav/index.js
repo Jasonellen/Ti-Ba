@@ -5,6 +5,8 @@ import './index.scss'
 const SubMenu = Menu.SubMenu;
 const Option = Select.Option;
 import phone_in_talk from 'static/phone-in-talk.svg'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
 // import { bindActionCreators } from 'redux'
 // import {connect} from 'react-redux';
 // import { browserHistory} from 'react-router'
@@ -50,9 +52,15 @@ export default Form.create()(class Nav extends Component {
 		this.state={
 			title:'登陆',
 			visible1:false,
-			visible2:true,
+			visible2:false,
 			visible3:false
 		}
+	}
+	static contextTypes = {
+	 router: PropTypes.object.isRequired
+	};
+	componentDidMount(){
+
 	}
 	handleSubmit1 = (e) => {
 	 e.preventDefault();
@@ -75,6 +83,9 @@ export default Form.create()(class Nav extends Component {
 				console.log('Received values of form: ', values);
 			}
 		});
+	}
+	NavLinkTo = (item)=>{
+		this.context.router.history.push('/'+item.key)
 	}
 	render() {
 		const { getFieldDecorator } = this.props.form;
@@ -100,61 +111,63 @@ export default Form.create()(class Nav extends Component {
 					</div>
 				</div>
 				{/* 导航菜单 */}
-				<div className="NavBar contentCenter clearfix">
-					<div className='NavAll left' onMouseOver={()=>{}}>全部课程</div>
-					<Menu mode="horizontal">
-		        <Menu.Item key="home">网站首页</Menu.Item>
-		        <SubMenu title={<span>手动组卷</span>}>
-		          	<Menu.Item key="setting:1">Option 1</Menu.Item>
-		            <Menu.Item key="setting:2">Option 2</Menu.Item>
-		        </SubMenu>
-		        <SubMenu title={<span>自动组卷</span>}>
-		          	<Menu.Item key="setting:3">Option 1</Menu.Item>
-		            <Menu.Item key="setting:4">Option 2</Menu.Item>
-		        </SubMenu>
-		        <SubMenu title={<span>试题库</span>}>
-		          	<Menu.Item key="setting:5">Option 1</Menu.Item>
-		            <Menu.Item key="setting:6">Option 2</Menu.Item>
-		        </SubMenu>
-		        <Menu.Item key="beike">备课中心</Menu.Item>
-			    </Menu>
-					<div className="item-list">
-						<h3>小学</h3>
-						<span>语文</span>
-						<span>数学</span>
-						<span>英语</span>
-						<span>科学</span>
-						<span>政治思品</span>
-						<h3>初中</h3>
-						<span>语文</span>
-						<span>数学</span>
-						<span>英语</span>
-						<span>科学</span>
-						<span>物理</span>
-						<span>化学</span>
-						<span>历史</span>
-						<span>政治思品</span>
-						<span>历史与社会</span>
-						<span>社会思品</span>
-						<span>生物</span>
-						<h3>高中</h3>
-						<span>语文</span>
-						<span>数学</span>
-						<span>英语</span>
-						<span>物理</span>
-					</div>
-			    <div className="right search">
-						<Input
-						 	placeholder='请输入关键词'
-						 	addonBefore={
-						 		<Select defaultValue="试卷" style={{ width: 90 }}>
-								   <Option value="试题">试题</Option>
-								   <Option value="试卷">试卷</Option>
-								</Select>}
-						 	addonAfter={<Icon type="search"/>}
-						 />
+				<div className='NavBarWarp'>
+					<div className="NavBar contentCenter clearfix">
+						<div className='NavAll left' onMouseOver={()=>{}}>全部课程</div>
+						<Menu mode="horizontal" onClick={(item)=>this.NavLinkTo(item)}>
+			        <Menu.Item key="home">网站首页</Menu.Item>
+			        <SubMenu title={<span>手动组卷</span>}>
+			          	<Menu.Item key="XuanTi/tb">章节同步选题</Menu.Item>
+								<Menu.Item key="XuanTi/zsd">知识点选题</Menu.Item>
+			        </SubMenu>
+			        <SubMenu title={<span>自动组卷</span>}>
+			          	<Menu.Item key="setting:3">Option 1</Menu.Item>
+			            <Menu.Item key="setting:4">Option 2</Menu.Item>
+			        </SubMenu>
+			        <SubMenu title={<span>试题库</span>}>
+			          	<Menu.Item key="setting:5">Option 1</Menu.Item>
+			            <Menu.Item key="setting:6">Option 2</Menu.Item>
+			        </SubMenu>
+			        <Menu.Item key="beike">备课中心</Menu.Item>
+				    </Menu>
+						<div className="item-list" style={{display:'none'}}>
+							<h3>小学</h3>
+							<span>语文</span>
+							<span>数学</span>
+							<span>英语</span>
+							<span>科学</span>
+							<span>政治思品</span>
+							<h3>初中</h3>
+							<span>语文</span>
+							<span>数学</span>
+							<span>英语</span>
+							<span>科学</span>
+							<span>物理</span>
+							<span>化学</span>
+							<span>历史</span>
+							<span>政治思品</span>
+							<span>历史与社会</span>
+							<span>社会思品</span>
+							<span>生物</span>
+							<h3>高中</h3>
+							<span>语文</span>
+							<span>数学</span>
+							<span>英语</span>
+							<span>物理</span>
+						</div>
+				    <div className="right search">
+							<Input
+							 	placeholder='请输入关键词'
+							 	addonBefore={
+							 		<Select defaultValue="试卷" style={{ width: 90 }}>
+									   <Option value="试题">试题</Option>
+									   <Option value="试卷">试卷</Option>
+									</Select>}
+							 	addonAfter={<Icon type="search"/>}
+							 />
+					  </div>
 				  </div>
-			  </div>
+				</div>
 				{/* 固定导航 */}
 		    <ul className="fixed">
 					<li><Icon type='rocket'/>激活vip</li>

@@ -1,0 +1,55 @@
+.ShiTiLan{
+	position: fixed;
+	right: 0;
+	bottom: 100px;
+	transition:.3s;
+	span{
+		color: red;
+	}
+	.left{
+		padding-top: 30px;
+		width: 30px;
+		text-align: center;
+		background: $c;
+		color: $f;
+		height: 220px;
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+		cursor: pointer;
+	}
+	.right{
+		height: 220px;
+		width: 170px;
+		text-align: center;
+		background: #FFF7F1;
+		position: relative;
+		.title{
+			text-align: center;
+			line-height: 3;
+			color: #000;
+			border-bottom: 1px solid #ddd;
+		}
+		ul{
+			font-size: 14px;
+			padding-top: 10px;
+			li{
+				line-height: 1.5;
+			}
+		}
+		.bottom{
+			display: inline-block;
+			padding: 5px;
+			border-radius: 5px;
+			position: absolute;
+			bottom: 10px;
+			width: 140px;
+			right: 15px;
+			background: $c;
+			color: $f;
+			cursor: pointer;
+		}
+	}
+}
+.ShiTiLan.none{
+	right:-170px;
+}

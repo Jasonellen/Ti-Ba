@@ -1,0 +1,105 @@
+.XuanTi{
+	.oneBar{
+    margin: 10px 0 5px;
+	}
+	.warp{
+		margin-top: 10px;
+		padding-bottom: 50px;
+		.leftSide{
+			width: 260px;
+			float: left;
+		}
+		.rightSide{
+			width: 920px;
+			float: right;
+	    padding-left: 1px;
+			.select{
+				border: 1px solid #ddd;
+				.SmallNavBar{
+					background: $f;
+					ul{
+						border-bottom:1px dashed #ddd;
+					}
+				}
+				.checkWarp{
+					line-height: 40px;
+					padding-left: 15px;
+				}
+			}
+			.selectMain{
+				line-height: 40px;
+				margin-bottom: 10px;
+				span{
+					cursor: pointer;
+					padding:5px 10px;
+				}
+				.all{
+					padding:0 10px;
+			    margin-top: 4px;
+				}
+				span:hover,span.active{
+					background: $c;
+					border-radius: 3px;
+					color: $f;
+				}
+				span.notHover:hover{
+					background: none;
+					border-radius: none;
+					color: rgba(0, 0, 0, 0.65);
+					cursor: default;
+				}
+			}
+			.st{
+				a:hover{
+					color: $c;
+				}
+				>li{
+					cursor: pointer;
+					margin-bottom: 20px;
+				}
+				>li:hover{
+					box-shadow: 0px 0px 15px 5px #eee;
+				}
+				.ant-card-actions > li > span{
+					.anticon{
+						margin-right: 5px;
+					}
+					.i{
+						padding: 5px 15px;
+				    border-radius: 5px;
+				    margin-left: 10px;
+				    background: $c;
+				    color: $f;
+					}
+				}
+				.ant-card-head-title{
+					>div{
+						margin-left: -10px;
+					}
+					span{
+						padding:0 10px;
+						border-right:1px solid #ddd;
+					}
+					span.noborder{
+						border:none;
+					}
+				}
+				.answer{
+					padding-top:20px;
+					margin-top: 20px;
+					border-top: 1px dashed #ddd;
+					._left{
+						color: $c;
+						width: 70px;
+					}
+					._right{
+						width: 790px;
+					}
+				}
+			}
+			.ant-pagination {
+				margin-top: 40px;
+			}
+		}
+	}
+}

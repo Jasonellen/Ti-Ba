@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { Modal, Icon } from 'antd';
 import './index.scss'
-import About from '~/About'
 import {Route,Link,} from 'react-router-dom'
 
 
@@ -13,9 +12,12 @@ export default class Home extends Component {
 		}
 	}
 	componentDidMount() {
+		console.log(this.props,'98765')
 		new Swiper ('.swiper', {
 			loop: true,
-			autoplay:true,
+			autoplay:{
+				disableOnInteraction:false
+			},
 			pagination: {
 				el: '.swiper-pagination',
 			},
@@ -27,6 +29,9 @@ export default class Home extends Component {
 		setTimeout(function(){
 			new Swiper('.swiper1', {
 				loop: true,
+				autoplay:{
+					disableOnInteraction:false
+				},
 				effect: 'coverflow',
 				grabCursor: true,
 				centeredSlides: true,
@@ -46,7 +51,9 @@ export default class Home extends Component {
 
 			new Swiper('.swiper2', {
 				loop: true,
-				autoplay:true,
+				autoplay:{
+					disableOnInteraction:false
+				},
 				slidesPerView: 5,
 	      spaceBetween: 30,
 				pagination: {
@@ -291,19 +298,19 @@ export default class Home extends Component {
 					      <div className="swiper-slide">
 									<div className="content">
 										<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3375177454,1868030626&fm=27&gp=0.jpg" alt=""/>
-										<div className="text">傻逼中学</div>
+										<div className="text">xx中学</div>
 									</div>
 					      </div>
 								<div className="swiper-slide">
 									<div className="content">
 										<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3375177454,1868030626&fm=27&gp=0.jpg" alt=""/>
-										<div className="text">傻逼中学</div>
+										<div className="text">xx中学</div>
 									</div>
 					      </div>
 								<div className="swiper-slide">
 									<div className="content">
 										<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3375177454,1868030626&fm=27&gp=0.jpg" alt=""/>
-										<div className="text">傻逼中学</div>
+										<div className="text">xx中学</div>
 									</div>
 					      </div>
 								<div className="swiper-slide">
