@@ -1,10 +1,11 @@
 import {combineReducers} from 'redux';
 
 import nav from './nav';
+import persist from './persist';
 
 
 const reducersApp = combineReducers({
-	nav
+	nav, persist
 });
 
 export default reducersApp;

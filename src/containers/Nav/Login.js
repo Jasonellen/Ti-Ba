@@ -3,6 +3,7 @@ import {  Icon, Button, Form, Modal, Input, Checkbox, notification } from 'antd'
 const FormItem = Form.Item;
 import {connect} from 'react-redux';
 import * as navAction from '@/actions/nav.js';
+import * as persistAction from '@/actions/persist.js';
 import { bindActionCreators } from 'redux'
 
 @connect(
@@ -11,7 +12,12 @@ import { bindActionCreators } from 'redux'
 			state:state.nav,
 		}
 	},
-	dispatch => bindActionCreators(navAction, dispatch)
+	dispatch => {
+		return {
+			navAction:bindActionCreators(navAction, dispatch),
+			persistAction:bindActionCreators(persistAction, dispatch)
+		}
+	}
 )
 class Login extends Component {
 
@@ -29,8 +35,9 @@ class Login extends Component {
 				password,
 			})
 				.then(data=>{
-					if(data.status === 200){
-						this.props.changeLoginModalShow(false)
+					if(data.data.status === 'success'){
+						this.props.navAction.changeLoginModalShow(false)
+						this.props.persistAction.getUser(data.data.token)
 						notification.success({
 							message: '通知提醒',
 							description: '恭喜登录成功！',
@@ -50,7 +57,7 @@ class Login extends Component {
 				width={350}
 				visible={loginModal}
 				footer={null}
-				onCancel={()=>this.props.changeLoginModalShow(false)}
+				onCancel={()=>this.props.navAction.changeLoginModalShow(false)}
 			>
 				<Form onSubmit={this.handleSubmit} className="login-form">
 					<FormItem>

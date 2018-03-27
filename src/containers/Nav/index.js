@@ -16,7 +16,7 @@ import Login from './Login'
 @connect(
 	state => {
 		return {
-			state:state.register,
+			user:state.persist.user
 		}
 	},
 	dispatch => bindActionCreators(navAction, dispatch)
@@ -27,7 +27,7 @@ export default class Nav extends Component {
 		this.state={
 			allClassName:'全部课程',
 			alClassShow:false,
-			educations:[]
+			educations:[],
 		}
 		this.timer=null
 	}
@@ -72,6 +72,8 @@ export default class Nav extends Component {
 
 	render() {
 		const { allClassName, alClassShow, educations } = this.state
+		const { user } = this.props.user
+		console.log(user,'===')
 		return (
 			<div className="Nav">
 				<div className="head">
@@ -85,22 +87,29 @@ export default class Nav extends Component {
 				</div>
 				<div className="login contentCenter clearfix">
 					<div className="right">
-						<span onClick={()=>this.props.changeLoginModalShow(true)}>登陆</span>
-						<span onClick={()=>this.props.changeRegisterModalShow(true)}>注册</span>
-						<Dropdown overlay={
-							<Menu>
-								<Menu.Item key="0">
-									<a target="_blank">1st menu item</a>
-								</Menu.Item>
-								<Menu.Item key="1">
-									<a target="_blank">2nd menu item</a>
-								</Menu.Item>
-								<Menu.Divider />
-								<Menu.Item key="3">3rd menu </Menu.Item>
-							</Menu>
-						}>
-					    <div>欢迎，张三<Icon type="down" /></div>
-					  </Dropdown>
+						{
+							!user
+								?
+								<div>
+									<span onClick={()=>this.props.changeLoginModalShow(true)}>登陆</span>
+									<span onClick={()=>this.props.changeRegisterModalShow(true)}>注册</span>
+								</div>
+								:
+								<Dropdown overlay={
+									<Menu>
+										<Menu.Item key="0">
+											<a target="_blank">1st menu item</a>
+										</Menu.Item>
+										<Menu.Item key="1">
+											<a target="_blank">2nd menu item</a>
+										</Menu.Item>
+										<Menu.Divider />
+										<Menu.Item key="3">3rd menu </Menu.Item>
+									</Menu>
+								}>
+									<div>欢迎，张三<Icon type="down" /></div>
+								</Dropdown>
+						}
 					</div>
 				</div>
 				{/* 导航菜单 */}
@@ -135,20 +144,20 @@ export default class Nav extends Component {
 									onMouseOver={()=>this.handleAllClass(true)}
 									onMouseOut={()=>this.handleAllClass(false)}
 								>
-								{
-									educations.length>0 && educations.map((item)=>{
-										return(
-											<div key={item.id}>
-												<h3>{item.name}</h3>
-												{
-													item.subjects.length>0 && item.subjects.map((iitem)=>{
-														return <span key={iitem.id} onClick={()=>this.handleClassClick(item.id,item.name,iitem.id,iitem.name)}>{iitem.name}</span>
-													})
-												}
-											</div>
-										)
-									})
-								}
+									{
+										educations.length>0 && educations.map((item)=>{
+											return(
+												<div key={item.id}>
+													<h3>{item.name}</h3>
+													{
+														item.subjects.length>0 && item.subjects.map((iitem)=>{
+															return <span key={iitem.id} onClick={()=>this.handleClassClick(item.id,item.name,iitem.id,iitem.name)}>{iitem.name}</span>
+														})
+													}
+												</div>
+											)
+										})
+									}
 								</div>
 							)
 						}
@@ -175,9 +184,9 @@ export default class Nav extends Component {
 					<li onClick={()=>this.NavLinkTo('SchoolService')} className='last'><Icon type="flag" />学校服务</li>
 		    </ul>
 				{/* 登陆 */}
-				<Login />
+				<Login onGetUser={this.handleGetUser}/>
 				{/* 注册 */}
-				<Register />
+				<Register onGetUser={this.handleGetUser}/>
 				{/* 忘记密码 */}
 				<Forget />
 				{/* 返回顶部 */}

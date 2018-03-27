@@ -3,6 +3,7 @@ import {  Icon, Button, Form, Modal, Dropdown, Input, Checkbox, Menu, notificati
 const FormItem = Form.Item;
 import {connect} from 'react-redux';
 import * as navAction from '@/actions/nav.js';
+import * as persistAction from '@/actions/persist.js';
 import { bindActionCreators } from 'redux'
 
 const formItemLayout = {
@@ -22,7 +23,12 @@ const formItemLayout = {
 			state:state.nav,
 		}
 	},
-	dispatch => bindActionCreators(navAction, dispatch)
+	dispatch => {
+		return {
+			navAction:bindActionCreators(navAction, dispatch),
+			persistAction:bindActionCreators(persistAction, dispatch)
+		}
+	}
 )
 class Register extends Component {
 	state={
@@ -47,9 +53,9 @@ class Register extends Component {
 				user_type
 			})
 				.then(data=>{
-					console.log(data, data.status ==='success')
-					if(data.status === 200){
+					if(data.data.status === 'success'){
 						this.props.changeRegisterModalShow(false)
+						this.props.persistAction.getUser(data.data.token)
 						notification.success({
 							message: '通知提醒',
 							description: '恭喜注册成功！',

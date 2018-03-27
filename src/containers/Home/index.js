@@ -8,18 +8,14 @@ export default class Home extends Component {
 	constructor(props){
 		super(props)
 		this.state={
-			carousels:[]
+			carousels:[],
+			educations:[]
 		}
 	}
 	componentDidMount() {
-		axios.get(url.carousels)
-		.then(data=>{
-			if(data.status === 200){
-				this.setState({
-					carousels:data.data.carousels
-				})
-			}
-		})
+		this.getEducations()
+		this.getCarousels()
+
 		new Swiper ('.swiper', {
 			loop: true,
 			autoplay:{
@@ -69,10 +65,31 @@ export default class Home extends Component {
 				},
 			});
 		},500)
-
+	}
+	//获取轮播图
+	getCarousels = ()=>{
+		axios.get(url.carousels)
+			.then(data=>{
+				if(data.data.msg.status === 'success'){
+					this.setState({
+						carousels:data.data.carousels
+					})
+				}
+			})
+	}
+	//课程列表
+	getEducations=()=>{
+		axios.get(url.educations)
+			.then(({data})=>{
+				if(data.msg.status === 'success'){
+					this.setState({
+						educations:data.educations
+					})
+				}
+			})
 	}
 	render() {
-		const { carousels } = this.state
+		const { carousels, educations } = this.state
 		return (
 			<div className="Home">
 				<div className="swiper-container swiper">
@@ -80,7 +97,7 @@ export default class Home extends Component {
 			    {
 			    	carousels.length>0 && carousels.map(function(item){
 			    		return (
-								<div className="swiper-slide" key={item.id} style={{background:`url(${item.cover_data.original}) center center no-repeat rgb(17, 137, 171)`,backgroundSize:'cover'}}></div>
+									<div className="swiper-slide" key={item.id} style={{background:`url(${item.cover_data.original}) center center no-repeat rgb(17, 137, 171)`,backgroundSize:'cover'}}></div>
 			    		)
 			    	})
 			    }
@@ -94,34 +111,26 @@ export default class Home extends Component {
 					<p>Course navigation</p>
 				</div>
 				<ul className="CourseNavi clearfix">
-					<li className='left box small'>
-						<div className="title"><Icon type="schedule"/>小学资源导航</div>
-						<ul className='list clearfix'>
-							<li className='left'>小学语文:<span>试题</span>|<span>试卷</span></li>
-							<li className='right'>小学语文:<span>试题</span>|<span>试卷</span></li>
-							<li className='left'>小学语文:<span>试题</span>|<span>试卷</span></li>
-						</ul>
-					</li>
-					<li className='left box middle'>
-						<div className="title"><Icon type="schedule"/>小学资源导航</div>
-						<ul className='list clearfix'>
-							<li className='left'>小学语文:<span>试题</span>|<span>试卷</span></li>
-							<li className='right'>小学语文:<span>试题</span>|<span>试卷</span></li>
-							<li className='left'>小学语文:<span>试题</span>|<span>试卷</span></li>
-						</ul>
-					</li>
-					<li className='left box height'>
-						<div className="title"><Icon type="schedule"/>小学资源导航</div>
-						<ul className='list clearfix'>
-							<li className='left'>小学语文:<span>试题</span>|<span>试卷</span></li>
-							<li className='right'>小学语文:<span>试题</span>|<span>试卷</span></li>
-							<li className='left'>小学语文:<span>试题</span>|<span>试卷</span></li>
-						</ul>
-					</li>
+					{
+						educations.length>0 && educations.map((item,index)=>{
+							return (
+								<li key={item.id} className={`left box ${index==0?'small':index==1?'middle':'height'}`}>
+									<div className="title"><Icon type="schedule"/>{item.name}资源导航</div>
+									<ul className='list clearfix'>
+										{
+											item.subjects.length>0 && item.subjects.map((iitem,i)=>{
+												return <li className={`${i%2 == 0 ? 'left' : 'right'}`} key={iitem.id}>{item.name}{iitem.name}:<span>试题</span>|<span>试卷</span></li>
+											})
+										}
+									</ul>
+								</li>
+							)
+						})
+					}
 				</ul>
 				<div className="moudleTitle">
-					<h3>课程导航</h3>
-					<p>Course navigation</p>
+					<h3>专题推荐</h3>
+					<p>Thematic recommendation</p>
 				</div>
 				<div className="beike">
 					<ul className="contentCenter clearfix">
@@ -182,8 +191,8 @@ export default class Home extends Component {
 					</ul>
 				</div>
 				<div className="moudleTitle">
-					<h3>课程导航</h3>
-					<p>Course navigation</p>
+					<h3>数据展示</h3>
+					<p>Data display</p>
 				</div>
 				<div className="contentCenter">
 					<div className="swiper-container swiper1">
@@ -235,8 +244,8 @@ export default class Home extends Component {
 				  </div>
 				</div>
 				<div className="moudleTitle">
-					<h3>课程导航</h3>
-					<p>Course navigation</p>
+					<h3>网站公告</h3>
+					<p>Website Bulletin</p>
 				</div>
 				<div className="beike bulletin">
 					<ul className="contentCenter clearfix">
