@@ -35,7 +35,8 @@ module.exports = {
 			"WeixinJSBridge":true,
       "wx":true,
       "_dev_api":true,
-			"Swiper":true
+			"Swiper":true,
+			"axios":true
     },
     rules: {
 		'indent': ['error', 'tab'],

@@ -12,7 +12,6 @@ export default class Home extends Component {
 		}
 	}
 	componentDidMount() {
-		console.log(this.props,'98765')
 		new Swiper ('.swiper', {
 			loop: true,
 			autoplay:{

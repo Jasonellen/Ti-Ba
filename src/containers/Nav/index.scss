@@ -58,6 +58,7 @@
 	}
 	.login{
 		padding: 15px 0;
+		background: $f;
 		span{
 			width:50px;
 			height:28px;
@@ -74,6 +75,7 @@
 		}
 	}
 	.fixed{
+		opacity:0.9;
 		width:110px;
 		border-radius:10px;
 		background:$c;
@@ -92,16 +94,16 @@
       padding-left: 9px;
 			border-bottom:1px solid #fff;
 			cursor: pointer;
-			transition: .3s;
+			// transition: .3s;
 			.anticon{
-				transition: line-height 3s ease-in-out;
+				// transition: line-height 3s ease-in-out;
 			}
 		}
 		li.last{
 			border: none;
 		}
 		li:hover{
-			line-height: 4;
+			// line-height: 4;
 		}
 	}
 
@@ -128,7 +130,7 @@
 		}
 	}
 	.ant-back-top{
-		bottom: 250px;
+		bottom: 50px;
 	}
 }
 

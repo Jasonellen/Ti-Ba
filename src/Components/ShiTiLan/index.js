@@ -13,7 +13,7 @@ export default class ShiTiLan extends Component{
 		return(
 			<div className={`ShiTiLan clearfix ${this.state.none && 'none'}`}>
 				<div className="left" onClick={()=>this.setState({none:!this.state.none})}>
-					{/*<Icon type="folder" />*/}<Icon type="folder-open" />试题篮
+					{/*<Icon type="folder" />*/}<Icon type="folder-open" />试题篮<Icon type="shrink" style={{marginTop:70}}/>
 				</div>
 				<div className='right'>
 					<div className="title">共计 ( <span>2</span> ) 道题</div>

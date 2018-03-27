@@ -1,0 +1,64 @@
+.Analyze{
+	background: rgba(0,0,0,.5);
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1001;
+	.content{
+		width:70%;
+		min-width: 800px;
+		margin:10vh auto;
+		height:80vh;
+		position: relative;
+		.wrap{
+			overflow: auto;
+			height:calc(80vh - 36px);
+			padding:40px 30px 30px;
+			background: $f;
+		}
+		table{
+			text-align: center;
+			th{
+				text-align: center;
+			}
+		}
+		.modal_title{
+			text-align: center;
+			line-height: 36px;
+			background: $c;
+			color: $f;
+			position: absolute;
+			width: 100%;
+			top: 0;
+			left: 0;
+			z-index: 1002;
+			.anticon{
+				width: 20px;
+				cursor: pointer;
+				margin-top: 9px;
+				margin-right: 5px;
+			}
+		}
+		.small_title{
+			margin:20px 0 10px;
+			border-left:4px solid $c;
+			padding-left: 10px;
+		}
+		.middle{
+			.left,.right{
+				width: 45%;
+				min-width: 350px;
+			}
+		}
+	}
+	#container{
+		width: 250px;
+		height: 250px;
+		margin: 0 auto;
+		.highcharts-credits{
+			display: none;
+		}
+	}
+}

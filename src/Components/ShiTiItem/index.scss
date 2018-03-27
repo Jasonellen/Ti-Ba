@@ -1,0 +1,41 @@
+.ShiTiItem{
+	a:hover{
+		color: $c;
+	}
+	.ant-card-actions > li > span{
+		.anticon{
+			margin-right: 5px;
+		}
+		.i{
+			padding: 5px 15px;
+			border-radius: 5px;
+			margin-left: 10px;
+			background: $c;
+			color: $f;
+		}
+	}
+	.ant-card-head-title{
+		>div{
+			margin-left: -10px;
+		}
+		span{
+			padding:0 10px;
+			border-right:1px solid #ddd;
+		}
+		span.noborder{
+			border:none;
+		}
+	}
+	.answer{
+		padding-top:20px;
+		margin-top: 20px;
+		border-top: 1px dashed #ddd;
+		._left{
+			color: $c;
+			width: 70px;
+		}
+		._right{
+			width: 790px;
+		}
+	}
+}

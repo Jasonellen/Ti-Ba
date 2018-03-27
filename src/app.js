@@ -1,6 +1,4 @@
 // application's entry
-require('es6-promise').polyfill()
-require('isomorphic-fetch')
 import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from 'react-redux'
@@ -45,9 +43,3 @@ persistStore(store, {
 		</Provider>
 	), document.getElementById('root'))
 })
-
-
-
-
-
-

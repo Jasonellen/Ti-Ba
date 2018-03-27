@@ -1,0 +1,40 @@
+.SchoolService{
+	h1{
+		text-align: center;
+		line-height: 4;
+	}
+	.left{
+		width: 60%;
+		padding-right: 30px;
+		border-right: 1px solid red;
+		span.red{
+			color: red;
+		}
+	}
+	.right{
+		font-size: 12px;
+		width: 40%;
+		padding:0 30px;
+		.apply-account .col{
+			color: $c;
+			margin-bottom: 5px;
+		}
+		.apply-account .con{
+	    margin-bottom: 10px;
+			line-height: 1.7;
+			a{
+				color: $c;
+			}
+		}
+		.steps{
+			margin-top: 10px;
+    	margin-left: 90px;
+		}
+	}
+	form .ant-select, form .ant-cascader-picker{
+		width: auto;
+	}
+	.ant-cascader-input.ant-input{
+		width: 250px;
+	}
+}

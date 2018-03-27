@@ -1,0 +1,80 @@
+.ZNZJ{
+	.warp{
+		margin-top: 10px;
+		padding-bottom: 50px;
+		.leftSide{
+			background: $f;
+			width: 260px;
+			float: left;
+		}
+		.rightSide{
+			background: $f;
+			width: 920px;
+			float: right;
+	    padding-left: 1px;
+			.ant-card-bordered{
+				margin-bottom: 20px;
+			}
+			.select{
+				li{
+					padding:5px 10px;
+					border:1px solid #ddd;
+					border-radius: 5px;
+					margin-right: 20px;
+					margin-bottom: 20px;
+					.anticon:hover{
+						color: red;
+					}
+				}
+				li:hover{
+					border:1px solid $c;
+				}
+			}
+			.btm{
+				>.left{
+					width: 65%;
+					padding-right:30px;
+					li{
+						margin-bottom: 20px;
+						.left{
+							font-weight: bold;
+							small{
+								margin-left: 40px;
+								color: #999;
+								font-weight: normal;
+							}
+						}
+						.right{
+							input{
+								border:1px solid #ddd;
+								outline: none;
+								width: 100px;
+								margin-right: 5px;
+							}
+							.anticon:hover{
+								color:red;
+							}
+						}
+
+					}
+				}
+				>.right{
+					width: 35%;
+					padding:10px 10px 0 30px;
+					border-left:1px dashed #ddd;
+					button{
+						margin-right: 10px;
+						margin-bottom: 10px;
+					}
+				}
+			}
+		}
+	}
+	.submit{
+		text-align: center;
+		button{
+			padding-right:50px;
+			padding-left:50px;
+		}
+	}
+}

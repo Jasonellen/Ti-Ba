@@ -1,0 +1,65 @@
+.ShiJuanDetail{
+	background: #f5f5f5;
+	.warp{
+		padding-top: 50px;
+		padding-bottom: 50px;
+		.leftSide{
+			background: $f;
+			width: 920px;
+			float: left;
+			padding:10px;
+			h1{
+				margin-top: 20px;
+				line-height: 20px;
+				font-size: 18px;
+				color: #333;
+				font-weight: 700;
+				text-align: center;
+			}
+			p{
+				margin: 20px 0 30px;
+				line-height: 20px;
+				text-align: center;
+				font-size: 14px;
+				color: #999;
+			}
+			hr{
+				border: none;
+    		border-bottom: 1px solid #ddd;
+			}
+			li{
+				margin:10px 0;
+			}
+		}
+		.rightSide{
+			background: $f;
+			width: 260px;
+			float: right;
+			.top{
+				padding:30px;
+				border-bottom:1px solid #ddd;
+				button{
+					width:100%;
+				}
+				.left,.right{
+					margin-top:10px;
+					font-size: 14px;
+				}
+			}
+			.bottom{
+				padding:10px;
+				ul{
+			    list-style: inside;
+					li{margin: 5px;}
+					a{
+						color:#222;
+						font-size: 14px;
+					}
+					a:hover{
+						color: $c;
+					}
+				}
+			}
+		}
+	}
+}

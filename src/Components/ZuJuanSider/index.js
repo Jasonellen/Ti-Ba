@@ -32,6 +32,7 @@ export default function ZuJuanSider(props){
 					</TreeNode>
 				</Tree>
 				<Tree
+					{...props}
 					showLine
 					onSelect={onSelect}
 				>
@@ -51,6 +52,7 @@ export default function ZuJuanSider(props){
 					</TreeNode>
 				</Tree>
 				<Tree
+					{...props}
 					showLine
 					onSelect={onSelect}
 				>

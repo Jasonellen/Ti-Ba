@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 
-import tabBar from './addAddress';
+import nav from './nav';
 
 
 const reducersApp = combineReducers({
-	tabBar
+	nav
 });
 
 export default reducersApp;

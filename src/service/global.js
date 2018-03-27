@@ -1,13 +1,11 @@
 import '@/style/common.scss'
-import _fetch from '@/service/fetch'
 import url from '@/api'
-import fetchJsonp from 'fetch-jsonp'  //全局的跨域请求
+import axios from 'axios'
 
 //全局变量
 Object.defineProperties(global, {
-	_fetch: {value: _fetch},
 	url: {value: url},
-	fetchJsonp: {value: fetchJsonp},
+	axios: {value: axios},
 });
 
 
@@ -36,7 +34,7 @@ if (typeof Object.assign != 'function') {
 if (!Array.prototype.filter)
 {
 	Array.prototype.filter = function(fun /* , thisArg*/)
-  {
+	{
 		"use strict";
 
 		if (this === void 0 || this === null)
@@ -49,9 +47,9 @@ if (!Array.prototype.filter)
 		var res = [];
 		var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
 		for (var i = 0; i < len; i++)
-    {
+		{
 			if (i in t)
-      {
+			{
 				var val = t[i];
 				if (fun.call(thisArg, val, i, t))
 					res.push(val);

@@ -1,0 +1,59 @@
+.Sider{
+	position: relative;
+	overflow: hidden;
+	min-height: 280px;
+	.content{
+		border:1px solid #ddd;
+	}
+	.title{
+		position: relative;
+		z-index: 1000;
+		background: $c;
+    height: 40px;
+		color: $f;
+		line-height: 40px;
+		.select_title{
+			width: 85%;
+			@include moreOne;
+			text-align: center;
+		}
+		.right{
+			width: 15%;
+			text-align: center;
+		}
+	}
+	.pan{
+		position: absolute;
+		top: 40px;
+		left: 0;
+		width: 100%;
+		border:1px solid $c;
+		padding-left: 30px;
+		background: $f;
+		z-index: 999;
+		color:#222;
+		font-weight: normal;
+		font-size: 14px;
+		text-align: center;
+		transition: .5s;
+		height:auto;
+		overflow: hidden;
+		.title1{
+			text-align: left;
+			font-size: 16px;
+			line-height: 40px;
+			border-bottom:1px dashed #ddd;
+			margin-bottom: 10px;
+		}
+		>div{
+			text-align: left;
+			margin:10px 0;
+		}
+	}
+	.pan.hide{
+		transform: translateY(-100%);
+	}
+	button{
+		margin-bottom: 10px;
+	}
+}

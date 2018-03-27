@@ -1,0 +1,22 @@
+.Papers{
+	.warp{
+		margin-top: 10px;
+		padding-bottom: 50px;
+		.leftSide{
+			background: $f;
+			width: 260px;
+			float: left;
+		}
+		.rightSide{
+			background: $f;
+			width: 920px;
+			float: right;
+	    padding-left: 1px;
+			.ul_list{
+				border:2px solid #ddd;
+				border-bottom-width:1px;
+				margin-bottom: 40px;
+			}
+		}
+	}
+}
