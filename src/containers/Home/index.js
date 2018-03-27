@@ -1,17 +1,25 @@
 import React, {Component} from 'react';
 import { Modal, Icon } from 'antd';
 import './index.scss'
-import {Route,Link,} from 'react-router-dom'
+import {Route,Link} from 'react-router-dom'
 
 
 export default class Home extends Component {
 	constructor(props){
 		super(props)
 		this.state={
-
+			carousels:[]
 		}
 	}
 	componentDidMount() {
+		axios.get(url.carousels)
+		.then(data=>{
+			if(data.status === 200){
+				this.setState({
+					carousels:data.data.carousels
+				})
+			}
+		})
 		new Swiper ('.swiper', {
 			loop: true,
 			autoplay:{
@@ -64,13 +72,18 @@ export default class Home extends Component {
 
 	}
 	render() {
+		const { carousels } = this.state
 		return (
 			<div className="Home">
 				<div className="swiper-container swiper">
 			    <div className="swiper-wrapper">
-						<div className="swiper-slide"></div>
-						<div className="swiper-slide"></div>
-			      <div className="swiper-slide"></div>
+			    {
+			    	carousels.length>0 && carousels.map(function(item){
+			    		return (
+								<div className="swiper-slide" key={item.id} style={{background:`url(${item.cover_data.original}) center center no-repeat rgb(17, 137, 171)`,backgroundSize:'cover'}}></div>
+			    		)
+			    	})
+			    }
 			    </div>
 			    <div className="swiper-pagination"></div>
 					<div className="swiper-button-prev prev"></div>

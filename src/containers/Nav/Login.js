@@ -29,12 +29,11 @@ class Login extends Component {
 				password,
 			})
 				.then(data=>{
-					console.log(data, data.status ==='success')
 					if(data.status === 200){
-						this.props.changeRegisterModalShow(false)
+						this.props.changeLoginModalShow(false)
 						notification.success({
 							message: '通知提醒',
-							description: '恭喜注册成功！',
+							description: '恭喜登录成功！',
 							duration:2
 						});
 					}

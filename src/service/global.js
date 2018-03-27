@@ -1,6 +1,10 @@
 import '@/style/common.scss'
 import url from '@/api'
 import axios from 'axios'
+import FastClick from 'fastclick' // 解决移动端300ms延迟
+
+// 解决移动端300ms延迟
+FastClick.attach(document.body)
 
 //全局变量
 Object.defineProperties(global, {

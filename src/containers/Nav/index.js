@@ -25,8 +25,9 @@ export default class Nav extends Component {
 	constructor(){
 		super()
 		this.state={
-			allClassName:'当前课程',
-			alClassShow:false
+			allClassName:'全部课程',
+			alClassShow:false,
+			educations:[]
 		}
 		this.timer=null
 	}
@@ -34,8 +35,20 @@ export default class Nav extends Component {
 	 router: PropTypes.object.isRequired
 	};
 	componentDidMount(){
-
+		this.getEducations()
 	}
+	//课程列表
+	getEducations=()=>{
+		axios.get(url.educations)
+			.then(({status,data})=>{
+				if(status == 200){
+					this.setState({
+						educations:data.educations
+					})
+				}
+			})
+	}
+	//全部课程hover
 	handleAllClass = (value)=>{
 		clearTimeout(this.timer)
 		if(value){
@@ -46,14 +59,19 @@ export default class Nav extends Component {
 			},2000)
 		}
 	}
-	handleToPage = (page)=>{
-		this.context.router.history.push(page)
+	//课程点击
+	handleClassClick = (topic_id,topic_name,subject_id,subject_name)=>{
+		this.setState({
+			allClassName:'当前：'+topic_name+subject_name
+		})
 	}
-	NavLinkTo = (item)=>{
-		this.context.router.history.push('/'+item.key)
+
+	NavLinkTo = (page)=>{
+		this.context.router.history.push('/'+page)
 	}
+
 	render() {
-		const { allClassName, alClassShow } = this.state
+		const { allClassName, alClassShow, educations } = this.state
 		return (
 			<div className="Nav">
 				<div className="head">
@@ -92,8 +110,8 @@ export default class Nav extends Component {
 							className='NavAll left'
 							onMouseOver={()=>this.handleAllClass(true)}
 							onMouseOut={()=>this.handleAllClass(false)}
-						>{allClassName}</div>
-						<Menu mode="horizontal" onClick={(item)=>this.NavLinkTo(item)}>
+						>{allClassName} <Icon type="down" /></div>
+						<Menu mode="horizontal" onClick={(item)=>this.NavLinkTo(item.key)}>
 			        <Menu.Item key="home">网站首页</Menu.Item>
 			        <SubMenu title={<span>手动组卷</span>}>
 		          	<Menu.Item key="XuanTi/tb">章节同步选题</Menu.Item>
@@ -117,29 +135,20 @@ export default class Nav extends Component {
 									onMouseOver={()=>this.handleAllClass(true)}
 									onMouseOut={()=>this.handleAllClass(false)}
 								>
-									<h3>小学</h3>
-									<span>语文</span>
-									<span>数学</span>
-									<span>英语</span>
-									<span>科学</span>
-									<span>政治思品</span>
-									<h3>初中</h3>
-									<span>语文</span>
-									<span>数学</span>
-									<span>英语</span>
-									<span>科学</span>
-									<span>物理</span>
-									<span>化学</span>
-									<span>历史</span>
-									<span>政治思品</span>
-									<span>历史与社会</span>
-									<span>社会思品</span>
-									<span>生物</span>
-									<h3>高中</h3>
-									<span>语文</span>
-									<span>数学</span>
-									<span>英语</span>
-									<span>物理</span>
+								{
+									educations.length>0 && educations.map((item)=>{
+										return(
+											<div key={item.id}>
+												<h3>{item.name}</h3>
+												{
+													item.subjects.length>0 && item.subjects.map((iitem)=>{
+														return <span key={iitem.id} onClick={()=>this.handleClassClick(item.id,item.name,iitem.id,iitem.name)}>{iitem.name}</span>
+													})
+												}
+											</div>
+										)
+									})
+								}
 								</div>
 							)
 						}
@@ -159,11 +168,11 @@ export default class Nav extends Component {
 				</div>
 				{/* 固定导航 */}
 		    <ul className="fixed">
-					<li onClick={()=>this.handleToPage('/VipActivate')}><Icon type='rocket'/>激活vip</li>
-					<li onClick={()=>this.handleToPage('/Vip')}><Icon type="pay-circle-o" />购买vip</li>
-					<li onClick={()=>this.handleToPage('/SchoolService')}><Icon type="form" />申请试用</li>
+					<li onClick={()=>this.NavLinkTo('VipActivate')}><Icon type='rocket'/>激活vip</li>
+					<li onClick={()=>this.NavLinkTo('Vip')}><Icon type="pay-circle-o" />购买vip</li>
+					<li onClick={()=>this.NavLinkTo('SchoolService')}><Icon type="form" />申请试用</li>
 					<li><Icon type="exclamation-circle-o" />客服帮助</li>
-					<li onClick={()=>this.handleToPage('/SchoolService')} className='last'><Icon type="flag" />学校服务</li>
+					<li onClick={()=>this.NavLinkTo('SchoolService')} className='last'><Icon type="flag" />学校服务</li>
 		    </ul>
 				{/* 登陆 */}
 				<Login />
