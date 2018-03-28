@@ -43,6 +43,12 @@ class Login extends Component {
 							description: '恭喜登录成功！',
 							duration:2
 						});
+					}else{
+						notification.error({
+							message: '通知提醒',
+							description: ' 账号或密码错误！',
+							duration:2
+						});
 					}
 				})
 		});

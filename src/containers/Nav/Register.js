@@ -54,11 +54,17 @@ class Register extends Component {
 			})
 				.then(data=>{
 					if(data.data.status === 'success'){
-						this.props.changeRegisterModalShow(false)
+						this.props.navAction.changeRegisterModalShow(false)
 						this.props.persistAction.getUser(data.data.token)
 						notification.success({
 							message: '通知提醒',
 							description: '恭喜注册成功！',
+							duration:2
+						});
+					}else{
+						notification.error({
+							message: '通知提醒',
+							description: '注册失败！',
 							duration:2
 						});
 					}
