@@ -1,5 +1,5 @@
 .NavBarWarp{
-	background: #33a9fc;
+	background: #f5f5f5;
 }
 .Nav{
 	.ant-dropdown-trigger{
@@ -9,17 +9,20 @@
 	    border: 1px solid #e8e8e8;
 	}
 	.ant-menu-item-selected,.ant-menu-submenu-title:hover,.ant-menu-submenu-active,.ant-menu-item-active,.ant-menu-item-open,.ant-menu-submenu-selected{
-		background: #1890ff !important;
+		background: $c !important;
 		color: #fff !important;
+		top: 0;
+		border-bottom-color:$c !important;
 	}
 	.NavAll{
 		width: 224px;
 		background:$c;
 		line-height: 46px;
-	    border: 1px solid $c;
-	    font-size: 16px;
-	    color:#fff;
-	    text-align: center;
+    border: 1px solid $c;
+    font-size: 16px;
+    color:#fff;
+    text-align: center;
+		margin-right: 10px;
 	}
 	.NavAll:hover{
 		cursor: pointer;

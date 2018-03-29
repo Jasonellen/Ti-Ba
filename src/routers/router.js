@@ -20,6 +20,7 @@ const ZNZJ = asyncComponent(() => import("~/ZNZJ"));
 const Papers = asyncComponent(() => import("~/Papers"));
 const PapersTest = asyncComponent(() => import("~/PapersTest"));
 const ShiJuanDetail = asyncComponent(() => import("~/ShiJuanDetail"));
+const BeiKeDetail = asyncComponent(() => import("~/BeiKeDetail"));
 
 export default function Routers(){
 	return (
@@ -40,6 +41,7 @@ export default function Routers(){
 						<Route path="/Papers" component={Papers}/>
 						<Route path="/PapersTest" component={PapersTest}/>
 						<Route path="/ShiJuanDetail/:id" component={ShiJuanDetail}/>
+						<Route path="/BeiKeDetail/:id" component={BeiKeDetail}/>
 					</Switch>
 				</div>
 				<Footer />
