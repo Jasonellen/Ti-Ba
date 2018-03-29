@@ -72,8 +72,7 @@ export default class Nav extends Component {
 
 	render() {
 		const { allClassName, alClassShow, educations } = this.state
-		const { user } = this.props.user
-		console.log(user,'===')
+		const { user } = this.props
 		return (
 			<div className="Nav">
 				<div className="head">
@@ -107,7 +106,7 @@ export default class Nav extends Component {
 										<Menu.Item key="3">3rd menu </Menu.Item>
 									</Menu>
 								}>
-									<div>欢迎，张三<Icon type="down" /></div>
+									<div>欢迎，{user.name}<Icon type="down" /></div>
 								</Dropdown>
 						}
 					</div>
