@@ -93,35 +93,31 @@ export default class Analyze extends Component{
 		setTimeout(()=>{
 			Highcharts.chart('container', {
 		    chart: {
-		      type: 'variablepie'
+		      type: 'pie'
 		    },
 		    title: {
 		      text: ''
 		    },
 				tooltip: {
-					headerFormat: '',
 					pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
 								'面积 (平方千米): <b>{point.y}</b><br/>' +
 								'人口密度 (每平方千米人数): <b>{point.z}</b><br/>'
 				},
+				plotOptions: {
+					pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+							enabled: true
+						},
+						showInLegend: true
+					}
+				},
 		  	series: [{
-		      minPointSize: 10,
-		      innerSize: '20%',
-		      zMin: 0,
-		      name: 'countries',
-		      data: [{
-		          name: '西班牙',
-		          y: 505370,
-		          z: 92.9
-		      }, {
-		          name: '法国',
-		          y: 551500,
-		          z: 118.7
-		      }, {
-		          name: '波兰',
-		          y: 312685,
-		          z: 124.6
-		      }]
+		      data: [
+						{color:'rgb(243, 156, 18)',name: '西班牙',y: 505370,z: 92.9},
+						{name: '法国',y: 551500,z: 118.7,color:'rgb(101, 198, 187)'},
+						{name: '波兰',y: 312685,z: 124.6,color:'rgb(68, 108, 179)'}]
 		  	}]
 			});
 		},1000)
