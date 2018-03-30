@@ -1,0 +1,40 @@
+.HelpCenter{
+	margin:20px auto 30px;
+	.right_content{
+		width:930px;
+		background: $f;
+		min-height: 550px;
+		padding:20px 30px 10px;
+		font-size: 14px;
+		.title{
+			font-size: 20px;
+			padding-left: 10px;
+			border-left: 4px solid $c;
+			margin-bottom: 15px;
+		}
+	}
+
+
+	.feedback{
+		.submit{
+			text-align: center;
+	    margin: 20px;
+		}
+		.content{
+			font-size: 14px;
+			p{
+				text-indent: 2em;
+				margin:10px 0;
+			}
+			.constro{
+				span{
+					color: red;
+				}
+				small{
+					color: #999;
+				}
+				margin-bottom: 10px;
+			}
+		}
+	}
+}

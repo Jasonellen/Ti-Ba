@@ -20,6 +20,8 @@ const ZNZJ = asyncComponent(() => import("~/ZNZJ"));
 const Papers = asyncComponent(() => import("~/Papers"));
 const PapersTest = asyncComponent(() => import("~/PapersTest"));
 const ShiJuanDetail = asyncComponent(() => import("~/ShiJuanDetail"));
+const HelpCenter = asyncComponent(() => import("~/HelpCenter"));
+const OnlineTest = asyncComponent(() => import("~/OnlineTest"));
 
 export default function Routers(){
 	return (
@@ -40,6 +42,8 @@ export default function Routers(){
 						<Route path="/Papers" component={Papers}/>
 						<Route path="/PapersTest" component={PapersTest}/>
 						<Route path="/ShiJuanDetail/:id" component={ShiJuanDetail}/>
+						<Route path="/HelpCenter/base" component={HelpCenter}/>
+						<Route path="/OnlineTest/:id" component={OnlineTest}/>
 					</Switch>
 				</div>
 				<Footer />

@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import { Modal, Icon } from 'antd';
 import './index.scss'
-import {Route,Link} from 'react-router-dom'
-
 
 export default class Home extends Component {
 	constructor(props){

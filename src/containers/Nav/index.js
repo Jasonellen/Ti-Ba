@@ -180,12 +180,12 @@ export default class Nav extends Component {
 					<li onClick={()=>this.NavLinkTo('Vip')}><Icon type="pay-circle-o" />购买vip</li>
 					<li onClick={()=>this.NavLinkTo('SchoolService')}><Icon type="form" />申请试用</li>
 					<li><Icon type="exclamation-circle-o" />客服帮助</li>
-					<li onClick={()=>this.NavLinkTo('SchoolService')} className='last'><Icon type="flag" />学校服务</li>
+					<li onClick={()=>this.NavLinkTo('helpCenter/base')} className='last'><Icon type="flag" />帮助中心</li>
 		    </ul>
 				{/* 登陆 */}
-				<Login onGetUser={this.handleGetUser}/>
+				<Login/>
 				{/* 注册 */}
-				<Register onGetUser={this.handleGetUser}/>
+				<Register/>
 				{/* 忘记密码 */}
 				<Forget />
 				{/* 返回顶部 */}
