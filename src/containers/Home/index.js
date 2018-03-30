@@ -7,13 +7,16 @@ export default class Home extends Component {
 		super(props)
 		this.state={
 			carousels:[],
-			educations:[]
+			educations:[],
+			features:[],
+			recommends:[]
 		}
 	}
 	componentDidMount() {
 		this.getEducations()
 		this.getCarousels()
-
+		this.getFeatures()
+		this.getRecommends()
 		new Swiper ('.swiper', {
 			loop: true,
 			autoplay:{
@@ -86,8 +89,34 @@ export default class Home extends Component {
 				}
 			})
 	}
+	//获取网站特色
+	getFeatures = ()=>{
+		axios.get(url.features,{
+			params:{
+				limit:3
+			}
+		})
+			.then(({data})=>{
+				if(data.msg.status === 'success'){
+					this.setState({
+						features:data.features
+					})
+				}
+			})
+	}
+	//专题推荐
+	getRecommends = ()=>{
+		axios.get(url.recommends)
+			.then(({data})=>{
+				if(data.msg.status === 'success'){
+					this.setState({
+						recommends:data.recommends
+					})
+				}
+			})
+	}
 	render() {
-		const { carousels, educations } = this.state
+		const { carousels, educations, features, recommends } = this.state
 		return (
 			<div className="Home">
 				<div className="swiper-container swiper">
@@ -117,7 +146,7 @@ export default class Home extends Component {
 									<ul className='list clearfix'>
 										{
 											item.subjects.length>0 && item.subjects.map((iitem,i)=>{
-												return <li className={`${i%2 == 0 ? 'left' : 'right'}`} key={iitem.id}>{item.name}{iitem.name}:<span>试题</span>|<span>试卷</span></li>
+												return <li className={`${i%2 == 0 ? 'left' : 'right'}`} key={iitem.id}>{iitem.name}:<span>试题</span>|<span>试卷</span></li>
 											})
 										}
 									</ul>
@@ -133,58 +162,47 @@ export default class Home extends Component {
 				<div className="beike">
 					<ul className="contentCenter clearfix">
 						<li className='left'>
-							<div className="content">
-								<div className="title">同步跟踪训练</div>
-								<div className='text'>你这么好看，说什么的偶对</div>
-							</div>
-							<div className="content">
-								<div className="title">同步跟踪训练</div>
-								<div className='text'>你这么好看，说什么的偶对</div>
-							</div>
-							<div className="content">
-								<div className="title">同步跟踪训练</div>
-								<div className='text'>你这么好看，说什么的偶对</div>
-							</div>
-							<div className="content">
-								<div className="title">同步跟踪训练</div>
-								<div className='text'>你这么好看，说什么的偶对</div>
-							</div>
+							{
+								recommends.length>0 && recommends.map((item,i)=>{
+									if(i<4){
+										return (
+											<div key={item.id} className="content">
+												<div className="title">{item.category}</div>
+												<div className='text'>{item.name}</div>
+											</div>
+										)
+									}
+
+								})
+							}
 						</li>
 						<li className='left'>
-							<div className="content">
-								<div className="title">同步跟踪训练</div>
-								<div className='text'>你这么好看，说什么的偶对</div>
-							</div>
-							<div className="content">
-								<div className="title">同步跟踪训练</div>
-								<div className='text'>你这么好看，说什么的偶对</div>
-							</div>
-							<div className="content">
-								<div className="title">同步跟踪训练</div>
-								<div className='text'>你这么好看，说什么的偶对</div>
-							</div>
-							<div className="content">
-								<div className="title">同步跟踪训练</div>
-								<div className='text'>你这么好看，说什么的偶对</div>
-							</div>
+							{
+								recommends.length>0 && recommends.map((item,i)=>{
+									if(i>=4 && i<8){
+										return (
+											<div key={item.id} className="content">
+												<div className="title">{item.category}</div>
+												<div className='text'>{item.name}</div>
+											</div>
+										)
+									}
+								})
+							}
 						</li>
 						<li className='left'>
-							<div className="content">
-								<div className="title">同步跟踪训练</div>
-								<div className='text'>你这么好看，说什么的偶对</div>
-							</div>
-							<div className="content">
-								<div className="title">同步跟踪训练</div>
-								<div className='text'>你这么好看，说什么的偶对</div>
-							</div>
-							<div className="content">
-								<div className="title">同步跟踪训练</div>
-								<div className='text'>你这么好看，说什么的偶对</div>
-							</div>
-							<div className="content">
-								<div className="title">同步跟踪训练</div>
-								<div className='text'>你这么好看，说什么的偶对</div>
-							</div>
+							{
+								recommends.length>0 && recommends.map((item,i)=>{
+									if(i>=8 && i<12){
+										return (
+											<div key={item.id} className="content">
+												<div className="title">{item.category}</div>
+												<div className='text'>{item.name}</div>
+											</div>
+										)
+									}
+								})
+							}
 						</li>
 					</ul>
 				</div>
@@ -274,36 +292,23 @@ export default class Home extends Component {
 				</div>
 				<div className="beike site">
 					<ul className="contentCenter clearfix">
-						<li className='left'>
-							<img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1281781512,2150938712&fm=27&gp=0.jpg" alt=""/>
-							<h2>为老师用户提供</h2>
-							<p>
-								<span>优质试题</span>
-								<span>海量试卷</span>
-								<span>精品专题</span>
-								<span>在线组卷</span>
-							</p>
-						</li>
-						<li className='left'>
-							<img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1281781512,2150938712&fm=27&gp=0.jpg" alt=""/>
-							<h2>为老师用户提供</h2>
-							<p>
-								<span>优质试题</span>
-								<span>海量试卷</span>
-								<span>精品专题</span>
-								<span>在线组卷</span>
-							</p>
-						</li>
-						<li className='left'>
-							<img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1281781512,2150938712&fm=27&gp=0.jpg" alt=""/>
-							<h2>为老师用户提供</h2>
-							<p>
-								<span>优质试题</span>
-								<span>海量试卷</span>
-								<span>精品专题</span>
-								<span>在线组卷</span>
-							</p>
-						</li>
+						{
+							features.length>0 && features.map((item)=>{
+								return (
+									<li key={item.id} className='left'>
+										<img src={item.avatar_data.original} alt=""/>
+										<h2>{item.title}</h2>
+										<p>
+											{
+												item.tags.split(',').map((iitem, i)=>{
+													return <Link key={i} to=''><span>{iitem}</span></Link>
+												})
+											}
+										</p>
+									</li>
+								)
+							})
+						}
 					</ul>
 				</div>
 				<div className="moudleTitle">

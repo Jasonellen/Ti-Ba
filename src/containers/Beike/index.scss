@@ -9,6 +9,9 @@
 			background: #55c3b1;
 			color: $f;
 			cursor: pointer;
+			a,a:hover{
+				color: $f;
+			}
 			img{
 				width: 100px;
 				height: 150px;
@@ -34,7 +37,7 @@
 			}
 		}
 		li:hover{
-			box-shadow: 0 0 50px #000;
+			box-shadow: 0 0 30px 5px #999;
 		}
 	}
 }
