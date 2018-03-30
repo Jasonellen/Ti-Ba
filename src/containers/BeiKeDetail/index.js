@@ -41,7 +41,7 @@ export default class BeiKeDetail extends Component{
 							</div>
 							<div className="right">
 								<span>平均分：暂无测试</span>
-								<span><Icon type="edit" /> <Link to=''>开始测试</Link></span>
+								<span><Icon type="edit" /> <Link to='/OnlineTest/1'>开始测试</Link></span>
 								<Button type="primary" icon="download">下载</Button>
 							</div>
 						</li>
@@ -52,7 +52,7 @@ export default class BeiKeDetail extends Component{
 							</div>
 							<div className="right">
 								<span>平均分：暂无测试</span>
-								<span><Icon type="edit" /> <Link to=''>开始测试</Link></span>
+								<span><Icon type="edit" /> <Link to='/OnlineTest/1'>开始测试</Link></span>
 								<Button type="primary" icon="download">下载</Button>
 							</div>
 						</li>
