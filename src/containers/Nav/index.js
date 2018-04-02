@@ -128,7 +128,7 @@ export default class Nav extends Component {
 			        <SubMenu title={<span>自动组卷</span>}>
 								<Menu.Item key="znzj/zj">章节智能组卷</Menu.Item>
 								<Menu.Item key="znzj/zsd">知识点智能组卷</Menu.Item>
-								<Menu.Item key="znzj/double">双向细目表组卷</Menu.Item>
+								<Menu.Item key="double">双向细目表组卷</Menu.Item>
 			        </SubMenu>
 			        <SubMenu title={<span>试卷库</span>}>
 			          	<Menu.Item key="Papers">同步试卷</Menu.Item>

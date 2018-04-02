@@ -25,10 +25,10 @@ export default class ZNZJ extends Component{
 	render(){
 		return (
 			<div className='ZNZJ contentCenter'>
-				<Breadcrumb separator=">">
+				{/*<Breadcrumb separator=">">
 			    <Breadcrumb.Item href="/"><Icon type="home" />当前位置：首页</Breadcrumb.Item>
 					<Breadcrumb.Item>初中数学</Breadcrumb.Item>
-			  </Breadcrumb>
+			  </Breadcrumb>*/}
 				<div className="warp clearfix">
 					<div className="leftSide">
 						<ZuJuanSider

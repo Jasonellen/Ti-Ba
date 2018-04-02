@@ -1,0 +1,85 @@
+.Double{
+	background: $f;
+	overflow: hidden;
+	.bar{
+		margin:20px 0;
+	}
+	.ximu-list-count{
+    margin-top: 20px;
+    padding: 0 20px;
+    line-height: 16px;
+    height: 16px;
+    a,span{
+	    margin-right: 10px;
+	    color: #333;
+    	text-decoration: none;
+    	font-size: 12px;
+    	cursor: pointer;
+    }
+    span{
+    	margin-left: 10px;
+    }
+    span:hover, a:hover{
+    	color: $c;
+    }
+    .order-type>i{
+    	border-left: 1px solid #999;
+	    width: 0;
+	    height: 12px;
+	    margin-top: 2px;
+    }
+    .help-enter{
+	    padding-left: 20px;
+	    color: #999;
+    }
+    span.right:hover{
+			cursor: default;
+			color: #333;
+    }
+	}
+	.ximu-list-wrap{
+    height: 480px;
+    border: 1px solid #dcdcdc;
+    margin-top: 20px;
+    overflow: hidden;
+    .ximu-list-inner{
+    	padding-left: 30px;
+	    margin-right: -80px;
+	    padding-bottom: 30px;
+    }
+    .ximu-list .ximu-item{
+	    width: 245px;
+	    height: 84px;
+	    margin-top: 30px;
+	    margin-right: 55px;
+	    float: left;
+	    background: url(https://zujuan.21cnjy.com/images/ximu_icon.png) left center no-repeat;
+	    position: relative;
+    }
+    .del-ximu-item, .used-ximu-num{
+    	position: absolute;
+	    bottom: 3px;
+	    left: 87px;
+	    color: #999;
+	    line-height: 22px;
+	    float: left;
+      font-size: 12px;
+    }
+    .inner{
+    	margin: 0 0 0 87px;
+    	h4{
+		    line-height: 22px;
+		    height: 44px;
+		    overflow: hidden;
+		    font-size: 14px;
+		    font-weight: 400;
+    	}
+    	a{
+    		color: #333;
+    	}
+    }
+	}
+	.ant-pagination {
+		margin: 30px;
+	}
+}

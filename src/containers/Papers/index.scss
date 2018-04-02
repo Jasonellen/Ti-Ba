@@ -1,4 +1,6 @@
 .Papers{
+	background: $f;
+	overflow: hidden;
 	.warp{
 		margin-top: 10px;
 		padding-bottom: 50px;
@@ -12,6 +14,7 @@
 			width: 920px;
 			float: right;
 	    padding-left: 1px;
+	    padding-bottom: 20px;
 			.ul_list{
 				border:2px solid #ddd;
 				border-bottom-width:1px;

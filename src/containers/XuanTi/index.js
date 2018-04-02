@@ -36,10 +36,10 @@ export default class XuanTi extends Component{
 		return (
 			<div className='XuanTi contentCenter'>
 				<div style={{background:'#f5h5h5',overflow:'hidden'}}>
-					<Breadcrumb separator=">">
-				    <Breadcrumb.Item href="/"><Icon type="home" />当前位置：首页</Breadcrumb.Item>
-						<Breadcrumb.Item>初中数学</Breadcrumb.Item>
-				  </Breadcrumb>
+					{/*<Breadcrumb separator=">">
+			    <Breadcrumb.Item href="/"><Icon type="home" />当前位置：首页</Breadcrumb.Item>
+					<Breadcrumb.Item>初中数学</Breadcrumb.Item>
+			  </Breadcrumb>*/}
 				</div>
 
 				<div className="oneBar">

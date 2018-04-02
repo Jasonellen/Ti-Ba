@@ -1,5 +1,12 @@
 .HelpCenter{
 	margin:20px auto 30px;
+	.subTitle{
+		img{
+			width: 20px;
+			height: 20px;
+			margin-right: 5px;
+		}
+	}
 	.right_content{
 		width:930px;
 		background: $f;

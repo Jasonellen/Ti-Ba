@@ -9,10 +9,10 @@ export default class Beike extends Component{
 	render(){
 		return (
 			<div className='beike contentCenter'>
-				<Breadcrumb separator=">">
-			    <Breadcrumb.Item href="/"><Icon type="home" />当前位置：Home</Breadcrumb.Item>
-			    <Breadcrumb.Item>Application Center</Breadcrumb.Item>
-			  </Breadcrumb>
+				{/*<Breadcrumb separator=">">
+			    <Breadcrumb.Item href="/"><Icon type="home" />当前位置：首页</Breadcrumb.Item>
+					<Breadcrumb.Item>初中数学</Breadcrumb.Item>
+			  </Breadcrumb>*/}
 				<SmallNavBar />
 				<ul className="clearfix textContainer">
 					<li className='clearfix left'>

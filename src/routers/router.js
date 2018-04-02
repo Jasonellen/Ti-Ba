@@ -22,7 +22,9 @@ const PapersTest = asyncComponent(() => import("~/PapersTest"));
 const ShiJuanDetail = asyncComponent(() => import("~/ShiJuanDetail"));
 const HelpCenter = asyncComponent(() => import("~/HelpCenter"));
 const OnlineTest = asyncComponent(() => import("~/OnlineTest"));
+const TestResult = asyncComponent(() => import("~/OnlineTest/TestResult"));
 const BeiKeDetail = asyncComponent(() => import("~/BeiKeDetail"));
+const Double = asyncComponent(() => import("~/Double"));
 
 export default function Routers(){
 	return (
@@ -45,7 +47,9 @@ export default function Routers(){
 						<Route path="/ShiJuanDetail/:id" component={ShiJuanDetail}/>
 						<Route path="/HelpCenter/base" component={HelpCenter}/>
 						<Route path="/OnlineTest/:id" component={OnlineTest}/>
+						<Route path="/TestResult/:id" component={TestResult}/>
 						<Route path="/BeiKeDetail/:id" component={BeiKeDetail}/>
+						<Route path="/Double" component={Double}/>
 					</Switch>
 				</div>
 				<Footer />
