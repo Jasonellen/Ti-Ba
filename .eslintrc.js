@@ -39,16 +39,17 @@ module.exports = {
 			"axios":true
     },
     rules: {
-		'indent': ['error', 'tab'],
-		 'no-tabs': 0,
-		 'no-unused-vars': 1,
-		 'eqeqeq': 0,
-		 'no-new': 0,
-		 'react/prop-types':0,
-		 'react/no-string-refs':0,
-		 'no-console':0,
-		 'no-unused-labels':0,
-		 'react/no-direct-mutation-state':0,
-         'no-mixed-spaces-and-tabs':0
+			'indent': ['error', 'tab'],
+			'no-tabs': 0,
+			'no-unused-vars': 1,
+			'eqeqeq': 0,
+			'no-new': 0,
+			'react/prop-types':0,
+			'react/no-string-refs':0,
+			'no-console':0,
+			'no-unused-labels':0,
+			'react/no-direct-mutation-state':0,
+			'no-mixed-spaces-and-tabs':0,
+			'react/display-name':0
     }
 }

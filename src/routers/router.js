@@ -25,6 +25,7 @@ const OnlineTest = asyncComponent(() => import("~/OnlineTest"));
 const TestResult = asyncComponent(() => import("~/OnlineTest/TestResult"));
 const BeiKeDetail = asyncComponent(() => import("~/BeiKeDetail"));
 const Double = asyncComponent(() => import("~/Double"));
+const DoubleDetail = asyncComponent(() => import("~/DoubleDetail"));
 
 export default function Routers(){
 	return (
@@ -50,6 +51,7 @@ export default function Routers(){
 						<Route path="/TestResult/:id" component={TestResult}/>
 						<Route path="/BeiKeDetail/:id" component={BeiKeDetail}/>
 						<Route path="/Double" component={Double}/>
+						<Route path="/DoubleDetail/1" component={DoubleDetail}/>
 					</Switch>
 				</div>
 				<Footer />

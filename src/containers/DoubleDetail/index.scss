@@ -1,0 +1,111 @@
+.DoubleDetail{
+	margin-top: 20px;
+	.leftwrap{
+		width: 270px;
+		background: $f;
+		h2{
+	    height: 20px;
+	    margin-top: 38px;
+	    font-size: 16px;
+	    margin-bottom: 18px;
+	    text-align: center;
+		}
+		.top{
+			padding:20px;
+			border-bottom:1px solid #ddd;
+			overflow: hidden;
+			.lbtn,.rbtn{
+				width: 105px;
+				line-height: 35px;
+				text-align: center;
+				border-radius: 3px;
+				color: $f;
+				border:1px solid $c;
+				background-color: $c;
+			}
+			.rbtn{
+				background-color: $f;
+				color: $c;
+			}
+		}
+		.htable{
+			font-size: 12px;
+			padding-bottom: 30px;
+			tspan{
+				font-size: 14px;
+			}
+			.t1{
+				padding-left: 40px;
+				overflow: hidden;
+				li{
+					float: left;
+					margin-right: 10px;
+				}
+				i{
+					display: inline-block;
+					width: 12px;
+					height: 12px;
+					background: red;
+					border-radius: 50%;
+				}
+			}
+
+		}
+	}
+
+	.rightwrap{
+		background: $f;
+		width: 920px;
+		padding:10px;
+		h1{
+	    font-size: 18px;
+	    font-weight: 700;
+	    line-height: 30px;
+	    height: 30px;
+	    padding: 35px 0;
+	    text-align: center;
+      height: 100px;
+		}
+		.title{
+			height: 38px;
+			line-height: 38px;
+			padding-left: 20px;
+			font-size: 14px;
+			font-weight: 700;
+			background: #eee;
+			margin:10px 0;
+			position: relative;
+			border:1px solid #eee;
+			.subtitle{
+				position: absolute;
+				top:-31px;
+				right: 0;
+				span{
+					color:$c;
+					padding:3px 5px;
+					border:1px solid $c;
+					font-size: 12px;
+					cursor: pointer;
+				}
+			}
+		}
+		.title:hover{
+			border-color: $c;
+		}
+		table{
+			th{
+				text-align: center;
+			}
+			text-align: center;
+		}
+		.delicon{
+			cursor: pointer;
+		}
+		.delicon:hover{
+			color: $c;
+		}
+		.ant-select-selection{
+			border:none;
+		}
+	}
+}
