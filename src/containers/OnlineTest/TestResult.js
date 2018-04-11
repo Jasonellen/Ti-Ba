@@ -1,6 +1,6 @@
 
 import React, { Component }from 'react';
-import { Radio, Input, Button, Anchor,Spin, Modal } from 'antd';
+import { Radio, Input, Button, Anchor,Spin, Modal,Checkbox, Affix } from 'antd';
 const RadioGroup = Radio.Group;
 const { TextArea } = Input;
 const { Link } = Anchor;
@@ -32,6 +32,20 @@ export default class TestResult extends Component{
               <span>用户名：</span><i className="name">21jy_230026031</i>
               <span>测试成绩：</span><i className="grade">0</i>
             </p>
+            <Affix>
+            <div className="report-bar clearfix">
+	            <div className="report-tab left">
+                <span className="active">全部试题</span>
+                <span>做错的题</span>
+                <span>做对的题</span>
+	            </div>
+	            <div className="report-items right">
+                <Checkbox>Checkbox</Checkbox>
+                <Checkbox>Checkbox</Checkbox>
+                <Checkbox>Checkbox</Checkbox>
+	            </div>
+	        	</div>
+	        	</Affix>
 						<section>
 							<div className="title">一、单选题</div>
 							<div className="title_content">

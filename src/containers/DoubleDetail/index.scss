@@ -57,6 +57,10 @@
 		background: $f;
 		width: 920px;
 		padding:10px;
+		.SelectBtn{
+			margin: 5px;
+
+		}
 		h1{
 	    font-size: 18px;
 	    font-weight: 700;
@@ -81,6 +85,7 @@
 				top:-31px;
 				right: 0;
 				span{
+					background: #fff;
 					color:$c;
 					padding:3px 5px;
 					border:1px solid $c;
@@ -93,10 +98,28 @@
 			border-color: $c;
 		}
 		table{
+			text-align: center;
+			th:nth-child(1){
+				width: 60px;
+			}
+			th:nth-child(2){
+				width: 120px;
+			}
+			th:nth-child(3){
+				width: 535px;
+			}
+			th:nth-child(4){
+				width: 120px;
+			}
+			td{
+				text-align: center;
+				padding: 0 !important;
+			}
 			th{
 				text-align: center;
+				padding:10px 0!important;
 			}
-			text-align: center;
+			
 		}
 		.delicon{
 			cursor: pointer;
@@ -107,5 +130,17 @@
 		.ant-select-selection{
 			border:none;
 		}
+	}
+	.addNew{
+		width: 100%;
+		line-height: 100px;
+		text-align: center;
+		border: 1px dashed $c;
+		color: $c;
+		cursor: pointer;
+		margin: 20px 0;
+	}
+	.addNew:hover{
+		background: #e8f5e9;
 	}
 }

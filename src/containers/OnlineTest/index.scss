@@ -198,6 +198,34 @@
 }
 
 .TestResult{
+	.report-bar{
+		width: 100%;
+		height: 40px;
+    background: rgba(255,99,00,.5);
+    position: relative;
+    overflow: hidden;	
+    padding-top: 6px;
+    padding-right: 35px;
+    .report-tab{
+	    position: absolute;
+	    bottom: 2px;
+	    left: 60px;
+	    span{
+	    	margin-right: 5px;
+		    font-size: 14px;
+		    color: $f;
+		    padding: 10px;
+		    border-radius: 5px;
+	    }
+	    span.active{
+	    	background: #fff;
+	    	color: $c;
+	    }
+    }
+    .ant-checkbox-wrapper span{
+    	color: $f;
+    }
+	}
 	.testTitle{
 		margin: 12px 0 40px;
     text-align: center;

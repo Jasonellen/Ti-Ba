@@ -53,10 +53,10 @@ export default class OnlineTest extends Component{
 		this.setState({loading:false,visible:false})
 	}
 	handleSubmit = ()=>{
-		setTimeout(()=>{})
 		this.setState({loading:true},()=>{
 			setTimeout(()=>{
 				this.setState({loading:false,visible:false})
+				this.props.history.push('/TestResult/1')
 			},2000)
 		})
 	}

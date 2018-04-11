@@ -1,11 +1,12 @@
 
 import React, { Component }from 'react';
-import { Icon,Table, Select } from 'antd';
+import { Icon,Table, Select, Modal, Button } from 'antd';
 import './index.scss'
 import { Link } from 'react-router-dom'
 var Highcharts = require('highcharts');
 require('highcharts/modules/variable-pie')(Highcharts);
 const Option = Select.Option;
+const confirm = Modal.confirm;
 
 let children = [];
 for (let i = 10; i < 36; i++) {
@@ -32,15 +33,10 @@ const columns = [{
 	dataIndex: 'address',
 	key: 'address',
 	render: text => (
-		<Select
-			className='moreSelect'
-			mode="tags"
-			value={['a10', 'c12']}
-			style={{ width: 360 }}
-			onFocus={()=>console.log(111)}
-		>
-		{[]}
-		</Select>
+		<div>
+			<Button className='SelectBtn'>算数平方根<Icon type="close" /></Button>
+			<Button type="dashed">+ 添加知识点</Button>
+		</div>
 	),
 }, {
 	title: '难度',
@@ -58,33 +54,44 @@ const columns = [{
 	title: '操作',
 	dataIndex: 'caozuo',
 	key: 'caozuo',
-	render: text => <Icon type='delete' className='delicon'></Icon>,
+	render: text => <Icon type='delete' className='delicon' onClick={()=>{
+		confirm({
+	    title: '删除试题',
+	    content: '你是否要删除该试题？',
+	    onOk() {
+	      console.log('OK');
+	    },
+	    onCancel() {
+	      console.log('Cancel');
+	    },
+	  });
+	}}></Icon>,
 }];
 
 const data = [{
 	key: '1',
-	name: 'John Brown',
-	age: 32,
+	name: '1',
+	age: '选择题',
 	address: 'New York No. 1 Lake Park',
 	nandu:1,
 	caozuo:12
 }, {
 	key: '2',
-	name: 'Jim Green',
-	age: 42,
+	name: '2',
+	age: '填空题',
 	address: 'London No. 1 Lake Park',
 	nandu:1,
 	caozuo:12
 }, {
 	key: '3',
-	name: 'Joe Black',
+	name: '3',
 	age: 32,
 	address: 'Sidney No. 1 Lake Park',
 	nandu:1,
 	caozuo:12
 }, {
 	key: '4',
-	name: 'Joe Black',
+	name: '4',
 	age: 32,
 	address: 'Sidney No. 1 Lake Park',
 	nandu:1,
@@ -92,7 +99,7 @@ const data = [{
 }];
 export default class DoubleDetail extends Component{
 	state={
-
+		visible:false
 	}
 
 
@@ -102,7 +109,7 @@ export default class DoubleDetail extends Component{
 				text: '大题体量分析'
 			},
 			xAxis: {
-				categories: ['非洲', '美洲'],
+				categories: ['非洲', '美洲','澳洲'],
 			},
 			yAxis: {
 				title: {
@@ -129,6 +136,11 @@ export default class DoubleDetail extends Component{
 					x: 1,
 					y: 10,
 					name: "普通",
+					color: "#FF00FF"
+				}, {
+					x: 2,
+					y: 7,
+					name: "普通1",
 					color: "#FF00FF"
 				}]
 			}]
@@ -203,6 +215,19 @@ export default class DoubleDetail extends Component{
 		});
 	}
 
+	handleDelConfirm = ()=>{
+		confirm({
+	    title: '删除试题',
+	    content: '你是否要删除该试题？',
+	    onOk() {
+	      console.log('OK');
+	    },
+	    onCancel() {
+	      console.log('Cancel');
+	    },
+	  });
+	}
+
 	render(){
 
 		return (
@@ -244,6 +269,19 @@ export default class DoubleDetail extends Component{
 					<div className="title">
 						一、填空题
 						<div className="subtitle">
+							<span onClick={this.handleDelConfirm}><Icon type='delete'></Icon>删除</span>
+							<span onClick={()=>this.setState({visible:true})}>+添加小标题</span>
+						</div>
+					</div>
+					<Table
+						columns={columns}
+						dataSource={data}
+						bordered={true}
+						pagination={false}
+					/>
+					<div className="title">
+						一、填空题
+						<div className="subtitle">
 							<span><Icon type='delete'></Icon>删除</span>
 							<span>+添加小标题</span>
 						</div>
@@ -254,7 +292,46 @@ export default class DoubleDetail extends Component{
 						bordered={true}
 						pagination={false}
 					/>
+					<div className="addNew" onClick={()=>this.setState({visible:true})}>+添加新大区</div>
 				</div>
+
+				<Modal
+          title="Modal"
+          visible={this.state.visible}
+          onOk={()=>alert('删除成功')}
+          onCancel={()=>this.setState({visible:false})}
+          okText="确认"
+          cancelText="取消"
+        >
+        	<div style={{marginBottom:10}}>
+        		试题数量：
+        		<Select defaultValue='lucy' style={{ width: 200 }} dropdownMatchSelectWidth={false}>
+				      <Option value="jack">Jack</Option>
+				      <Option value="lucy">Lucy</Option>
+				      <Option value="disabled" disabled>Disabled</Option>
+				      <Option value="Yiminghe">yiminghe</Option>
+				    </Select>
+        	</div>
+          <div style={{marginBottom:10}}>
+          	选择题型：
+          	<Select defaultValue='jack' style={{ width: 200 }} dropdownMatchSelectWidth={false}>
+				      <Option value="jack">Jack</Option>
+				      <Option value="lucy">Lucy</Option>
+				      <Option value="disabled" disabled>Disabled</Option>
+				      <Option value="Yiminghe">yiminghe</Option>
+				    </Select>
+          </div>
+			    <div>
+			    	试题难度：
+			    	<Select defaultValue='Yiminghe' style={{ width: 200 }} dropdownMatchSelectWidth={false}>
+				      <Option value="jack">Jack</Option>
+				      <Option value="lucy">Lucy</Option>
+				      <Option value="disabled" disabled>Disabled</Option>
+				      <Option value="Yiminghe">yiminghe</Option>
+				    </Select>
+			    </div>
+			    
+        </Modal>
 			</div>
 		)
 	}

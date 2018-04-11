@@ -36,7 +36,7 @@ export default class Double extends Component{
 						<div className="ximu-list-inner clearfix">
 							<div className="ximu-item">
 								<div className="inner">
-									<h4><Link to="" className="J_ToEditXimu" title="2017年江苏省泰州市中考数学试卷">2017年江苏省泰州市中考数学试卷</Link></h4>
+									<h4><Link to="/doubledetail/1" className="J_ToEditXimu" title="2017年江苏省泰州市中考数学试卷">2017年江苏省泰州市中考数学试卷</Link></h4>
 									<span className="used-ximu-num">使用人数：101人</span>
 								</div>
 							</div>
