@@ -13,8 +13,8 @@ import store from '@/service/store'
 if (module.hot) {
 	module.hot.accept() //无刷新
 	// Enable Webpack hot module replacement for reducers
-	module.hot.accept('@/reducers/index', () => {
-		const nextRootReducer = require('@/reducers/index');
+	module.hot.accept('@/Redux/reducers/index', () => {
+		const nextRootReducer = require('@/Redux/reducers/index');
 		store.replaceReducer(nextRootReducer);
 	});
 }

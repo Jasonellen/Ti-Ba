@@ -1,11 +1,18 @@
 
 import React, { Component }from 'react';
 import { Table, Breadcrumb, Icon, Radio,Button, Select } from 'antd';
-import './Analyze.scss'
+import './index.scss'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux';
+import * as otherAction from '@/Redux/actions/other.js';
+import { bindActionCreators } from 'redux'
 var Highcharts = require('highcharts');
 require('highcharts/modules/variable-pie')(Highcharts);
 
+@connect(
+	null,
+	dispatch => bindActionCreators(otherAction, dispatch),
+)
 export default class Analyze extends Component{
 	state = {
 		dataSource:[{
@@ -129,7 +136,7 @@ export default class Analyze extends Component{
 		return (
 			<div className={`Analyze`}>
 				<div className="content">
-					<div className="modal_title clearfix">试卷分析<Icon type="close" className='right' onClick={()=>this.setState({analyze_show:false})}/></div>
+					<div className="modal_title clearfix">试卷分析<Icon type="close" className='right' onClick={()=>this.props.changeAnalyzeShow(false)}/></div>
 					<div className="wrap">
 						<div className="small_title">试卷总体分布分析</div>
 						<Table dataSource={dataSource} columns={columns} pagination={false} bordered={true} size="middle"/>

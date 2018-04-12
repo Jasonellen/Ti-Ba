@@ -2,7 +2,7 @@
 import {compose, createStore, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import createLogger from 'redux-logger'
-import reducers from '@/reducers/index'
+import reducers from '@/Redux/reducers/index'
 import {autoRehydrate} from 'redux-persist' // 做本地持久化
 
 const middleWares = [thunk]

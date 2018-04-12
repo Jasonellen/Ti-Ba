@@ -1,12 +1,13 @@
 
 import React, { Component }from 'react';
-import { Icon,Table, Select, Modal, Button } from 'antd';
+import { Icon,Table, Select, Modal, Button,Input, Radio,message } from 'antd';
 import './index.scss'
 import { Link } from 'react-router-dom'
 var Highcharts = require('highcharts');
 require('highcharts/modules/variable-pie')(Highcharts);
 const Option = Select.Option;
 const confirm = Modal.confirm;
+const RadioGroup = Radio.Group;
 
 let children = [];
 for (let i = 10; i < 36; i++) {
@@ -99,7 +100,8 @@ const data = [{
 }];
 export default class DoubleDetail extends Component{
 	state={
-		visible:false
+		visible:false,
+		visible1:false
 	}
 
 
@@ -228,14 +230,20 @@ export default class DoubleDetail extends Component{
 	  });
 	}
 
+	saveDetail = () => {
+	  const hide = message.loading('系统正在出题，请耐心等待', 0);
+	  // Dismiss manually and asynchronously
+	  setTimeout(hide, 2500);
+	};
+
 	render(){
 
 		return (
 			<div className='DoubleDetail contentCenter clearfix'>
 				<div className="left leftwrap clearfix">
 					<div className="top">
-						<div className="lbtn left">马上出题</div>
-						<div className="rbtn right">保存细目表</div>
+						<div className="lbtn left" onClick={this.saveDetail}>马上出题</div>
+						<div className="rbtn right" onClick={()=>this.setState({visible1:true})}>保存细目表</div>
 					</div>
 					<h2>双向细目标分析</h2>
 					<div className="htable">
@@ -331,6 +339,27 @@ export default class DoubleDetail extends Component{
 				    </Select>
 			    </div>
 			    
+        </Modal>
+        <Modal
+          title="Modal"
+          visible={this.state.visible1}
+          onOk={()=>alert('保存成功')}
+          onCancel={()=>this.setState({visible1:false})}
+          okText="确认"
+          cancelText="取消"
+        >
+        	<div style={{marginBottom:10}}>
+        		细目表名称：<Input style={{width:'70%'}} value="Basic usage"/>
+        	</div>
+          <div style={{marginBottom:10}}>
+          	细目表类型：
+          	<RadioGroup onChange={()=>{}} value={1}>
+			        <Radio value={1}>中考模拟</Radio>
+			        <Radio value={2}>期中试卷</Radio>
+			        <Radio value={3}>期末试卷</Radio>
+			        <Radio value={4}>其他</Radio>
+			      </RadioGroup>
+          </div>			    
         </Modal>
 			</div>
 		)

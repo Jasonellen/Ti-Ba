@@ -7,19 +7,23 @@ import phone_in_talk from 'static/phone-in-talk.svg'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import * as navAction from '@/actions/nav.js';
+import * as navAction from '@/Redux/actions/nav.js';
 import { bindActionCreators } from 'redux'
 import Register from './Register'
 import Forget from './Forget'
 import Login from './Login'
+import Analyze from '@/Components/Analyze'
+import Download from '@/Components/Download'
+import AnswerSheet from '@/Components/AnswerSheet'
 
 @connect(
 	state => {
 		return {
-			user:state.persist.user
+			user:state.persist.user,
+			other:state.other
 		}
 	},
-	dispatch => bindActionCreators(navAction, dispatch)
+	dispatch => bindActionCreators(navAction, dispatch),
 )
 export default class Nav extends Component {
 	constructor(){
@@ -72,7 +76,7 @@ export default class Nav extends Component {
 
 	render() {
 		const { allClassName, alClassShow, educations } = this.state
-		const { user } = this.props
+		const { user,other } = this.props
 		return (
 			<div className="Nav">
 				<div className="head">
@@ -190,6 +194,12 @@ export default class Nav extends Component {
 				<Forget />
 				{/* 返回顶部 */}
 				<BackTop />
+				{/* 试卷分析 */}
+				{ other.analyzeShow && <Analyze /> }
+				{/* 试卷下载 */}
+				{ other.downloadShow && <Download /> }
+				{/* 答题卡下载 */}
+				{ other.answerSheetShow && <AnswerSheet /> }
 			</div>
 		);
 	}

@@ -1,13 +1,20 @@
 
 import React, { Component }from 'react';
 import { Table, Breadcrumb, Icon, Radio,Button, Checkbox } from 'antd';
-import './Download.scss'
+import './index.scss'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux';
+import * as otherAction from '@/Redux/actions/other.js';
+import { bindActionCreators } from 'redux'
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
-
 const plainOptions = ['Apple', 'Pear', 'Orange'];
 const defaultCheckedList = ['Apple', 'Orange'];
+
+@connect(
+	null,
+	dispatch => bindActionCreators(otherAction, dispatch),
+)
 export default class Download extends Component{
 	state = {
 		value: 1,
@@ -38,7 +45,7 @@ export default class Download extends Component{
 		return (
 			<div className="Download">
 				<div className="content">
-					<div className="modal_title clearfix">下载word试卷<Icon type="close" className='right'/></div>
+					<div className="modal_title clearfix">下载word试卷<Icon type="close" className='right' onClick={()=>this.props.changeDownloadShow(false)}/></div>
 					<div className="wrap">
 						<div className="small_title">纸张大小：</div>
 						<RadioGroup onChange={this.onChange} value={this.state.value}>

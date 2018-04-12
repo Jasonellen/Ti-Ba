@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import {  Icon, Button, Form, Modal, Input, Checkbox, notification } from 'antd';
 const FormItem = Form.Item;
 import {connect} from 'react-redux';
-import * as navAction from '@/actions/nav.js';
-import * as persistAction from '@/actions/persist.js';
+import * as navAction from '@/Redux/actions/nav.js';
+import * as persistAction from '@/Redux/actions/persist.js';
 import { bindActionCreators } from 'redux'
 
 @connect(

@@ -26,6 +26,15 @@
 	    font-size: 14px;
 	    color: #333;
 	    position: relative;
+	    ._title{
+	    	display: block;
+	    	margin:10px 0 0;
+	    	color: $c;
+	    	font-weight: bold;
+	    }
+	    .content{
+	    	text-indent: 4em;
+	    }
 		}
 		.padding_box{
 			.sub_title{

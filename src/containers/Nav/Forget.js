@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {  Icon, Button, Form, Modal, Input, notification } from 'antd';
 const FormItem = Form.Item;
 import {connect} from 'react-redux';
-import * as navAction from '@/actions/nav.js';
+import * as navAction from '@/Redux/actions/nav.js';
 import { bindActionCreators } from 'redux'
 
 @connect(

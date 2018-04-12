@@ -6,10 +6,21 @@ import SmallNavBar from '@/Components/SmallNavBar'
 import ZuJuanSider from '@/Components/ZuJuanSider'
 import ShiTiLan from '@/Components/ShiTiLan'
 import ShiTiItem from '@/Components/ShiTiItem'
-const CheckboxGroup = Checkbox.Group;
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux';
+import * as otherAction from '@/Redux/actions/other.js';
+import { bindActionCreators } from 'redux'
 const { TextArea } = Input;
+const CheckboxGroup = Checkbox.Group;
 
+@connect(
+	state => {
+		return {
+			other:state.other
+		}
+	},
+	dispatch => bindActionCreators(otherAction, dispatch),
+)
 export default class ShiJuanDetail extends Component{
 	state = {
 
@@ -37,14 +48,14 @@ export default class ShiJuanDetail extends Component{
 					</div>
 					<div className="rightSide">
 						<div className="top">
-							<Button type="primary" icon="download" size='large'>下载试卷</Button>
+							<Button type="primary" icon="download" size='large' onClick={()=>this.props.changeDownloadShow(true)}>下载试卷</Button>
 							<div className="clearfix">
-								<div className="left"><Icon type="file-word" style={{color:'#ff9600'}}/> 答题卡下载</div>
-								<div className="right"><Icon type="edit" style={{color:'#ff9600'}}/> 在线测试</div>
+								<div className="left" style={{cursor:'pointer'}} onClick={()=>this.props.changeAnswerSheetShow(true)}><Icon type="file-word" style={{color:'#ff9600'}}/> 答题卡下载</div>
+								<Link to='/onlineTest/1' style={{color:'rgba(0, 0, 0, 0.65)'}}><div className="right"><Icon type="edit" style={{color:'#ff9600'}}/> 在线测试</div></Link>
 							</div>
 							<div className="clearfix">
 								<div className="left"><Icon type="heart-o" style={{color:'#ff9600'}}/> 收藏试卷</div>
-								<div className="right"><Icon type="line-chart" style={{color:'#ff9600'}}/> 分析试卷</div>
+								<div className="right" style={{cursor:'pointer'}} onClick={()=>this.props.changeAnalyzeShow(true)}><Icon type="line-chart" style={{color:'#ff9600',cursor:'pointer'}}/> 分析试卷</div>
 							</div>
 						</div>
 						<div className="bottom">

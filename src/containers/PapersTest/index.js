@@ -4,8 +4,6 @@ import { Table, Breadcrumb, Icon, Tree, Checkbox, Pagination,Modal, Input, Radio
 import './index.scss'
 import {Link} from 'react-router-dom'
 import ZuJuanSider from '@/Components/ZuJuanSider'
-import Analyze from '~/Papers/Analyze'
-import Download from '~/Papers/Download'
 import PaperItem from '@/Components/PaperItem'
 import SmallNavBar from '@/Components/SmallNavBar'
 
@@ -43,8 +41,6 @@ export default class PapersTest extends Component{
 						<Pagination defaultCurrent={1} total={50} />
 					</div>
 				</div>
-				{/*<Analyze />*/}
-				{/*<Download />*/}
 			</div>
 		)
 	}

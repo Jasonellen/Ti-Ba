@@ -11,21 +11,6 @@ export default function SmallNavBar(){
 				<li className='left'>全部</li>
 				<li className='left'>全部</li>
 				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
 			</ul>
 		</div>
 	)

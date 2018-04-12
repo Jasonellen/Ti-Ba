@@ -40,9 +40,9 @@ export default class TestResult extends Component{
                 <span>做对的题</span>
 	            </div>
 	            <div className="report-items right">
-                <Checkbox>Checkbox</Checkbox>
-                <Checkbox>Checkbox</Checkbox>
-                <Checkbox>Checkbox</Checkbox>
+                <Checkbox>答案</Checkbox>
+                <Checkbox>考点</Checkbox>
+                <Checkbox>解析</Checkbox>
 	            </div>
 	        	</div>
 	        	</Affix>
@@ -56,6 +56,24 @@ export default class TestResult extends Component{
 									</div>
 								</div>
 								<img src="https://zujuan.21cnjy.com/images/qright.png" alt="" className="result"/>
+								<div className="daan">
+									<span className='_title'>【答案】</span>
+									<div className="content">
+										<p>asdasd</p>
+									</div>
+								</div>
+								<div className="kaodian">
+									<span className='_title'>【考点】</span>
+									<div className="content">
+										<p>asdasd</p>
+									</div>
+								</div>
+								<div className="jiexi">
+									<span className='_title'>【解析】</span>
+									<div className="content">
+										<p>asdasd</p>
+									</div>
+								</div>
 							</div>
 						</section>
 						<section>
@@ -82,6 +100,24 @@ export default class TestResult extends Component{
 											></span>
 											<img src="https://zujuan.21cnjy.com/images/qwrong.png" alt="" className="result"/>
 										</div>
+										<div className="daan">
+											<span className='_title'>【答案】</span>
+											<div className="content">
+												<p>asdasd</p>
+											</div>
+										</div>
+										<div className="kaodian">
+											<span className='_title'>【考点】</span>
+											<div className="content">
+												<p>asdasd</p>
+											</div>
+										</div>
+										<div className="jiexi">
+											<span className='_title'>【解析】</span>
+											<div className="content">
+												<p>asdasd</p>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -101,6 +137,24 @@ export default class TestResult extends Component{
 											<div className="sub_sub_title">（1）列两个不同的含x的代数式表示甲班植树的株数．</div>
 											<TextArea rows={6}  placeholder='请输入答案' disabled/>
 											<img src="https://zujuan.21cnjy.com/images/qunknow.png" alt="" className="result"/>
+										</div>
+									</div>
+									<div className="daan">
+										<span className='_title'>【答案】</span>
+										<div className="content">
+											<p>asdasd</p>
+										</div>
+									</div>
+									<div className="kaodian">
+										<span className='_title'>【考点】</span>
+										<div className="content">
+											<p>asdasd</p>
+										</div>
+									</div>
+									<div className="jiexi">
+										<span className='_title'>【解析】</span>
+										<div className="content">
+											<p>asdasd</p>
 										</div>
 									</div>
 								</div>
