@@ -1,6 +1,6 @@
 
 import React, { Component }from 'react';
-import { Menu, Icon, Input,Select, Button } from 'antd';
+import { Menu, Input,Select, Button } from 'antd';
 import {Route,Link, Redirect} from 'react-router-dom'
 import './index.scss'
 import Base from './base'
@@ -8,7 +8,7 @@ const { TextArea } = Input;
 const Option = Select.Option;
 const InputGroup = Input.Group;
 const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
+
 
 export default class HelpCenter extends Component{
 	state={
@@ -54,7 +54,7 @@ export default class HelpCenter extends Component{
 			        mode="inline"
 			      >
 			      {
-			      	data.map((item,index)=>{
+			      	data.map((item)=>{
 			      		return(
 									<SubMenu key={String(item.id)} title={<span className='subTitle'><img src={item.avatar_data.original} alt=""/><span>{item.title}</span></span>}>
 					          {

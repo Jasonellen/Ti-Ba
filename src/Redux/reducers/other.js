@@ -4,6 +4,7 @@ let initialState = {
 	analyzeShow:false,
 	downloadShow:false,
 	answerSheetShow:false,
+	correctError:false
 }
 const other = handleActions({
 	changeAnalyzeShow: (state, action) => ({
@@ -17,6 +18,10 @@ const other = handleActions({
 	changeAnswerSheetShow: (state, action) => ({
 		...state,
 		answerSheetShow: action.payload
+	}),
+	changeCorrectErrorShow: (state, action) => ({
+		...state,
+		correctError: action.payload
 	}),
 
 }, initialState);

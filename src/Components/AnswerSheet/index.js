@@ -1,19 +1,20 @@
 
 import React, { Component }from 'react';
-import { Table, Breadcrumb, Icon, Radio,Button, Checkbox, Select } from 'antd';
+import { Table, Icon, Radio, Checkbox, Select } from 'antd';
 import './index.scss'
-import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import * as otherAction from '@/Redux/actions/other.js';
 import { bindActionCreators } from 'redux'
-const RadioGroup = Radio.Group;
-const CheckboxGroup = Checkbox.Group;
-const plainOptions = ['Apple', 'Pear', 'Orange'];
+
 const defaultCheckedList = ['Apple', 'Orange'];
 const Option = Select.Option;
 
 @connect(
-	null,
+	state => {
+		return {
+			other:state.other
+		}
+	},
 	dispatch => bindActionCreators(otherAction, dispatch),
 )
 export default class AnswerSheet extends Component{
@@ -43,22 +44,29 @@ export default class AnswerSheet extends Component{
 		});
 	}
 	render(){
+		const { answerSheetShow } = this.props.other
 		return (
-			<div className="AnswerSheet">
-				<div className="content">
-					<div className="modal_title clearfix">下载答题卡<Icon type="close" className='right' onClick={()=>this.props.changeAnswerSheetShow(false)}/></div>
-					<div className="wrap">
-						<div className="small_title">
-							纸张大小：
-							<Select defaultValue='a' style={{ width: 140 }} dropdownMatchSelectWidth={false}>
-					      <Option value="a">普通表格型</Option>
-					      <Option value="b">标准题卡型</Option>
-					      <Option value="c">选择密集型</Option>
-					    </Select>
+			<div>
+				{
+					answerSheetShow && (
+						<div className="AnswerSheet">
+							<div className="content">
+								<div className="modal_title clearfix">下载答题卡<Icon type="close" className='right' onClick={()=>this.props.changeAnswerSheetShow(false)}/></div>
+								<div className="wrap">
+									<div className="small_title">
+										纸张大小：
+										<Select defaultValue='a' style={{ width: 140 }} dropdownMatchSelectWidth={false}>
+								      <Option value="a">普通表格型</Option>
+								      <Option value="b">标准题卡型</Option>
+								      <Option value="c">选择密集型</Option>
+								    </Select>
+									</div>
+									<img src="http://pay.21cnjy.com/index.php?m=signup&f=showqrcode&url=weixin%3A%2F%2Fwxpay%2Fbizpayurl%3Fpr%3DMTC0C6E" alt=""/>
+								</div>
+							</div>
 						</div>
-						<img src="http://pay.21cnjy.com/index.php?m=signup&f=showqrcode&url=weixin%3A%2F%2Fwxpay%2Fbizpayurl%3Fpr%3DMTC0C6E" alt=""/>
-					</div>
-				</div>
+					)
+				}
 			</div>
 		)
 	}

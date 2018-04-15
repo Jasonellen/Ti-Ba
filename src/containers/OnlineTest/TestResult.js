@@ -1,9 +1,8 @@
 
 import React, { Component }from 'react';
-import { Radio, Input, Button, Anchor,Spin, Modal,Checkbox, Affix } from 'antd';
+import { Radio, Input, Anchor,Checkbox, Affix } from 'antd';
 const RadioGroup = Radio.Group;
 const { TextArea } = Input;
-const { Link } = Anchor;
 import './index.scss'
 
 const options = [
@@ -22,9 +21,7 @@ export default class TestResult extends Component{
 	}
 
 	render(){
-		const { hour,minutes,seconds,panActive,spinning,visible,loading } = this.state
 		return (
-
 				<div className='OnlineTest TestResult contentCenter'>
 					<div className="left content_left">
 						<h1>新人教版数学七年级上册第三章一元一次方程3.1.1 一元一次方程 课时练习</h1>

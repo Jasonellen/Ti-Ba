@@ -15,6 +15,7 @@ import Login from './Login'
 import Analyze from '@/Components/Analyze'
 import Download from '@/Components/Download'
 import AnswerSheet from '@/Components/AnswerSheet'
+import CorrectError from '@/Components/CorrectError'
 
 @connect(
 	state => {
@@ -91,7 +92,7 @@ export default class Nav extends Component {
 				<div className="login contentCenter clearfix">
 					<div className="right">
 						{
-							!user
+							user
 								?
 								<div>
 									<span onClick={()=>this.props.changeLoginModalShow(true)}>登陆</span>
@@ -101,13 +102,25 @@ export default class Nav extends Component {
 								<Dropdown overlay={
 									<Menu>
 										<Menu.Item key="0">
-											<a target="_blank">1st menu item</a>
+											<a target="_blank">下载记录</a>
 										</Menu.Item>
 										<Menu.Item key="1">
-											<a target="_blank">2nd menu item</a>
+											<a target="_blank">组卷记录</a>
+										</Menu.Item>
+										<Menu.Item key="1">
+											<a target="_blank">测试记录</a>
+										</Menu.Item>
+										<Menu.Item key="1">
+											<a target="_blank">我的收藏</a>
+										</Menu.Item>
+										<Menu.Item key="1">
+											<a target="_blank">错题本</a>
+										</Menu.Item>
+										<Menu.Item key="1">
+											<a target="_blank">个人信息</a>
 										</Menu.Item>
 										<Menu.Divider />
-										<Menu.Item key="3">3rd menu </Menu.Item>
+										<Menu.Item key="3">退出</Menu.Item>
 									</Menu>
 								}>
 									<div>欢迎，{user.name}<Icon type="down" /></div>
@@ -195,11 +208,13 @@ export default class Nav extends Component {
 				{/* 返回顶部 */}
 				<BackTop />
 				{/* 试卷分析 */}
-				{ other.analyzeShow && <Analyze /> }
+				<Analyze />
 				{/* 试卷下载 */}
-				{ other.downloadShow && <Download /> }
+				<Download />
 				{/* 答题卡下载 */}
-				{ other.answerSheetShow && <AnswerSheet /> }
+				<AnswerSheet />
+				{/* 试题纠错 */}
+				<CorrectError />
 			</div>
 		);
 	}

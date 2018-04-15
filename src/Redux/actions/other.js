@@ -4,10 +4,12 @@ export const {
 	changeAnalyzeShow,
 	changeDownloadShow,
 	changeAnswerSheetShow,
+	changeCorrectErrorShow,
 } = createActions(
 		'changeAnalyzeShow',
 		'changeDownloadShow',
 		'changeAnswerSheetShow',
+		'changeCorrectErrorShow',
 	)
 
 // export const getUser = (token) => (dispatch) =>{

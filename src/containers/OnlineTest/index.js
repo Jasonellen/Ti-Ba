@@ -164,7 +164,8 @@ export default class OnlineTest extends Component{
 									    </div>
 								    </div>
 									</div>
-									<div className="answer-number"><h2>一、单选题</h2>
+									<div className="answer-number">
+										<h2>一、单选题</h2>
 								    <div className="answer-num">
 									    <ul>
 										    <li><Link href='#s_1' title="1"></Link></li>
@@ -184,10 +185,6 @@ export default class OnlineTest extends Component{
 								    <h2>三、综合题</h2>
 								    <div className="answer-num">
 									    <ul>
-										    <li><Link title="1"></Link></li>
-										    <li><Link title="1"></Link></li>
-										    <li><Link title="1"></Link></li>
-										    <li><Link title="1"></Link></li>
 										    <li><Link title="1"></Link></li>
 										    <li><Link title="1"></Link></li>
 									    </ul>

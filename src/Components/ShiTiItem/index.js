@@ -3,8 +3,19 @@ import React, { Component }from 'react';
 import { Breadcrumb, Icon, Card,Modal, Input } from 'antd';
 import './index.scss'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux';
+import * as otherAction from '@/Redux/actions/other.js';
+import { bindActionCreators } from 'redux'
 const { TextArea } = Input;
 
+connect(
+	state => {
+		return {
+			other:state.other
+		}
+	},
+	dispatch => bindActionCreators(otherAction, dispatch),
+)
 export default class ShiTiItem extends Component{
 	state = {
 
@@ -24,7 +35,7 @@ export default class ShiTiItem extends Component{
 					actions={[
 						<Link to='/AnswerDetail/1' className='cardLeft' key='0' ><Icon type="eye-o" />查看答案解析</Link>,
 						<div  onClick={()=>Modal.success({title: '消息提示！',content:'收藏成功'})} className='cardLeft' key='1' ><Icon type="heart-o" />收藏</div>,
-						<div  onClick={()=>this.setState({confirmShow:true})} className='cardLeft' key='2' ><Icon type="exclamation-circle-o" />纠错</div>, <div className='cardRight' key='3'>组卷次数：66次<i className='i'>+选题</i></div>
+						<div  onClick={()=>this.props.changeCorrectErrorShow(false)} className='cardLeft' key='2' ><Icon type="exclamation-circle-o" />纠错</div>, <div className='cardRight' key='3'>组卷次数：66次<i className='i'>+选题</i></div>
 					]}
 				>
 						Inner Card content
@@ -46,17 +57,6 @@ export default class ShiTiItem extends Component{
 						</div>
 					</div>
 				</Card>
-
-				<Modal
-					title="试题纠错"
-					visible={this.state.confirmShow}
-					onOk={this.handleOk}
-					onCancel={()=>this.setState({confirmShow:false})}
-					okText='提交'
-					cancelText = '取消'
-				>
-					<TextArea rows={6} placeholder='请输入您遇到的错误，错误一经确认，我们会给予您一定的奖励'/>
-				</Modal>
 			</div>
 		)
 	}
