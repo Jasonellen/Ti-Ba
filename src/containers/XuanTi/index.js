@@ -6,9 +6,20 @@ import SmallNavBar from '@/Components/SmallNavBar'
 import ZuJuanSider from '@/Components/ZuJuanSider'
 import ShiTiLan from '@/Components/ShiTiLan'
 import ShiTiItem from '@/Components/ShiTiItem'
-const CheckboxGroup = Checkbox.Group;
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux'
+const CheckboxGroup = Checkbox.Group;
 const { TextArea } = Input;
+
+@connect(
+	state => {
+		return {
+			persist:state.persist,
+		}
+	},
+	null
+)
 
 export default class XuanTi extends Component{
 	state = {
@@ -33,6 +44,8 @@ export default class XuanTi extends Component{
 		});
 	}
 	render(){
+		const { versions, topic_types } = this.props.persist
+		console.log(topic_types,3333)
 		return (
 			<div className='XuanTi contentCenter'>
 				<div style={{background:'#f5h5h5',overflow:'hidden'}}>
@@ -43,18 +56,27 @@ export default class XuanTi extends Component{
 				</div>
 
 				<div className="oneBar">
-					<SmallNavBar />
+					<SmallNavBar 
+						title='教材' 
+						data={versions} 
+						onChange={(x)=>alert(x)}
+					/>
 				</div>
-				<div className="oneBar">
+				{/*<div className="oneBar">
 					<SmallNavBar />
-				</div>
+				</div>*/}
 				<div className="warp clearfix">
 					<div className="leftSide">
 						<ZuJuanSider />
 					</div>
 					<div className="rightSide">
 						<div className="select">
-							<SmallNavBar />
+							<SmallNavBar 
+								title='题型'
+								data={topic_types} 
+								onChange={(x)=>alert(x)}
+								width='120px'
+							/>
 							<SmallNavBar />
 							<SmallNavBar />
 							<div className='checkWarp'>

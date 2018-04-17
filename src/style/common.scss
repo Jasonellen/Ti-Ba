@@ -69,6 +69,9 @@ body,html{
 .ant-spin{
 	color: $c !important;
 }
+.ant-dropdown{
+	z-index: 10000!important;
+}
 .highcharts-credits{
 	display: none;
 }

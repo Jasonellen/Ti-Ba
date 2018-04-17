@@ -20,37 +20,38 @@ import { bindActionCreators } from 'redux'
 	}
 )
 class Login extends Component {
-
+	handleForget = ()=>{
+		this.props.navAction.changeLoginModalShow(false)
+		this.props.navAction.changeForgetModalShow(true)
+	}
+	handleRegister = ()=>{
+		this.props.navAction.changeLoginModalShow(false)
+		this.props.navAction.changeRegisterModalShow(true)
+	}
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
 				console.log('Received values of form: ', values);
-			}
-			const {mobile,password,remember} = values
-
-			if(!remember)return false;
-			axios.post(url.login,{
-				mobile,
-				password,
-			})
-				.then(data=>{
-					if(data.data.status === 'success'){
-						this.props.navAction.changeLoginModalShow(false)
-						this.props.persistAction.getUser(data.data.token)
-						notification.success({
-							message: '通知提醒',
-							description: '恭喜登录成功！',
-							duration:2
-						});
-					}else{
-						notification.error({
-							message: '通知提醒',
-							description: ' 账号或密码错误！',
-							duration:2
-						});
-					}
+				const {mobile,password,remember} = values
+				if(!remember)return false;
+				axios.post(url.login,{
+					mobile,
+					password,
 				})
+					.then(data=>{
+						if(data.data.status === 'success'){
+							this.props.navAction.changeLoginModalShow(false)
+							this.props.persistAction.getUser(data.data.token)
+						}else{
+							notification.error({
+								message: '通知提醒',
+								description: ' 账号或密码错误！',
+								duration:2
+							});
+						}
+					})
+			}
 		});
 	}
 
@@ -87,11 +88,11 @@ class Login extends Component {
 						})(
 							<Checkbox>自动登陆</Checkbox>
 						)}
-						<a style={{float:'right'}}>忘记密码</a>
+						<span style={{float:'right',color:'#FE9600',cursor:'pointer'}} onClick={this.handleForget}>忘记密码</span>
 						<Button type="primary" htmlType="submit" className="login_button">登陆</Button>
 						<div className='clearfix otherLogin'>
-							<span className="left">其他登陆方式：<Icon type="wechat" style={{fontSize:25,marginRight:5}}/><Icon type="qq" style={{fontSize:25}}/></span>
-							<span className="right">免费注册<Icon type="login" /></span>
+							{/*<span className="left">其他登陆方式：<Icon type="wechat" style={{fontSize:25,marginRight:5}}/><Icon type="qq" style={{fontSize:25}}/></span>*/}
+							<span className="right" onClick={this.handleRegister}>免费注册<Icon type="login" /></span>
 						</div>
 					</FormItem>
 				</Form>

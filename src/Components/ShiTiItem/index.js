@@ -31,7 +31,7 @@ export default class ShiTiItem extends Component{
 				<Card
 					hoverable={true}
 					type="inner"
-					title={header && <div><span>题型：填空题</span><span>题型：填空题</span><span className='noborder'>题型：填空题</span></div>}
+					title={header && <div><span>题型：填空题</span><span>题类：填空题</span><span className='noborder'>难易度：填空题</span></div>}
 					actions={[
 						<Link to='/AnswerDetail/1' className='cardLeft' key='0' ><Icon type="eye-o" />查看答案解析</Link>,
 						<div  onClick={()=>Modal.success({title: '消息提示！',content:'收藏成功'})} className='cardLeft' key='1' ><Icon type="heart-o" />收藏</div>,

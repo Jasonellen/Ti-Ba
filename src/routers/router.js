@@ -27,6 +27,7 @@ const BeiKeDetail = asyncComponent(() => import("~/BeiKeDetail"));
 const Double = asyncComponent(() => import("~/Double"));
 const DoubleDetail = asyncComponent(() => import("~/DoubleDetail"));
 const DownloadPage = asyncComponent(() => import("~/DownloadPage"));
+const PersonalCenter = asyncComponent(() => import("~/PersonalCenter"));
 
 export default function Routers(){
 	return (
@@ -54,6 +55,7 @@ export default function Routers(){
 						<Route path="/Double" component={Double}/>
 						<Route path="/DoubleDetail/:id" component={DoubleDetail}/>
 						<Route path="/DownloadPage/:id" component={DownloadPage}/>
+						<Route path="/PersonalCenter" component={PersonalCenter}/>
 					</Switch>
 				</div>
 				<Footer />

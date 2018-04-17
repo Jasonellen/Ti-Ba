@@ -1,17 +1,27 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import './index.scss'
-export default function SmallNavBar(){
+
+export default function SmallNavBar(props){
 	return(
 		<div className="SmallNavBar clearfix">
-			<div className='first left'>类型 ：</div>
-			<ul className="left clearfix">
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
-				<li className='left'>全部</li>
+			<div className='first left' style={{width:props.width}}>{props.title} ：</div>
+			<ul className="left clearfix" style={{width: `calc(100% - ${props.width})`}}>
+			{
+				props.data.length> 0 && props.data.map((item)=>{
+					return <li className='left' key={item.id} onClick={()=>props.onChange && props.onChange(item.id)}>{item.name || item.title}</li>
+				})
+			}
 			</ul>
 		</div>
 	)
 }
+SmallNavBar.propTypes = {
+	title: PropTypes.string,
+	data: PropTypes.array.isRequired,
+};
+
+SmallNavBar.defaultProps = {
+	type: '未知',
+	data: []
+};

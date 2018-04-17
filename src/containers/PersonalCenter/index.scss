@@ -1,0 +1,199 @@
+.PersonalCenter{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	overflow: hidden;
+	>.left{
+		width: 256px;
+		background: $f;
+		.user-msg{
+			border-bottom: 1px solid #dcdcdc;
+			padding-bottom: 15px;
+			margin-bottom: 10px;
+		}
+		.user-pic{
+			float: left;
+    	width: 50%;
+    	.pic-border{
+    		margin: 20px;
+		    width: 80px;
+		    height: 80px;
+		    border: 3px solid #f2e2d6;
+		    background: #f2e2d6;
+		    border-radius: 50%;
+		    overflow: hidden;
+		    img{
+    	    width: 100%;
+		    }
+    	}
+		}
+		.user-id{
+	    margin-top: 35px;
+	    float: left;
+    	width: 50%;
+    	.user-idname{
+		    margin-right: 15px;
+		    height: 18px;
+		    line-height: 18px;
+		    font-size: 14px;
+		    color: #666;
+    	}
+    	.user-level{
+				margin-top: 15px;
+				font-size: 14px;
+				color: #666;
+				img{
+			    display: inline-block;
+			    width: 23px;
+	        vertical-align: text-top;
+				}
+    	}
+		}
+		.points{
+			li{
+				width: 50%;
+				float: left;
+				text-align: center;
+				p{
+					font-size: 12px;
+					color: #666;
+					line-height: 20px;
+					span{
+						display: block;
+						font-size: 14px;
+						color: #E0884D;
+					}
+				}
+				.line-border{
+			    border-left: 1px solid #dcdcdc;
+				}
+			}
+		}
+	}
+	>.right{
+		background: $f;
+		width: 934px;
+		padding:10px;
+		min-height: 600px;
+		h1{
+			margin: 20px 0 30px 20px;
+	    font-size: 20px;
+	    color: #333;
+	    font-weight: 700;
+		}
+		.download{
+			.downloadItem{
+				border-bottom: 1px solid #dcdcdc;
+				li{
+					border: 1px solid #dcdcdc;
+					border-bottom: 0;
+					margin: 0;
+					padding: 0;
+					z-index: 1;
+					position: relative;
+			    height: 105px;
+					.test-pic{
+						width: 65px;
+						text-align: center;
+						line-height: 0;
+						position: absolute;
+				    margin: 15px 20px;
+					}
+					.test-txt{
+						padding-right: 250px;
+				    padding-left: 110px;
+		        overflow: hidden;
+				    .test-txt-p1{
+				    	margin-top: 20px;
+							height: 24px;
+							line-height: 24px;
+							overflow: hidden;
+							a{
+								font-size: 16px;
+    						color: #333;
+							}
+				    }
+				    p{
+				    	margin-top: 20px;
+				    }
+						span{
+							margin-right: 10px;
+							font-size: 12px;
+							color: #999;
+						}
+					}
+					.ant-btn{
+				    position: absolute;
+				    right: 50px;
+				    top: 35px;
+					}
+				}
+			}
+		}
+		.Pjiucuo{
+			.table-record{
+				font-size: 14px;
+				width: 100%;
+				border: 1px solid #dcdcdc;
+				thead tr td{
+					background-color: #f6f6f6;
+			    height: 38px;
+			    line-height: 38px;
+			    border-bottom: 1px solid #dcdcdc;
+			    text-align: center;
+				}
+				.fixed-width{
+					width: 108px;
+				}
+				.fixed-width1, .fixed-width2, .fixed-width3, .no-width1, .fixed-width4{
+					border-right: 1px solid #dcdcdc;
+				}
+				tbody tr td{
+					height: 48px;
+			    text-align: center;
+			    border-bottom: 1px solid #dcdcdc;
+				}
+			}
+		}
+		.personalInfo{
+			h3{
+				font-size: 16px;
+    		margin-left: 20px;
+			}
+			li{
+				padding-left: 20px;
+				font-size: 14px;
+		    margin: 10px 0;
+				span{
+					color: #999;
+					display: inline-block;
+					width: 90px;
+				}
+			}
+			.user-item{
+				width: 283px;
+				height: 158px;
+				font-size: 14px;
+				border: 1px solid #ddd;
+				margin: 10px 0 0 20px;
+				p{
+					padding-top: 20px;
+					margin-left: 22px;
+					line-height: 20px;
+					color: #333;
+					span{
+						display: inline-block;
+						width: 105px;
+						color: #999;
+					}
+				}
+				a{
+					zoom: 1;
+					float: right;
+					margin-right: 12px;
+					font-size: 14px;
+					color: $c;
+				}
+			}
+		}
+	}
+}

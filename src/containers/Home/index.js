@@ -10,86 +10,43 @@ export default class Home extends Component {
 			carousels:[],
 			educations:[],
 			features:[],
-			recommends:[]
+			Course:[],
+			School:[],
+			notices:[],
+			Zujuan:{},
 		}
 	}
 	componentDidMount() {
-		this.getEducations()
+		// this.getEducations()
 		this.getCarousels()
 		this.getFeatures()
-		this.getRecommends()
-		new Swiper ('.swiper', {
-			loop: true,
-			autoplay:{
-				disableOnInteraction:false
-			},
-			pagination: {
-				el: '.swiper-pagination',
-			},
-			navigation: {
-				nextEl: '.next',
-				prevEl: '.prev',
-			}
-		})
-		setTimeout(function(){
-			new Swiper('.swiper1', {
-				loop: true,
-				autoplay:{
-					disableOnInteraction:false
-				},
-				effect: 'coverflow',
-				grabCursor: true,
-				centeredSlides: true,
-				slidesPerView: 'auto',
-				coverflowEffect: {
-					rotate: 50,
-					stretch: 0,
-					depth: 100,
-					modifier: 1,
-					slideShadows : true,
-				},
-				navigation: {
-					nextEl: '.next1',
-					prevEl: '.prev1',
-				},
-			});
-
-			new Swiper('.swiper2', {
-				loop: true,
-				autoplay:{
-					disableOnInteraction:false
-				},
-				slidesPerView: 5,
-	      spaceBetween: 30,
-				pagination: {
-					el: '.pagination2',
-					dynamicBullets:true,
-				},
-			});
-		},500)
+		this.getRecommends('School')
+		this.getRecommends('Course')
+		this.getNotices()
+		this.getZujuanData()
 	}
 	//获取轮播图
 	getCarousels = ()=>{
 		axios.get(url.carousels)
-			.then(data=>{
-				if(data.data.msg.status === 'success'){
-					this.setState({
-						carousels:data.data.carousels
-					})
-				}
-			})
-	}
-	//课程列表
-	getEducations=()=>{
-		axios.get(url.educations)
 			.then(({data})=>{
 				if(data.msg.status === 'success'){
 					this.setState({
-						educations:data.educations
-					})
+						carousels:data.carousels
+					},this.SwiperInit)
 				}
 			})
 	}
+	// //教育年级科目
+	// getEducations=()=>{
+	// 	axios.get(url.educations)
+	// 		.then(({data})=>{
+	// 			if(data.msg.status === 'success'){
+	// 				this.setState({
+	// 					educations:data.educations
+	// 				})
+	// 			}
+	// 		})
+	// }
 	//获取网站特色
 	getFeatures = ()=>{
 		axios.get(url.features,{
@@ -106,18 +63,102 @@ export default class Home extends Component {
 			})
 	}
 	//专题推荐
-	getRecommends = ()=>{
-		axios.get(url.recommends)
+	getRecommends = (type)=>{
+		axios.get(url.recommends,{
+			params:{
+				type:type,
+				limit:1000
+			}
+		})
 			.then(({data})=>{
 				if(data.msg.status === 'success'){
 					this.setState({
-						recommends:data.recommends
+						[type]:data.recommends
+					},()=>{
+						if(type==='School')this.SchoolSwiperInit();
 					})
 				}
 			})
 	}
+	//获取网站公告
+	getNotices =()=>{
+		axios.get(url.notices)
+			.then(({data})=>{
+				if(data.msg.status === 'success'){
+					this.setState({
+						notices:data.notices
+					})
+				}
+			})
+	}
+	//获取组卷轮播
+	getZujuanData = ()=>{
+		axios.get(url.home)
+			.then(({data})=>{
+				if(data.msg.status === 'success'){
+					this.setState({
+						Zujuan:data.data
+					},this.DataShowSwiperInit)
+				}
+			})
+	}
+	//大图轮播
+	SwiperInit = ()=>{
+		new Swiper ('.swiper', {
+			loop: true,
+			autoplay:{
+				disableOnInteraction:false
+			},
+			pagination: {
+				el: '.swiper-pagination',
+			},
+			navigation: {
+				nextEl: '.next',
+				prevEl: '.prev',
+			}
+		})
+	}
+	//数据展示Swiper
+	DataShowSwiperInit = ()=>{
+		new Swiper('.swiper1', {
+			loop: true,
+			autoplay:{
+				disableOnInteraction:false
+			},
+			effect: 'coverflow',
+			grabCursor: true,
+			centeredSlides: true,
+			slidesPerView: 'auto',
+			coverflowEffect: {
+				rotate: 50,
+				stretch: 0,
+				depth: 100,
+				modifier: 1,
+				slideShadows : true,
+			},
+			navigation: {
+				nextEl: '.next1',
+				prevEl: '.prev1',
+			},
+		});
+	}
+	//学校swiper
+	SchoolSwiperInit=()=>{
+		new Swiper('.swiper2', {
+			loop: false,
+			autoplay:{
+				disableOnInteraction:false
+			},
+			slidesPerView: 5,
+			spaceBetween: 30,
+			pagination: {
+				el: '.pagination2',
+				dynamicBullets:true,
+			},
+		});
+	}
 	render() {
-		const { carousels, educations, features, recommends } = this.state
+		const { carousels, educations, features, Course, School,notices, Zujuan } = this.state
 		return (
 			<div className="Home">
 				<div className="swiper-container swiper">
@@ -156,6 +197,7 @@ export default class Home extends Component {
 						})
 					}
 				</ul>
+			{/*
 				<div className="moudleTitle">
 					<h3>专题推荐</h3>
 					<p>Thematic recommendation</p>
@@ -164,7 +206,7 @@ export default class Home extends Component {
 					<ul className="contentCenter clearfix">
 						<li className='left'>
 							{
-								recommends.length>0 && recommends.map((item,i)=>{
+								Course.length>0 && Course.map((item,i)=>{
 									if(i<4){
 										return (
 											<div key={item.id} className="content">
@@ -179,7 +221,7 @@ export default class Home extends Component {
 						</li>
 						<li className='left'>
 							{
-								recommends.length>0 && recommends.map((item,i)=>{
+								Course.length>0 && Course.map((item,i)=>{
 									if(i>=4 && i<8){
 										return (
 											<div key={item.id} className="content">
@@ -193,7 +235,7 @@ export default class Home extends Component {
 						</li>
 						<li className='left'>
 							{
-								recommends.length>0 && recommends.map((item,i)=>{
+								Course.length>0 && Course.map((item,i)=>{
 									if(i>=8 && i<12){
 										return (
 											<div key={item.id} className="content">
@@ -207,6 +249,7 @@ export default class Home extends Component {
 						</li>
 					</ul>
 				</div>
+				*/}
 				<div className="moudleTitle">
 					<h3>数据展示</h3>
 					<p>Data display</p>
@@ -216,42 +259,42 @@ export default class Home extends Component {
 				    <div className="swiper-wrapper">
 				      <div className="swiper-slide">
 								<div className="content">
-									<h2>智能组卷</h2>
-									<small>组卷总量</small>
-									<p>354168</p>
-									<small>今日组卷数量：3980份</small>
+									<h2>试题库</h2>
+									<small>试题总量</small>
+									<p>{Zujuan.all_exams_count}</p>
+									<small>今日组卷数量：{Zujuan.today_exams_count}份</small>
+								</div>
+				      </div>
+							<div className="swiper-slide">
+								<div className="content">
+									<h2>试卷库</h2>
+									<small>试卷总量</small>
+									<p>{Zujuan.all_topics_count}</p>
+									<small>今日组卷数量：{Zujuan.today_topics_count}份</small>
 								</div>
 				      </div>
 							<div className="swiper-slide">
 								<div className="content">
 									<h2>智能组卷</h2>
 									<small>组卷总量</small>
-									<p>354168</p>
-									<small>今日组卷数量：3980份</small>
+									<p>{Zujuan.all_exam_records_count}</p>
+									<small>今日组卷数量：{Zujuan.today_exam_records_count}份</small>
 								</div>
 				      </div>
 							<div className="swiper-slide">
 								<div className="content">
-									<h2>智能组卷</h2>
-									<small>组卷总量</small>
-									<p>354168</p>
-									<small>今日组卷数量：3980份</small>
+									<h2>在线测试</h2>
+									<small>测试总量</small>
+									<p>{Zujuan.all_test_records_count}</p>
+									<small>今日组卷数量：{Zujuan.today_test_records_count}份</small>
 								</div>
 				      </div>
 							<div className="swiper-slide">
 								<div className="content">
-									<h2>智能组卷</h2>
-									<small>组卷总量</small>
-									<p>354168</p>
-									<small>今日组卷数量：3980份</small>
-								</div>
-				      </div>
-							<div className="swiper-slide">
-								<div className="content">
-									<h2>智能组卷</h2>
-									<small>组卷总量</small>
-									<p>354168</p>
-									<small>今日组卷数量：3980份</small>
+									<h2>合作学校</h2>
+									<small>学校总量</small>
+									<p>{Zujuan.all_schools_count}</p>
+									<small>今日组卷数量：{Zujuan.today_schools_count}份</small>
 								</div>
 				      </div>
 				    </div>
@@ -266,24 +309,17 @@ export default class Home extends Component {
 				</div>
 				<div className="beike bulletin">
 					<ul className="contentCenter clearfix">
-						<li className='left'>
-							<h1>01&bull;</h1>
-							<h2>组卷编辑页面</h2>
-							<p>组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面</p>
-							<div>阅读更多</div>
-						</li>
-						<li className='left'>
-							<h1>01&bull;</h1>
-							<h2>组卷编辑页面</h2>
-							<p>组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面</p>
-							<div>阅读更多</div>
-						</li>
-						<li className='left'>
-							<h1>01&bull;</h1>
-							<h2>组卷编辑页面</h2>
-							<p>组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面组卷编辑页面</p>
-							<div>阅读更多</div>
-						</li>
+					{
+						notices.length>0 && notices.map(function(item,index){
+							return (
+								<li className='left' key={item.id}>
+									<h1>{index+1}&bull;</h1>
+									<h2>{item.title}</h2>
+									<div>阅读更多</div>
+								</li>
+							)
+						})
+					}
 					</ul>
 					<Icon type="double-right"/>
 				</div>
@@ -302,7 +338,7 @@ export default class Home extends Component {
 										<p>
 											{
 												item.tags.split(',').map((iitem, i)=>{
-													return <Link key={i} to=''><span>{iitem}</span></Link>
+													return <span key={i}>{iitem}</span>
 												})
 											}
 										</p>
@@ -320,42 +356,30 @@ export default class Home extends Component {
 					<div className="contentCenter">
 						<div className="swiper-container swiper2">
 					    <div className="swiper-wrapper">
-					      <div className="swiper-slide">
-									<div className="content">
-										<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3375177454,1868030626&fm=27&gp=0.jpg" alt=""/>
-										<div className="text">xx中学</div>
-									</div>
-					      </div>
-								<div className="swiper-slide">
-									<div className="content">
-										<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3375177454,1868030626&fm=27&gp=0.jpg" alt=""/>
-										<div className="text">xx中学</div>
-									</div>
-					      </div>
-								<div className="swiper-slide">
-									<div className="content">
-										<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3375177454,1868030626&fm=27&gp=0.jpg" alt=""/>
-										<div className="text">xx中学</div>
-									</div>
-					      </div>
-								<div className="swiper-slide">
-									<div className="content">
-										<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3375177454,1868030626&fm=27&gp=0.jpg" alt=""/>
-										<div className="text">傻逼中学</div>
-									</div>
-					      </div>
-								<div className="swiper-slide">
-									<div className="content">
-										<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3375177454,1868030626&fm=27&gp=0.jpg" alt=""/>
-										<div className="text">傻逼中学</div>
-									</div>
-					      </div>
-								<div className="swiper-slide">
-									<div className="content">
-										<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3375177454,1868030626&fm=27&gp=0.jpg" alt=""/>
-										<div className="text">傻逼中学</div>
-									</div>
-					      </div>
+					    {
+					    	School.length>0 && School.map(function(item){
+					    		return (
+										<div className="swiper-slide" key={item.id}>
+											<div className="content">
+												<img src={item.cover_data.original} alt=""/>
+												<div className="text">{item.name}</div>
+											</div>
+							      </div>
+					    		)
+					    	})
+					    }
+					    {
+					    	School.length>0 && School.map(function(item){
+					    		return (
+										<div className="swiper-slide" key={item.id}>
+											<div className="content">
+												<img src={item.cover_data.original} alt=""/>
+												<div className="text">{item.name}</div>
+											</div>
+							      </div>
+					    		)
+					    	})
+					    }
 					    </div>
 					    <div className="swiper-pagination pagination2"></div>
 					  </div>

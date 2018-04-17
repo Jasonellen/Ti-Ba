@@ -94,7 +94,7 @@ class Register extends Component {
 				title='注册'
 				visible={registerModal}
 				footer={null}
-				onCancel={()=>this.props.changeRegisterModalShow(false)}
+				onCancel={()=>this.props.navAction.changeRegisterModalShow(false)}
 			>
 				<Form onSubmit={this.handleSubmit} className="login-form">
 					<FormItem

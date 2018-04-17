@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import { Menu, Dropdown, Icon, Input, Select, BackTop } from 'antd';
 import './index.scss'
-const SubMenu = Menu.SubMenu;
-const Option = Select.Option;
 import phone_in_talk from 'static/phone-in-talk.svg'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as navAction from '@/Redux/actions/nav.js';
+import * as persistAction from '@/Redux/actions/persist.js';
 import { bindActionCreators } from 'redux'
 import Register from './Register'
 import Forget from './Forget'
@@ -16,15 +15,23 @@ import Analyze from '@/Components/Analyze'
 import Download from '@/Components/Download'
 import AnswerSheet from '@/Components/AnswerSheet'
 import CorrectError from '@/Components/CorrectError'
+import { getCookie } from '@/service/cookie'
+const SubMenu = Menu.SubMenu;
+const Option = Select.Option;
 
 @connect(
 	state => {
 		return {
-			user:state.persist.user,
+			persist:state.persist,
 			other:state.other
 		}
 	},
-	dispatch => bindActionCreators(navAction, dispatch),
+	dispatch => {
+		return {
+			navAction:bindActionCreators(navAction, dispatch),
+			persistAction:bindActionCreators(persistAction, dispatch)
+		}
+	}
 )
 export default class Nav extends Component {
 	constructor(){
@@ -33,6 +40,8 @@ export default class Nav extends Component {
 			allClassName:'全部课程',
 			alClassShow:false,
 			educations:[],
+			logo:'',
+			phone:''
 		}
 		this.timer=null
 	}
@@ -40,19 +49,27 @@ export default class Nav extends Component {
 	 router: PropTypes.object.isRequired
 	};
 	componentDidMount(){
-		this.getEducations()
+		this.getLogo()
+		this.props.persistAction.getEducations()
+
+		let token = getCookie('tiba_key')
+		if(token){
+			this.props.persistAction.getUser(token)
+		}
 	}
-	//课程列表
-	getEducations=()=>{
-		axios.get(url.educations)
-			.then(({status,data})=>{
-				if(status == 200){
+		//获取logo和电话
+	getLogo = ()=>{
+		axios.get(url.homelogo)
+			.then(({data})=>{
+				if(data.msg.status === 'success'){
 					this.setState({
-						educations:data.educations
+						logo:data.web && data.web.avatar_data.original,
+						phone:data.web.telephone
 					})
 				}
 			})
 	}
+
 	//全部课程hover
 	handleAllClass = (value)=>{
 		clearTimeout(this.timer)
@@ -74,53 +91,52 @@ export default class Nav extends Component {
 	NavLinkTo = (page)=>{
 		this.context.router.history.push('/'+page)
 	}
-
 	render() {
-		const { allClassName, alClassShow, educations } = this.state
-		const { user,other } = this.props
+		const { allClassName, alClassShow, logo, phone } = this.state
+		const { user,educations,full_name } = this.props.persist
+		const { other } = this.props
 		return (
 			<div className="Nav">
 				<div className="head">
 					<div className="contentCenter clearfix">
-						<img src="https://zujuan.21cnjy.com/images/test_logo.png" alt="" className="left"/>
+						<img src={logo} alt="" className="left"/>
 						<div className="right">
 							<img src={phone_in_talk} alt=""/>
-							400-800-4489
+							{phone}
 						</div>
 					</div>
 				</div>
 				<div className="login contentCenter clearfix">
 					<div className="right">
 						{
-							user
+							!user
 								?
 								<div>
-									<span onClick={()=>this.props.changeLoginModalShow(true)}>登陆</span>
-									<span onClick={()=>this.props.changeRegisterModalShow(true)}>注册</span>
+									<span onClick={()=>this.props.navAction.changeLoginModalShow(true)}>登陆</span>
+									<span onClick={()=>this.props.navAction.changeRegisterModalShow(true)}>注册</span>
 								</div>
 								:
 								<Dropdown overlay={
 									<Menu>
-										<Menu.Item key="0">
-											<a target="_blank">下载记录</a>
+										<Menu.Item key="download">
+											<Link to='/PersonalCenter/download' target="_blank">下载记录</Link>
 										</Menu.Item>
-										<Menu.Item key="1">
-											<a target="_blank">组卷记录</a>
+										<Menu.Item key="Pzujuanrecord">
+											<Link to='/PersonalCenter/Pzujuanrecord' target="_blank">组卷记录</Link>
 										</Menu.Item>
-										<Menu.Item key="1">
-											<a target="_blank">测试记录</a>
+										<Menu.Item key="Pshiti">
+											<Link to='/PersonalCenter/Pshiti' target="_blank">我的收藏</Link>
 										</Menu.Item>
-										<Menu.Item key="1">
-											<a target="_blank">我的收藏</a>
-										</Menu.Item>
-										<Menu.Item key="1">
-											<a target="_blank">错题本</a>
-										</Menu.Item>
-										<Menu.Item key="1">
-											<a target="_blank">个人信息</a>
+										<Menu.Item key="personalcenter">
+											<Link to='/PersonalCenter/personalcenter' target="_blank">个人信息</Link>
 										</Menu.Item>
 										<Menu.Divider />
-										<Menu.Item key="3">退出</Menu.Item>
+										<Menu.Item key="exit">
+											<span 
+												style={{display: 'inline-block',width: '100%'}} 
+												onClick={()=>this.props.persistAction.exitUser(this.context.router.history)}>退出
+											</span>
+										</Menu.Item>
 									</Menu>
 								}>
 									<div>欢迎，{user.name}<Icon type="down" /></div>
@@ -135,7 +151,7 @@ export default class Nav extends Component {
 							className='NavAll left'
 							onMouseOver={()=>this.handleAllClass(true)}
 							onMouseOut={()=>this.handleAllClass(false)}
-						>{allClassName} <Icon type="down" /></div>
+						>{full_name} <Icon type="down" /></div>
 						<Menu mode="horizontal" onClick={(item)=>this.NavLinkTo(item.key)}>
 			        <Menu.Item key="home">网站首页</Menu.Item>
 			        <SubMenu title={<span>手动组卷</span>}>
@@ -152,7 +168,7 @@ export default class Nav extends Component {
 								<Menu.Item key="PapersTest">测试试卷</Menu.Item>
 			            <Menu.Item key="realPapers">真卷&模拟卷</Menu.Item>
 			        </SubMenu>
-			        <Menu.Item key="beike">备课中心</Menu.Item>
+			        {/*<Menu.Item key="beike">备课中心</Menu.Item>*/}
 				    </Menu>
 						{
 							alClassShow && (
