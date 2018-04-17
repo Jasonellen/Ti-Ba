@@ -57,7 +57,7 @@ export default class Nav extends Component {
 			this.props.persistAction.getUser(token)
 		}
 	}
-		//获取logo和电话
+	//获取logo和电话
 	getLogo = ()=>{
 		axios.get(url.homelogo)
 			.then(({data})=>{
@@ -132,8 +132,8 @@ export default class Nav extends Component {
 										</Menu.Item>
 										<Menu.Divider />
 										<Menu.Item key="exit">
-											<span 
-												style={{display: 'inline-block',width: '100%'}} 
+											<span
+												style={{display: 'inline-block',width: '100%'}}
 												onClick={()=>this.props.persistAction.exitUser(this.context.router.history)}>退出
 											</span>
 										</Menu.Item>

@@ -44,8 +44,14 @@ export default class XuanTi extends Component{
 		});
 	}
 	render(){
-		const { versions, topic_types } = this.props.persist
-		console.log(topic_types,3333)
+		const { versions, topic_types,topic_classes,levels, test_point_counts, grades } = this.props.persist
+		let select_grades=[]
+		grades.map(function(item){
+			if(item.checked == true){
+				select_grades.push(item.value)
+			}
+		})
+		console.log(select_grades,543)
 		return (
 			<div className='XuanTi contentCenter'>
 				<div style={{background:'#f5h5h5',overflow:'hidden'}}>
@@ -56,9 +62,9 @@ export default class XuanTi extends Component{
 				</div>
 
 				<div className="oneBar">
-					<SmallNavBar 
-						title='教材' 
-						data={versions} 
+					<SmallNavBar
+						title='教材'
+						data={versions}
 						onChange={(x)=>alert(x)}
 					/>
 				</div>
@@ -71,29 +77,39 @@ export default class XuanTi extends Component{
 					</div>
 					<div className="rightSide">
 						<div className="select">
-							<SmallNavBar 
+							<SmallNavBar
 								title='题型'
-								data={topic_types} 
+								data={topic_types}
 								onChange={(x)=>alert(x)}
 								width='120px'
 							/>
-							<SmallNavBar />
-							<SmallNavBar />
+							<SmallNavBar
+								title='难易程度'
+								data={levels}
+								onChange={(x)=>alert(x)}
+								width='120px'
+							/>
+							<SmallNavBar
+								title='题类筛选'
+								data={topic_classes}
+								onChange={(x)=>alert(x)}
+								width='120px'
+							/>
+							<SmallNavBar
+								title='知识点个数'
+								data={test_point_counts}
+								onChange={(x)=>alert(x)}
+								width='120px'
+							/>
 							<div className='checkWarp'>
 								适用年级：
-								<Checkbox
-									onChange={this.onCheckAllChange}
-									checked={this.state.checkAll}
-								>
-            			Check all
-								</Checkbox>
-								<CheckboxGroup options={this.state.plainOptions} value={this.state.checkedList} onChange={this.onChange} />
+								<CheckboxGroup options={grades} value={select_grades} onChange={this.onChange} />
 							</div>
 						</div>
 						<div className="selectMain">
 							排序：<span>时间<Icon type="arrow-up" /></span>
 							<span>组卷次数<Icon type="arrow-down" /></span>
-							<span>去除已使用的试题</span>
+							{/*<span>去除已使用的试题</span>*/}
 							<span className='right active all'>选择本页全部试题</span>
 							<span className="right notHover">共计：1234题</span>
 						</div>

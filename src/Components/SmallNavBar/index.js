@@ -1,20 +1,50 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import './index.scss'
 
-export default function SmallNavBar(props){
-	return(
-		<div className="SmallNavBar clearfix">
-			<div className='first left' style={{width:props.width}}>{props.title} ：</div>
-			<ul className="left clearfix" style={{width: `calc(100% - ${props.width})`}}>
-			{
-				props.data.length> 0 && props.data.map((item)=>{
-					return <li className='left' key={item.id} onClick={()=>props.onChange && props.onChange(item.id)}>{item.name || item.title}</li>
-				})
+export default class SmallNavBar extends Component{
+	state={
+		title:this.props.title,
+		data:this.props.data,
+		width:this.props.width
+	}
+	componentDidMount(){
+		let newData = this.state.data
+		newData.map(function(item){
+			item.checked = false
+		})
+		this.setState({
+			data:[{id:'',title:'全部',name:'全部',checked:true}].concat(newData)
+		})
+	}
+	handleClick=(id)=>{
+		let newData = this.state.data
+		newData.map(function(item){
+			if(item.id === id){
+				item.checked = true
+			}else{
+				item.checked = false
 			}
-			</ul>
-		</div>
-	)
+		})
+		this.setState({},()=>{
+			this.props.onChange && this.props.onChange(id)
+		})
+	}
+	render(){
+		const { title, data, width } = this.state
+		return(
+			<div className="SmallNavBar clearfix">
+				<div className='first left' style={{width}}>{title} ：</div>
+				<ul className="left clearfix" style={{width: `calc(100% - ${width})`}}>
+					{
+						data.length> 0 && data.map((item)=>{
+							return <li className={`left ${item.checked && 'active'}`} key={item.id} onClick={()=>this.handleClick(item.id)}>{item.name || item.title}</li>
+						})
+					}
+				</ul>
+			</div>
+		)
+	}
 }
 SmallNavBar.propTypes = {
 	title: PropTypes.string,
