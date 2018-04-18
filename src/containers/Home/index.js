@@ -17,7 +17,6 @@ export default class Home extends Component {
 		}
 	}
 	componentDidMount() {
-		// this.getEducations()
 		this.getCarousels()
 		this.getFeatures()
 		this.getRecommends('School')
@@ -36,17 +35,6 @@ export default class Home extends Component {
 				}
 			})
 	}
-	// //教育年级科目
-	// getEducations=()=>{
-	// 	axios.get(url.educations)
-	// 		.then(({data})=>{
-	// 			if(data.msg.status === 'success'){
-	// 				this.setState({
-	// 					educations:data.educations
-	// 				})
-	// 			}
-	// 		})
-	// }
 	//获取网站特色
 	getFeatures = ()=>{
 		axios.get(url.features,{

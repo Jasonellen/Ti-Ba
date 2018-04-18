@@ -1,13 +1,12 @@
 // application's entry
 import React from 'react'
 import {render} from 'react-dom'
+import '@/service/global'
 import {Provider} from 'react-redux'
 import {persistStore} from 'redux-persist' // 做本地持久化
 import { asyncSessionStorage } from 'redux-persist/storages'
-import '@/service/global'
 import Routers from '@/routers/router'
 import store from '@/service/store'
-
 
 // 开启局部热更新
 if (module.hot) {

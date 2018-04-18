@@ -23,7 +23,6 @@ const Option = Select.Option;
 	state => {
 		return {
 			persist:state.persist,
-			other:state.other
 		}
 	},
 	dispatch => {
@@ -92,9 +91,8 @@ export default class Nav extends Component {
 		this.context.router.history.push('/'+page)
 	}
 	render() {
-		const { allClassName, alClassShow, logo, phone } = this.state
+		const { alClassShow, logo, phone } = this.state
 		const { user,educations,full_name } = this.props.persist
-		const { other } = this.props
 		return (
 			<div className="Nav">
 				<div className="head">
@@ -183,7 +181,7 @@ export default class Nav extends Component {
 													<h3>{item.name}</h3>
 													{
 														item.subjects.length>0 && item.subjects.map((iitem)=>{
-															return <span key={iitem.id} onClick={()=>this.handleClassClick(item.id,item.name,iitem.id,iitem.name)}>{iitem.name}</span>
+															return <span key={iitem.id} onClick={()=>this.props.persistAction.changeSubject(item,iitem)}>{iitem.name}</span>
 														})
 													}
 												</div>

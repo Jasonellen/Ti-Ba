@@ -1,14 +1,19 @@
 import { createActions } from 'redux-actions';
 import { setCookie, deleteCookie } from '@/service/cookie'
 import { notification } from 'antd';
+
 export const {
 	changeUser,
 	changeEducations,
 	changeEducationsId,
+	changeChapters,
+	
 } = createActions(
 		'changeUser',
 		'changeEducations',
 		'changeEducationsId',
+		'changeChapters',
+		'changeSubmitId',
 	)
 
 export const getUser = (token) => (dispatch) =>{
@@ -72,17 +77,14 @@ export const changeSubject = (edu,sub) => (dispatch) =>{
 		topic_classes:edu.topic_classes,
 		grades:newG
 	}))
+
 	//根据subject_id获取章节树状数据
 	axios.get(url.chapters+'?subject_id='+sub.id)
 		.then(({data})=>{
-			// if(data.data.user){
-			// 	dispatch(changeUser(data.data.user))
-			// 	setCookie('tiba_key',token)
-			// 	notification.success({
-			// 		message: '通知提醒',
-			// 		description: '恭喜登录成功！',
-			// 		duration:2
-			// 	});
-			// }
+			if(data.msg.status == 'success'){
+				dispatch(changeChapters(data.chapter.children))
+			}
 		})
+	eventEmitter.emit('subjectChanged');
 }
+

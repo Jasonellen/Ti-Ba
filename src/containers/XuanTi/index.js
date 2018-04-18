@@ -9,49 +9,41 @@ import ShiTiItem from '@/Components/ShiTiItem'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux'
+import * as zjzujuanAction from '@/Redux/actions/zjzujuan.js';
 const CheckboxGroup = Checkbox.Group;
 const { TextArea } = Input;
 
 @connect(
-	state => {
+	state => { 
 		return {
 			persist:state.persist,
 		}
 	},
-	null
+	dispatch => bindActionCreators(zjzujuanAction, dispatch)
 )
 
 export default class XuanTi extends Component{
 	state = {
-		plainOptions: ['Apple', 'Pear', 'Orange'],
-		checkedList: ['Apple', 'Orange'],
-		indeterminate: true,
-		checkAll: true,
+
 	};
 	componentDidMount(){
-		console.log(this.props,123)
+		this.props.initParamsAndSearch()
+		eventEmitter.on('subjectChanged',()=>{
+			this.props.initParamsAndSearch()
+		});
 	}
 	onChange = (checkedList) => {
-		this.setState({
-			checkedList,
-			checkAll: checkedList.length === this.state.plainOptions.length,
-		});
+		
 	}
-	onCheckAllChange = (e) => {
-		this.setState({
-			checkedList: e.target.checked ? this.state.plainOptions : [],
-			checkAll: e.target.checked,
-		});
-	}
+
 	render(){
-		const { versions, topic_types,topic_classes,levels, test_point_counts, grades } = this.props.persist
+		const { versions, topic_types,topic_classes,levels, test_point_counts, grades, chapter } = this.props.persist
 		let select_grades=[]
 		grades.map(function(item){
 			if(item.checked == true){
 				select_grades.push(item.value)
 			}
 		})
-		console.log(select_grades,543)
 		return (
 			<div className='XuanTi contentCenter'>
 				<div style={{background:'#f5h5h5',overflow:'hidden'}}>
@@ -73,7 +65,7 @@ export default class XuanTi extends Component{
 				</div>*/}
 				<div className="warp clearfix">
 					<div className="leftSide">
-						<ZuJuanSider />
+						<ZuJuanSider data={chapter} title='选择章节'/>
 					</div>
 					<div className="rightSide">
 						<div className="select">

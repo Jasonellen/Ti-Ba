@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 
 let initialState = {
-	user:'',
+	user:'', //------data
 	educations:'',
 	education_id:'',
 	subject_id:'',
@@ -11,6 +11,7 @@ let initialState = {
 	levels:[], //难易程度
 	test_point_counts:[], //知识点
 	grades:[], //适用年级
+	chapter:[], //章节树形数据 ------data
 }
 const persist = handleActions({
 	changeUser: (state, action) => ({
@@ -32,6 +33,10 @@ const persist = handleActions({
 		topic_types:action.payload.topic_types,
 		topic_classes:action.payload.topic_classes,
 		grades:action.payload.grades,
+	}),
+	changeChapters: (state, action) => ({
+		...state,
+		chapter: action.payload,
 	}),
 
 }, initialState);

@@ -27,16 +27,16 @@ module.exports = {
         "react"
     ],
 		"globals": {
-			"_fetch": true,
-			"url": true,
-			"_DEV_": true,
-			"IScroll":true,
-			"fetchJsonp":true,
-			"WeixinJSBridge":true,
-      "wx":true,
-      "_dev_api":true,
-			"Swiper":true,
-			"axios":true
+            "url": true,
+            "_DEV_": true,
+            "IScroll":true,
+            "fetchJsonp":true,
+            "WeixinJSBridge":true,
+            "wx":true,
+            "_dev_api":true,
+            "Swiper":true,
+            "axios":true,
+            "eventEmitter":true
     },
     rules: {
 			'indent': ['error', 'tab'],

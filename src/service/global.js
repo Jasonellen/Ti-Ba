@@ -2,7 +2,9 @@ import '@/style/common.scss'
 import url from '@/api'
 import axios from 'axios'
 import FastClick from 'fastclick' // 解决移动端300ms延迟
-
+var events = require('events');
+// 创建 eventEmitter 对象
+var eventEmitter = new events.EventEmitter();
 // 解决移动端300ms延迟
 FastClick.attach(document.body)
 
@@ -10,8 +12,8 @@ FastClick.attach(document.body)
 Object.defineProperties(global, {
 	url: {value: url},
 	axios: {value: axios},
+	eventEmitter:{value: eventEmitter},
 });
-
 
 //扩展对象
 if (typeof Object.assign != 'function') {
