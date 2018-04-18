@@ -18,10 +18,15 @@ export const beginSearch = () => (dispatch,getState) =>{
 		grade_id,
 		created_at,
 		mix_times,
-		page,
+		current_page:page,
 		per_page
 	} = getState().zjzujuan
-	const con = {
+
+	const order = {
+		created_at,
+		mix_times
+	}
+	axios.post(url.topics,{
 		education_id,
 		subject_id,
 		version_id,
@@ -29,51 +34,52 @@ export const beginSearch = () => (dispatch,getState) =>{
 		level,
 		topic_class_id,
 		test_point_count,
-		'grade_id[]':grade_id
-	}
-	const order = {
-		created_at,
-		mix_times
-	}
-	axios.get(url.topics,{
-		params:{
-			con,order,page,per_page
-		}
+		grade_id,
+		order,page,per_page
 	})
 		.then(({data})=>{
 			if(data.msg.status === 'success'){
-				// let levels = data.levels
-				// levels.map(function(item){
-				// 	item.id = item.value
-				// 	item.name = item.label
-				// })
-				// let test_point_counts = data.test_point_counts
-				// test_point_counts.map(function(item){
-				// 	item.id = item.value
-				// 	item.name = item.label
-				// })
-				// dispatch(changeEducations({educations:data.educations,levels,test_point_counts}))
-
-				// let edu = data.educations[0]
-				// let sub = ''
-				// if(edu) sub = edu.subjects[0];
-				// if(sub){
-				// 	dispatch(changeSubject(edu,sub))
-				// }
+				dispatch(zjzujuanChangeSubmitId({key:'data',value:data.data}))
+				dispatch(zjzujuanChangeSubmitId({key:'current_page',value:data.meta.current_page}))
+				dispatch(zjzujuanChangeSubmitId({key:'total_pages',value:data.meta.total_pages}))
+				dispatch(zjzujuanChangeSubmitId({key:'total_count',value:data.meta.total_count}))
 			}
 		})
 }
 
 export const initParamsAndSearch = () => (dispatch,getState) =>{
 	let data = getState().persist
-	let defaultGradesId = [] 
-	data.grades.map(function(item){
+	let defaultGradesId = []
+	let grades = JSON.parse(JSON.stringify(data.grades))
+	grades.map(function(item){
 		defaultGradesId.push(item.id)
 	})
-		//初始化试题搜索信息
+	//初始化试题搜索信息
 	dispatch(zjzujuanChangeSubmitId({key:'education_id',value:data.education_id}))
 	dispatch(zjzujuanChangeSubmitId({key:'subject_id',value:data.subject_id}))
 	dispatch(zjzujuanChangeSubmitId({key:'grade_id',value:defaultGradesId}))
+	dispatch(zjzujuanChangeSubmitId({key:'grades',value:grades}))
 
+	dispatch(beginSearch())
+}
+
+//搜索条件改变
+export const handleOptionChange = (key,value) => (dispatch) =>{
+	dispatch(zjzujuanChangeSubmitId({key,value}))
+	dispatch(beginSearch())
+}
+//年级点击
+export const handleCheckGroup = (x) => (dispatch, getState) =>{
+	let grades = getState().zjzujuan.grades
+	grades.map(function(item){
+		item.checked = false
+		x.map(function(iitem){
+			if(item.id === iitem){
+				item.checked = true
+			}
+		})
+	})
+	dispatch(zjzujuanChangeSubmitId({key:'grades',value:grades}))
+	dispatch(zjzujuanChangeSubmitId({key:'grade_id',value:x}))
 	dispatch(beginSearch())
 }

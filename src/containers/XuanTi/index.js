@@ -14,9 +14,10 @@ const CheckboxGroup = Checkbox.Group;
 const { TextArea } = Input;
 
 @connect(
-	state => { 
+	state => {
 		return {
 			persist:state.persist,
+			zjzujuan:state.zjzujuan,
 		}
 	},
 	dispatch => bindActionCreators(zjzujuanAction, dispatch)
@@ -33,11 +34,12 @@ export default class XuanTi extends Component{
 		});
 	}
 	onChange = (checkedList) => {
-		
+
 	}
 
 	render(){
-		const { versions, topic_types,topic_classes,levels, test_point_counts, grades, chapter } = this.props.persist
+		const { versions, topic_types,topic_classes,levels, test_point_counts, chapter } = this.props.persist
+		const { grades, data,current_page, total_pages, total_count } = this.props.zjzujuan
 		let select_grades=[]
 		grades.map(function(item){
 			if(item.checked == true){
@@ -57,7 +59,7 @@ export default class XuanTi extends Component{
 					<SmallNavBar
 						title='教材'
 						data={versions}
-						onChange={(x)=>alert(x)}
+						onChange={(x)=>this.props.handleOptionChange('version_id',x)}
 					/>
 				</div>
 				{/*<div className="oneBar">
@@ -72,30 +74,31 @@ export default class XuanTi extends Component{
 							<SmallNavBar
 								title='题型'
 								data={topic_types}
-								onChange={(x)=>alert(x)}
+								onChange={(x)=>this.props.handleOptionChange('topic_type_id',x)}
 								width='120px'
 							/>
 							<SmallNavBar
 								title='难易程度'
 								data={levels}
-								onChange={(x)=>alert(x)}
+								onChange={(x)=>this.props.handleOptionChange('level',x)}
 								width='120px'
 							/>
 							<SmallNavBar
 								title='题类筛选'
 								data={topic_classes}
-								onChange={(x)=>alert(x)}
+								onChange={(x)=>this.props.handleOptionChange('topic_class_id',x)}
 								width='120px'
 							/>
 							<SmallNavBar
 								title='知识点个数'
 								data={test_point_counts}
-								onChange={(x)=>alert(x)}
+								onChange={(x)=>this.props.handleOptionChange('test_point_count',x)}
 								width='120px'
 							/>
 							<div className='checkWarp'>
 								适用年级：
-								<CheckboxGroup options={grades} value={select_grades} onChange={this.onChange} />
+								{console.log(grades,333)}
+								<CheckboxGroup options={grades} value={select_grades} onChange={(x)=>this.props.handleCheckGroup(x)} />
 							</div>
 						</div>
 						<div className="selectMain">
@@ -103,14 +106,20 @@ export default class XuanTi extends Component{
 							<span>组卷次数<Icon type="arrow-down" /></span>
 							{/*<span>去除已使用的试题</span>*/}
 							<span className='right active all'>选择本页全部试题</span>
-							<span className="right notHover">共计：1234题</span>
+							<span className="right notHover">共计：{total_count}题</span>
 						</div>
 						<ul className="st">
-							<li>
-								<ShiTiItem />
-							</li>
+							{
+								data.length>0 && data.map(function(item){
+									return (
+										<li key={item.id}>
+											<ShiTiItem data={item}/>
+										</li>
+									)
+								})
+							}
 						</ul>
-						<Pagination defaultCurrent={1} total={50} />
+						<Pagination current={current_page} total={total_pages*10} onChange={x=>this.props.handleOptionChange('current_page',x)}/>
 					</div>
 				</div>
 				<ShiTiLan />

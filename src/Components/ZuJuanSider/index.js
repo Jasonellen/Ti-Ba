@@ -17,29 +17,29 @@ export default function ZuJuanSider(props){
 					showLine
 					onSelect={onSelect}
 				>
-				{
-					data.length>0 && data.map(function(item){
-						return (
-							<TreeNode title={item.name} key={item.id}>
-								{
-									item.children.length>0 && item.children.map(function(iitem){
-										return (
-											<TreeNode title={iitem.name} key={iitem.id}>
-											{
-												iitem.children.length>0 && iitem.children.map(function(iiitem){
-													return (
-														<TreeNode title={iiitem.name} key={iitem.id} />
-													)
-												})
-											}
-											</TreeNode>
-										)
-									})
-								}
-							</TreeNode>
-						)
-					})
-				}
+					{
+						data.length>0 && data.map(function(item){
+							return (
+								<TreeNode title={item.name} key={item.id}>
+									{
+										item.children.length>0 && item.children.map(function(iitem){
+											return (
+												<TreeNode title={iitem.name} key={iitem.id}>
+													{
+														iitem.children.length>0 && iitem.children.map(function(iiitem){
+															return (
+																<TreeNode title={iiitem.name} key={iitem.id} />
+															)
+														})
+													}
+												</TreeNode>
+											)
+										})
+									}
+								</TreeNode>
+							)
+						})
+					}
 				</Tree>
 			</div>
 		</div>

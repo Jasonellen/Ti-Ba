@@ -25,35 +25,33 @@ export default class ShiTiItem extends Component{
 	}
 
 	render(){
-		const { header=true } = this.props
+		const { header=true, data={} } = this.props
+		const ease_type = {
+			'easy':'简单',
+			'normal':'普通',
+			'difficult':'困难'
+		}
 		return (
 			<div className='ShiTiItem'>
 				<Card
 					hoverable={true}
 					type="inner"
-					title={header && <div><span>题型：填空题</span><span>题类：填空题</span><span className='noborder'>难易度：填空题</span></div>}
+					title={header && <div><span>题型：{data.topic_type}</span><span>题类：{data.topic_class}</span><span className='noborder'>难易度：{ease_type[data.level]}</span></div>}
 					actions={[
-						<Link to='/AnswerDetail/1' className='cardLeft' key='0' ><Icon type="eye-o" />查看答案解析</Link>,
+						<Link to={`/AnswerDetail/${data.id}`} className='cardLeft' key='0' ><Icon type="eye-o" />查看答案解析</Link>,
 						<div  onClick={()=>Modal.success({title: '消息提示！',content:'收藏成功'})} className='cardLeft' key='1' ><Icon type="heart-o" />收藏</div>,
-						<div  onClick={()=>this.props.changeCorrectErrorShow(false)} className='cardLeft' key='2' ><Icon type="exclamation-circle-o" />纠错</div>, <div className='cardRight' key='3'>组卷次数：66次<i className='i'>+选题</i></div>
+						<div  onClick={()=>this.props.changeCorrectErrorShow(false)} className='cardLeft' key='2' ><Icon type="exclamation-circle-o" />纠错</div>, <div className='cardRight' key='3'>组卷次数：{data.mix_times || 0}次<i className='i'>+选题</i></div>
 					]}
 				>
-						Inner Card content
+					<div dangerouslySetInnerHTML={{__html: data.content}}></div>
 					<div className="answer">
 						<div className="kd clearfix">
 							<div className="left _left">【考点】</div>
-							<div className="left _right">xxxxx雪地里的小画家</div>
+							<div className="left _right" dangerouslySetInnerHTML={{__html: data.remark && data.remark.test_point}}></div>
 						</div>
 						<div className="da clearfix">
 							<div className="left _left">【答案】</div>
-							<div className="left _right">
-								<div>[第一空] A</div>
-								<div>[第一空] A</div>
-								<div>[第一空] A</div>
-								<div>[第一空] A</div>
-								<div>[第一空] A</div>
-								<div>[第一空] A</div>
-							</div>
+							<div className="left _right" dangerouslySetInnerHTML={{__html: data.remark && data.remark.right_answer}}></div>
 						</div>
 					</div>
 				</Card>
