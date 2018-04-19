@@ -1,17 +1,15 @@
 
 import React, { Component }from 'react';
-import { Breadcrumb, Icon, Pagination, Checkbox, Card,Modal, Input } from 'antd';
+import { Icon, Pagination, Checkbox,Modal } from 'antd';
 import './index.scss'
 import SmallNavBar from '@/Components/SmallNavBar'
 import ZuJuanSider from '@/Components/ZuJuanSider'
 import ShiTiLan from '@/Components/ShiTiLan'
 import ShiTiItem from '@/Components/ShiTiItem'
-import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux'
 import * as zjzujuanAction from '@/Redux/actions/zjzujuan.js';
 const CheckboxGroup = Checkbox.Group;
-const { TextArea } = Input;
 
 @connect(
 	state => {
@@ -25,21 +23,35 @@ const { TextArea } = Input;
 
 export default class XuanTi extends Component{
 	state = {
-
+		side:this.props.location.pathname,
 	};
 	componentDidMount(){
+		console.log(this.props,1234)
+		this.props.history.listen((location)=>{
+			this.setState({
+				side:location.pathname
+			})
+			"/XuanTi/zsd"
+			// if(location.action == 'POP'){
+			// 	this.setState({display:'none'})
+			// }else{
+			// 	this.setState({display:'block'})
+			// }
+		})
+
 		this.props.initParamsAndSearch()
 		eventEmitter.on('subjectChanged',()=>{
 			this.props.initParamsAndSearch()
 		});
 	}
-	onChange = (checkedList) => {
-
+	
+	handleSort = (key,value)=>{
+		let x = value == 'asc' ? 'desc' : 'asc'
+		this.props.handleOptionChange(key,x)
 	}
-
 	render(){
-		const { versions, topic_types,topic_classes,levels, test_point_counts, chapter } = this.props.persist
-		const { grades, data,current_page, total_pages, total_count } = this.props.zjzujuan
+		const { versions, topic_types,topic_classes,levels, test_point_counts, chapter,knowledges } = this.props.persist
+		const { grades, data,current_page, total_pages, total_count, created_at, mix_times } = this.props.zjzujuan
 		let select_grades=[]
 		grades.map(function(item){
 			if(item.checked == true){
@@ -67,7 +79,12 @@ export default class XuanTi extends Component{
 				</div>*/}
 				<div className="warp clearfix">
 					<div className="leftSide">
-						<ZuJuanSider data={chapter} title='选择章节'/>
+					{
+						this.state.side == '/XuanTi/tb'
+						?
+							<ZuJuanSider data={chapter} title='选择章节'/>
+						: <ZuJuanSider data={knowledges} title='选择知识点'/>
+					}
 					</div>
 					<div className="rightSide">
 						<div className="select">
@@ -97,29 +114,28 @@ export default class XuanTi extends Component{
 							/>
 							<div className='checkWarp'>
 								适用年级：
-								{console.log(grades,333)}
 								<CheckboxGroup options={grades} value={select_grades} onChange={(x)=>this.props.handleCheckGroup(x)} />
 							</div>
 						</div>
 						<div className="selectMain">
-							排序：<span>时间<Icon type="arrow-up" /></span>
-							<span>组卷次数<Icon type="arrow-down" /></span>
+							排序：<span onClick={()=>this.handleSort('created_at',created_at)}>时间<Icon type={ created_at ==='asc' ? "arrow-up" : 'arrow-down'} /></span>
+							<span onClick={()=>this.handleSort('mix_times',mix_times)}>组卷次数<Icon type={ mix_times ==='asc' ? "arrow-up" : 'arrow-down'}/></span>
 							{/*<span>去除已使用的试题</span>*/}
-							<span className='right active all'>选择本页全部试题</span>
+							{/*<span className='right active all'>选择本页全部试题</span>*/}
 							<span className="right notHover">共计：{total_count}题</span>
 						</div>
 						<ul className="st">
 							{
-								data.length>0 && data.map(function(item){
+								data.length>0 && data.map((item)=>{
 									return (
 										<li key={item.id}>
-											<ShiTiItem data={item}/>
+											<ShiTiItem data={item} onCollect={this.props.handleCollect}/>
 										</li>
 									)
 								})
 							}
 						</ul>
-						<Pagination current={current_page} total={total_pages*10} onChange={x=>this.props.handleOptionChange('current_page',x)}/>
+						{ !!total_pages && <Pagination current={current_page} total={total_pages*10} onChange={x=>this.props.handleOptionChange('current_page',x)}/> }
 					</div>
 				</div>
 				<ShiTiLan />

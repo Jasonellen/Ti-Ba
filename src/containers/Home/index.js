@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import { Modal, Icon } from 'antd';
-import { Link } from 'react-router-dom'
+import { Icon } from 'antd';
 import './index.scss'
 
 export default class Home extends Component {
@@ -26,68 +25,54 @@ export default class Home extends Component {
 	}
 	//获取轮播图
 	getCarousels = ()=>{
-		axios.get(url.carousels)
-			.then(({data})=>{
-				if(data.msg.status === 'success'){
-					this.setState({
-						carousels:data.carousels
-					},this.SwiperInit)
-				}
+		_axios.get(url.carousels)
+			.then(data=>{
+				this.setState({
+					carousels:data.carousels
+				},this.SwiperInit)
 			})
 	}
 	//获取网站特色
 	getFeatures = ()=>{
-		axios.get(url.features,{
-			params:{
-				limit:3
-			}
+		_axios.get(url.features,{
+			limit:3
 		})
-			.then(({data})=>{
-				if(data.msg.status === 'success'){
-					this.setState({
-						features:data.features
-					})
-				}
+			.then(data=>{
+				this.setState({
+					features:data.features
+				})
 			})
 	}
 	//专题推荐
 	getRecommends = (type)=>{
-		axios.get(url.recommends,{
-			params:{
-				type:type,
-				limit:1000
-			}
+		_axios.get(url.recommends,{
+			type,
+			limit:1000
 		})
-			.then(({data})=>{
-				if(data.msg.status === 'success'){
-					this.setState({
-						[type]:data.recommends
-					},()=>{
-						if(type==='School')this.SchoolSwiperInit();
-					})
-				}
+			.then(data=>{
+				this.setState({
+					[type]:data.recommends
+				},()=>{
+					if(type==='School')this.SchoolSwiperInit();
+				})
 			})
 	}
 	//获取网站公告
 	getNotices =()=>{
-		axios.get(url.notices)
-			.then(({data})=>{
-				if(data.msg.status === 'success'){
-					this.setState({
-						notices:data.notices
-					})
-				}
+		_axios.get(url.notices)
+			.then(data=>{
+				this.setState({
+					notices:data.notices
+				})
 			})
 	}
 	//获取组卷轮播
 	getZujuanData = ()=>{
-		axios.get(url.home)
-			.then(({data})=>{
-				if(data.msg.status === 'success'){
-					this.setState({
-						Zujuan:data.data
-					},this.DataShowSwiperInit)
-				}
+		_axios.get(url.home)
+			.then(data=>{
+				this.setState({
+					Zujuan:data.data
+				},this.DataShowSwiperInit)
 			})
 	}
 	//大图轮播
@@ -146,7 +131,7 @@ export default class Home extends Component {
 		});
 	}
 	render() {
-		const { carousels, educations, features, Course, School,notices, Zujuan } = this.state
+		const { carousels, educations, features, School,notices, Zujuan } = this.state
 		return (
 			<div className="Home">
 				<div className="swiper-container swiper">

@@ -99,7 +99,7 @@ export default class Analyze extends Component{
 		}]
 	};
 	componentDidMount(){
-		console.log(this.props,123)
+		// console.log(this.props,123)
 		setTimeout(()=>{
 			Highcharts.chart('container', {
 		    chart: {
@@ -138,31 +138,26 @@ export default class Analyze extends Component{
 		const { dataSource, columns,columns1,dataSource1 } = this.state
 		const { analyzeShow } = this.props.other
 		return (
-			<div>
-			{
-				analyzeShow && 
-				<div className={`Analyze`}>
-					<div className="content">
-						<div className="modal_title clearfix">试卷分析<Icon type="close" className='right' onClick={()=>this.props.changeAnalyzeShow(false)}/></div>
-						<div className="wrap">
-							<div className="small_title">试卷总体分布分析</div>
-							<Table dataSource={dataSource} columns={columns} pagination={false} bordered={true} size="middle"/>
-							<div className="middle clearfix">
-								<div className="left">
-									<div className="small_title">试卷题量分布分析</div>
-									<Table dataSource={dataSource1} columns={columns1} pagination={false} bordered={true} size="middle"/>
-								</div>
-								<div className="right">
-									<div className="small_title">试卷难度结构分析</div>
-									<div id="container"></div>
-								</div>
+			<div className={`Analyze`} style={{'display':`${!analyzeShow &&'none'}`}}>
+				<div className="content">
+					<div className="modal_title clearfix">试卷分析<Icon type="close" className='right' onClick={()=>this.props.changeAnalyzeShow(false)}/></div>
+					<div className="wrap">
+						<div className="small_title">试卷总体分布分析</div>
+						<Table dataSource={dataSource} columns={columns} pagination={false} bordered={true} size="middle"/>
+						<div className="middle clearfix">
+							<div className="left">
+								<div className="small_title">试卷题量分布分析</div>
+								<Table dataSource={dataSource1} columns={columns1} pagination={false} bordered={true} size="middle"/>
 							</div>
-							<div className="small_title">试卷知识点分析</div>
-							<Table dataSource={dataSource1} columns={columns1} pagination={false} bordered={true} size="middle"/>
+							<div className="right">
+								<div className="small_title">试卷难度结构分析</div>
+								<div id="container"></div>
+							</div>
 						</div>
+						<div className="small_title">试卷知识点分析</div>
+						<Table dataSource={dataSource1} columns={columns1} pagination={false} bordered={true} size="middle"/>
 					</div>
 				</div>
-			}
 			</div>
 		)
 	}

@@ -2,6 +2,9 @@
 let url={}  //导出url
 let __host__ = 'http://rqiang.mynatapp.cc/api/v1';
 // __host__ = 'http://192.168.0.111:3008/api/v1';
+__host__ = 'http://192.168.0.110:3000/api/v1';
+
+
 
 Object.defineProperties(url, {
 	register: {value: __host__ + '/users'},
@@ -17,6 +20,9 @@ Object.defineProperties(url, {
 	homelogo: {value: __host__ + '/home/web'},  //首页logo和电话
 	chapters: {value: __host__ + '/chapters'},  //章节树形数据
 	topics: {value: __host__ + '/topics'},  //题目列表
+	action_stores: {value: __host__ + '/action_stores'},  //收藏点赞
+	knowledges: {value: __host__ + '/knowledges'},  //知识点树
+	exam_records: {value: __host__ + '/exam_records'},  //生成试卷
 });
 
 export default url

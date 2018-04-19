@@ -13,7 +13,7 @@ import { bindActionCreators } from 'redux'
 	},
 	dispatch => bindActionCreators(navAction, dispatch)
 )
-class Login extends Component {
+class Forget extends Component {
 
 	handleSubmit = (e) => {
 		e.preventDefault();
@@ -24,20 +24,17 @@ class Login extends Component {
 			const {mobile,password,remember} = values
 
 			if(!remember)return false;
-			axios.post(url.forget,{
+			_axios.post(url.forget,{
 				mobile,
 				password,
 			})
 				.then(data=>{
-					console.log(data, data.status ==='success')
-					if(data.status === 200){
-						this.props.changeRegisterModalShow(false)
-						notification.success({
-							message: '通知提醒',
-							description: '恭喜注册成功！',
-							duration:2
-						});
-					}
+					// this.props.changeRegisterModalShow(false)
+					// notification.success({
+					// 	message: '通知提醒',
+					// 	description: '恭喜注册成功！',
+					// 	duration:2
+					// });
 				})
 		});
 	}
@@ -78,4 +75,4 @@ class Login extends Component {
 		)
 	}
 }
-export default Form.create()(Login)
+export default Form.create()(Forget)

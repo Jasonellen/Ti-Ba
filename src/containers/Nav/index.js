@@ -58,14 +58,12 @@ export default class Nav extends Component {
 	}
 	//获取logo和电话
 	getLogo = ()=>{
-		axios.get(url.homelogo)
-			.then(({data})=>{
-				if(data.msg.status === 'success'){
-					this.setState({
-						logo:data.web && data.web.avatar_data.original,
-						phone:data.web.telephone
-					})
-				}
+		_axios.get(url.homelogo)
+			.then(data=>{
+				this.setState({
+					logo:data.web && data.web.avatar_data.original,
+					phone:data.web.telephone
+				})
 			})
 	}
 
@@ -107,7 +105,7 @@ export default class Nav extends Component {
 				<div className="login contentCenter clearfix">
 					<div className="right">
 						{
-							!user
+							!user.token
 								?
 								<div>
 									<span onClick={()=>this.props.navAction.changeLoginModalShow(true)}>登陆</span>
@@ -210,7 +208,7 @@ export default class Nav extends Component {
 					<li onClick={()=>this.NavLinkTo('VipActivate')}><Icon type='rocket'/>激活vip</li>
 					<li onClick={()=>this.NavLinkTo('Vip')}><Icon type="pay-circle-o" />购买vip</li>
 					<li onClick={()=>this.NavLinkTo('SchoolService')}><Icon type="form" />申请试用</li>
-					<li><Icon type="exclamation-circle-o" />客服帮助</li>
+					<li><a href="http://wpa.qq.com/msgrd?v=1&uin=269248791&site=qq&menu=yes&from=message&isappinstalled=0" target='_blank' rel='noopener noreferrer'><Icon type="qq" />客服帮助</a></li>
 					<li onClick={()=>this.NavLinkTo('helpCenter/base')} className='last'><Icon type="flag" />帮助中心</li>
 		    </ul>
 				{/* 登陆 */}

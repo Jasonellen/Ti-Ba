@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 
 let initialState = {
-	user:'', //------data
+	user:{token:''}, //------data
 	educations:'',
 	education_id:'',
 	subject_id:'',
@@ -12,6 +12,7 @@ let initialState = {
 	test_point_counts:[], //知识点
 	grades:[], //适用年级
 	chapter:[], //章节树形数据 ------data
+	knowledges:[],
 }
 const persist = handleActions({
 	changeUser: (state, action) => ({
@@ -37,6 +38,10 @@ const persist = handleActions({
 	changeChapters: (state, action) => ({
 		...state,
 		chapter: action.payload,
+	}),
+	changeKnowledges: (state, action) => ({
+		...state,
+		knowledges: action.payload,
 	}),
 
 }, initialState);

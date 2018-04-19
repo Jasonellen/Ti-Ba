@@ -24,7 +24,7 @@ export default class AnswerSheet extends Component{
 		checkedList: defaultCheckedList,
 	};
 	componentDidMount(){
-		console.log(this.props,123)
+		// console.log(this.props,123)
 	}
 	onChange = (e) => {
 		console.log('radio checked', e.target.value);

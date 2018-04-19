@@ -3,7 +3,6 @@ import React, { Component }from 'react';
 import { Menu, Input,Select, Button } from 'antd';
 import {Route,Link, Redirect} from 'react-router-dom'
 import './index.scss'
-import Base from './base'
 const { TextArea } = Input;
 const Option = Select.Option;
 const InputGroup = Input.Group;
@@ -12,27 +11,31 @@ const SubMenu = Menu.SubMenu;
 
 export default class HelpCenter extends Component{
 	state={
-		data:[]
+		data:[],
+		help_detail:{}
 	}
 	componentDidMount() {
 		this.getData()
 	}
 	handleClick = (e) => {
-		this.props.history.push(e.key)
+		_axios.get(url.helps+'/'+e.key)
+			.then(data=>{
+				this.setState({
+					help_detail:data.help
+				})
+			})
 	}
 	//获取数据
 	getData = ()=>{
-		axios.get(url.helps)
+		_axios.get(url.helps)
 			.then(data=>{
-				if(data.data.msg.status === 'success'){
-					this.setState({
-						data:data.data.helps
-					})
-				}
+				this.setState({
+					data:data.helps
+				},()=>this.handleClick({key:data.helps[0].id}))
 			})
 	}
 	render(){
-		const { data } = this.state
+		const { data, help_detail } = this.state
 		let defaultSelectedKeys = ''
 		if(data.length>0 && data.datas && data.datas.length>0){
 			defaultSelectedKeys = String(data.datas[0].id)
@@ -73,15 +76,9 @@ export default class HelpCenter extends Component{
 				}
 				</div>
 				<div className="right right_content">
-					<div className="title">基本介绍</div>
-					<div className="content">
-							这里是基本介绍新消息1
-					</div>
-					<div dangerouslySetInnerHTML={{__html: data.body }}></div>
-					{
-
-					}
-					<div className='feedback'>
+					<div className="title">{help_detail.title}</div>
+					<div dangerouslySetInnerHTML={{__html: help_detail.content }}></div>
+					{/*<div className='feedback'>
 						<div className="content">
 							<div className='constro'>
 								<span>*</span>反馈内容<small>(请在此处详细描述您的问题与建议，如果涉及到资源问题，可附带资源链接)</small>
@@ -102,9 +99,7 @@ export default class HelpCenter extends Component{
 			        </InputGroup>
 			        <div className="submit"><Button type='primary'>提交反馈</Button></div>
 						</div>
-					</div>
-					{/*<Route path="/helpcenter/base" component={Base}/>
-					<Route path="/helpcenter/feedback" component={FeedBack}/>*/}
+					</div>*/}
 				</div>
 			</div>
 		)

@@ -7,20 +7,21 @@ export const {
 	changeEducations,
 	changeEducationsId,
 	changeChapters,
+	changeKnowledges
 	
 } = createActions(
 		'changeUser',
 		'changeEducations',
 		'changeEducationsId',
 		'changeChapters',
-		'changeSubmitId',
+		'changeKnowledges',
 	)
 
 export const getUser = (token) => (dispatch) =>{
-	axios.get(url.get_users+'?token='+token)
+	_axios.get(url.get_users+'?token='+token)
 		.then(data=>{
-			if(data.data.user){
-				dispatch(changeUser(data.data.user))
+			if(data.user){
+				dispatch(changeUser(data.user))
 				setCookie('tiba_key',token)
 				notification.success({
 					message: '通知提醒',
@@ -37,27 +38,25 @@ export const exitUser = (history) => (dispatch) =>{
 }
 
 export const getEducations = () => (dispatch) =>{
-	axios.get(url.educations)
-		.then(({data})=>{
-			if(data.msg.status === 'success'){
-				let levels = data.levels
-				levels.map(function(item){
-					item.id = item.value
-					item.name = item.label
-				})
-				let test_point_counts = data.test_point_counts
-				test_point_counts.map(function(item){
-					item.id = item.value
-					item.name = item.label
-				})
-				dispatch(changeEducations({educations:data.educations,levels,test_point_counts}))
+	_axios.get(url.educations)
+		.then(data=>{
+			let levels = data.levels
+			levels.map(function(item){
+				item.id = item.value
+				item.name = item.label
+			})
+			let test_point_counts = data.test_point_counts
+			test_point_counts.map(function(item){
+				item.id = item.value
+				item.name = item.label
+			})
+			dispatch(changeEducations({educations:data.educations,levels,test_point_counts}))
 
-				let edu = data.educations[0]
-				let sub = ''
-				if(edu) sub = edu.subjects[0];
-				if(sub){
-					dispatch(changeSubject(edu,sub))
-				}
+			let edu = data.educations[0]
+			let sub = ''
+			if(edu) sub = edu.subjects[0];
+			if(sub){
+				dispatch(changeSubject(edu,sub))
 			}
 		})
 }
@@ -79,11 +78,14 @@ export const changeSubject = (edu,sub) => (dispatch) =>{
 	}))
 
 	//根据subject_id获取章节树状数据
-	axios.get(url.chapters+'?subject_id='+sub.id)
-		.then(({data})=>{
-			if(data.msg.status == 'success'){
-				dispatch(changeChapters(data.chapter.children))
-			}
+	_axios.get(url.chapters+'?subject_id='+sub.id)
+		.then(data=>{
+			dispatch(changeChapters(data.chapter.children))
+		})
+	//根据subject_id获取知识点树状数据
+	_axios.get(url.knowledges+'?subject_id='+sub.id)
+		.then(data=>{
+			dispatch(changeChapters(data.knowledge.children))
 		})
 	eventEmitter.emit('subjectChanged');
 }

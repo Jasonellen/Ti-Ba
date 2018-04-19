@@ -19,7 +19,7 @@ let initialState = {
 	data:[], //列表数据
 	grades:[],
 	current_page:1,
-	total_pages:1,
+	total_pages:0,
 	total_count:0,
 }
 const zjzujuan = handleActions({

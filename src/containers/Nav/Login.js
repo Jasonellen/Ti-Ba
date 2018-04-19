@@ -35,21 +35,13 @@ class Login extends Component {
 				console.log('Received values of form: ', values);
 				const {mobile,password,remember} = values
 				if(!remember)return false;
-				axios.post(url.login,{
+				_axios.post(url.login,{
 					mobile,
 					password,
 				})
 					.then(data=>{
-						if(data.data.status === 'success'){
-							this.props.navAction.changeLoginModalShow(false)
-							this.props.persistAction.getUser(data.data.token)
-						}else{
-							notification.error({
-								message: '通知提醒',
-								description: ' 账号或密码错误！',
-								duration:2
-							});
-						}
+						this.props.navAction.changeLoginModalShow(false)
+						this.props.persistAction.getUser(data.token)
 					})
 			}
 		});

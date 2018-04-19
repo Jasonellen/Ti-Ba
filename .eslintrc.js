@@ -36,6 +36,7 @@ module.exports = {
             "_dev_api":true,
             "Swiper":true,
             "axios":true,
+            "_axios": true,
             "eventEmitter":true
     },
     rules: {

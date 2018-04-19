@@ -1,4 +1,6 @@
 import { createActions } from 'redux-actions';
+import { Modal } from 'antd';
+
 export const {
 	zjzujuanChangeSubmitId,
 } = createActions(
@@ -26,7 +28,7 @@ export const beginSearch = () => (dispatch,getState) =>{
 		created_at,
 		mix_times
 	}
-	axios.post(url.topics,{
+	_axios.post(url.topics,{
 		education_id,
 		subject_id,
 		version_id,
@@ -37,13 +39,11 @@ export const beginSearch = () => (dispatch,getState) =>{
 		grade_id,
 		order,page,per_page
 	})
-		.then(({data})=>{
-			if(data.msg.status === 'success'){
-				dispatch(zjzujuanChangeSubmitId({key:'data',value:data.data}))
-				dispatch(zjzujuanChangeSubmitId({key:'current_page',value:data.meta.current_page}))
-				dispatch(zjzujuanChangeSubmitId({key:'total_pages',value:data.meta.total_pages}))
-				dispatch(zjzujuanChangeSubmitId({key:'total_count',value:data.meta.total_count}))
-			}
+		.then(data=>{
+			dispatch(zjzujuanChangeSubmitId({key:'data',value:data.data}))
+			dispatch(zjzujuanChangeSubmitId({key:'current_page',value:data.meta.current_page}))
+			dispatch(zjzujuanChangeSubmitId({key:'total_pages',value:data.meta.total_pages}))
+			dispatch(zjzujuanChangeSubmitId({key:'total_count',value:data.meta.total_count}))
 		})
 }
 
@@ -83,3 +83,23 @@ export const handleCheckGroup = (x) => (dispatch, getState) =>{
 	dispatch(zjzujuanChangeSubmitId({key:'grade_id',value:x}))
 	dispatch(beginSearch())
 }
+
+//搜索条件改变
+export const handleCollect = (id,star) => (dispatch) =>{
+	let method = star ? 'delete' : 'post'
+	let _url = star ? url.action_stores+'/'+id : url.action_stores
+	let msg = star ? '取消收藏成功！' : '收藏成功！'
+	_axios[method](_url,{
+		action_type:'star',
+		target_type:'topic',
+		id,
+	})
+		.then(()=>{
+			dispatch(beginSearch())
+			Modal.success({
+			 	title: '消息提醒',
+    		content: msg,
+			});
+		})	
+}
+

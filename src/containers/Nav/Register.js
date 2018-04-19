@@ -47,27 +47,19 @@ class Register extends Component {
 			const {mobile,password,remember} = values
 			const { user_type } = this.state
 			if(!remember)return false;
-			axios.post(url.register,{
+			_axios.post(url.register,{
 				mobile,
 				password,
 				user_type
 			})
 				.then(data=>{
-					if(data.data.status === 'success'){
-						this.props.navAction.changeRegisterModalShow(false)
-						this.props.persistAction.getUser(data.data.token)
-						notification.success({
-							message: '通知提醒',
-							description: '恭喜注册成功！',
-							duration:2
-						});
-					}else{
-						notification.error({
-							message: '通知提醒',
-							description: '注册失败！',
-							duration:2
-						});
-					}
+					this.props.navAction.changeRegisterModalShow(false)
+					this.props.persistAction.getUser(data.token)
+					notification.success({
+						message: '通知提醒',
+						description: '恭喜注册成功！',
+						duration:2
+					});
 				})
 		});
 	}

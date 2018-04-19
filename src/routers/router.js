@@ -48,7 +48,7 @@ export default function Routers(){
 						<Route path="/Papers" component={Papers}/>
 						<Route path="/PapersTest" component={PapersTest}/>
 						<Route path="/ShiJuanDetail/:id" component={ShiJuanDetail}/>
-						<Route path="/HelpCenter/base" component={HelpCenter}/>
+						<Route path="/HelpCenter" component={HelpCenter}/>
 						<Route path="/OnlineTest/:id" component={OnlineTest}/>
 						<Route path="/TestResult/:id" component={TestResult}/>
 						<Route path="/BeiKeDetail/:id" component={BeiKeDetail}/>
