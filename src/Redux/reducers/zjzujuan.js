@@ -21,6 +21,8 @@ let initialState = {
 	current_page:1,
 	total_pages:0,
 	total_count:0,
+	chapters:[],
+	knowledges:[],
 }
 const zjzujuan = handleActions({
 	zjzujuanChangeSubmitId: (state, action) => ({

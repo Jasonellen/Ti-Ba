@@ -1,29 +1,82 @@
 
 import React, { Component }from 'react';
-import { Modal, Select, Icon, Checkbox, Button, Input } from 'antd';
-import {Link} from 'react-router-dom'
-import './index.scss'
-import SmallNavBar from '@/Components/SmallNavBar'
-import ZuJuanSider from '@/Components/ZuJuanSider'
-const CheckboxGroup = Checkbox.Group;
-const { TextArea } = Input;
-import ShiTiLan from '@/Components/ShiTiLan'
+import { Select, Checkbox, Button, Modal } from 'antd';
 const Option = Select.Option;
+import {connect} from 'react-redux';
+import './index.scss'
 
+@connect(
+	state => state.persist,
+	null
+)
 export default class VIP extends Component{
 	state = {
-		confirmShow:false
+		educations:[],
+		education_id:'',
+		subjects:[],
+		subject_id:'',
+		packages:[],
+		vip_introduction:'',
+		pay_id:''
 	};
 	componentDidMount(){
-
+		this.getData()
+		const { educations } = this.props
+		this.setState({
+			educations,
+		})
+		// educations.map(()=>{
+		//
+		// })
 	}
 	handleChange = (value)=>{
-		console.log(value)
+		const { educations } = this.state
+		educations.map((item)=>{
+			if(item.id == value){
+				this.setState({
+					subjects:item.subjects,
+					education_id:value
+				})
+			}
+		})
 	}
-	handleFaPiao = (value)=>{
-		console.log(value)
+	handleFaPiao = (e)=>{
+		this.setState({
+			checked:e.target.checked
+		})
+	}
+	getData = ()=>{
+		_axios.get(url.packages)
+			.then(data=>{
+				let _data = data.packages
+				let pay_id=''
+				_data.map(function(item){
+					item.checked = false
+				})
+				if(_data[0]){
+					_data[0].ckecked = true
+					pay_id = _data[0].id
+				}
+				this.setState({
+					packages:data.packages,
+					vip_introduction:data.vip_introduction,
+					pay_id
+				})
+			})
+	}
+	handleSubmit = ()=>{
+		const { education_id, subject_id } = this.state
+		if(!education_id || !subject_id){
+			Modal.error({
+				title: '支付提醒',
+				content: '请先选择购买学科',
+			});
+		}else{
+			alert('即将支付')
+		}
 	}
 	render(){
+		const { educations, subjects, education_id, packages, vip_introduction } = this.state
 		return (
 			<div className='VIP'>
 				<div className="top contentCenter box-shadow">
@@ -35,40 +88,38 @@ export default class VIP extends Component{
 								placeholder="请选择学段"
 								onChange={this.handleChange}
 							>
-					      <Option value="jack">Jack</Option>
-					      <Option value="lucy">Lucy</Option>
-					      <Option value="disabled" disabled>Disabled</Option>
-					      <Option value="Yiminghe">yiminghe</Option>
+								{
+									educations.length>0 && educations.map((item)=>{
+										return <Option key={item.id} value={item.id}>{item.name}</Option>
+									})
+								}
 					    </Select>
 					    <Select
+								disabled={!education_id}
 								placeholder="请选择学科"
 								style={{ width: 120,marginLeft:30 }}
+								onChange={(subject_id)=>this.setState({subject_id})}
 							>
-					      <Option value="lucy">Lucy</Option>
+								{
+									subjects.length>0 && subjects.map((item)=>{
+										return <Option key={item.id} value={item.id}>{item.name}</Option>
+									})
+								}
 					    </Select>
 						</li>
 						<li className='clearfix'>
 							<div className='left'>购买套餐：</div>
-							<div className='box left active'>
-								<h2>一个月</h2>
-								<p>(可下载50份试卷)</p>
-								<span>售价：16元</span>
-							</div>
-							<div className='box left'>
-								<h2>一个月</h2>
-								<p>(可下载50份试卷)</p>
-								<span>售价：16元</span>
-							</div>
-							<div className='box left'>
-								<h2>一个月</h2>
-								<p>(可下载50份试卷)</p>
-								<span>售价：16元</span>
-							</div>
-							<div className='box left'>
-								<h2>一个月</h2>
-								<p>(可下载50份试卷)</p>
-								<span>售价：16元</span>
-							</div>
+							{
+								packages.length>0 && packages.map((item)=>{
+									return (
+										<div key={item.id} className={`box left ${item.ckecked && 'active'}`}>
+											<h2>{item.name}</h2>
+											<p>(可下载${item.download_no}份试卷)</p>
+											<span>售价：{item.price}元</span>
+										</div>
+									)
+								})
+							}
 						</li>
 						<li>
 							开具发票： <Checkbox onChange={this.handleFaPiao}>选择开具发票</Checkbox>
@@ -80,7 +131,7 @@ export default class VIP extends Component{
 							&gt;&gt; 激活VIP体验卡
 						</Link>*/}
 						<div className="right">
-							金额：<span className='price'>16</span> 元<Button type='primary'>立即支付</Button>
+							金额：<span className='price'>16</span> 元<Button type='primary' onClick={this.handleSubmit}>立即支付</Button>
 						</div>
 					</div>
 				</div>
@@ -88,11 +139,7 @@ export default class VIP extends Component{
 					<div className="vip-introduce">
 						<dl>
 							<dt>VIP会员介绍</dt>
-							<dd>1、购买二一组卷VIP会员服务，可免费下载试卷。</dd>
-							<dd>2、会员可免费进行在线测试功能，并提供完整、详细的测试报告。</dd>
-							<dd>3、每张组卷的试题数量限制，由原来的30道试题，增加至50道。</dd>
-							<dd>4、每个用户允许开通多个学科的VIP服务。</dd>
-							<dd>5、VIP服务时间为一整个月（30天），不受日期的影响。</dd>
+							<dd><div onClick={()=>this.setState({showAnswer:!this.state.showAnswer})} dangerouslySetInnerHTML={{__html: vip_introduction}}></div></dd>
 						</dl>
         	</div>
 				</div>

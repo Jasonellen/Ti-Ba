@@ -10,12 +10,23 @@ export default class SmallNavBar extends Component{
 	}
 	componentDidMount(){
 		let newData = this.state.data
+		console.log(newData,232323)
 		newData.map(function(item){
 			item.checked = false
 		})
-		this.setState({
-			data:[{id:'',title:'全部',name:'全部',checked:true}].concat(newData)
-		})
+		if(this.props.noall){
+			if(newData.length>0){
+				newData[0].checked = true
+			}
+			this.setState({
+				data:newData
+			})
+		}else{
+			this.setState({
+				data:[{id:'',title:'全部',name:'全部',checked:true}].concat(newData)
+			})
+		}
+
 	}
 	handleClick=(id)=>{
 		let newData = this.state.data

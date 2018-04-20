@@ -21,7 +21,9 @@ export const beginSearch = () => (dispatch,getState) =>{
 		created_at,
 		mix_times,
 		current_page:page,
-		per_page
+		per_page,
+		chapters,
+		knowledges
 	} = getState().zjzujuan
 
 	const order = {
@@ -37,7 +39,9 @@ export const beginSearch = () => (dispatch,getState) =>{
 		topic_class_id,
 		test_point_count,
 		grade_id,
-		order,page,per_page
+		order,page,per_page,
+		chapters,
+		knowledges
 	})
 		.then(data=>{
 			data.data.map(function(item){
@@ -105,6 +109,5 @@ export const handleCollect = (id,star) => (dispatch) =>{
 			 	title: '消息提醒',
     		content: msg,
 			});
-		})	
+		})
 }
-

@@ -14,4 +14,5 @@ Object.defineProperties(global, {
 	url: {value: url},
 	_axios: {value: _axios},
 	eventEmitter:{value: eventEmitter},
+	log:{value:console.log}
 });

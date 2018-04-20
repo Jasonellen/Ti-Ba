@@ -37,10 +37,18 @@ export default class XuanTi extends Component{
 			this.props.initParamsAndSearch()
 		});
 	}
-	
+
 	handleSort = (key,value)=>{
 		let x = value == 'asc' ? 'desc' : 'asc'
 		this.props.handleOptionChange(key,x)
+	}
+	handleC = (x)=>{
+		this.props.handleOptionChange('chapters',x)
+		this.props.handleOptionChange('knowledges',[])
+	}
+	handleK = (x)=>{
+		this.props.handleOptionChange('chapters',[])
+		this.props.handleOptionChange('knowledges',x)
 	}
 	render(){
 		const { versions, topic_types,topic_classes,levels, test_point_counts, chapter,knowledges } = this.props.persist
@@ -72,12 +80,12 @@ export default class XuanTi extends Component{
 				</div>*/}
 				<div className="warp clearfix">
 					<div className="leftSide">
-					{
-						this.state.side == '/XuanTi/tb'
-						?
-							<ZuJuanSider data={chapter} title='选择章节'/>
-						: <ZuJuanSider data={knowledges} title='选择知识点'/>
-					}
+						{
+							this.state.side == '/XuanTi/tb'
+								?
+								<ZuJuanSider data={chapter} title='选择章节' onSelect={(x)=>this.handleC(x)}/>
+								: <ZuJuanSider data={knowledges} title='选择知识点' onSelect={(x)=>this.handleK(x)}/>
+						}
 					</div>
 					<div className="rightSide">
 						<div className="select">

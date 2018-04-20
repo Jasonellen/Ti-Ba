@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import * as navAction from '@/Redux/actions/nav.js';
 import * as persistAction from '@/Redux/actions/persist.js';
 import { bindActionCreators } from 'redux'
+import { setCookie } from '@/service/cookie'
 
 const formItemLayout = {
 	labelCol: {
@@ -54,7 +55,8 @@ class Register extends Component {
 			})
 				.then(data=>{
 					this.props.navAction.changeRegisterModalShow(false)
-					this.props.persistAction.getUser(data.token)
+					setCookie('tiba_key',data.token)
+					this.props.persistAction.getUser()
 					notification.success({
 						message: '通知提醒',
 						description: '恭喜注册成功！',

@@ -9,7 +9,7 @@ export const {
 	changeEducationsId,
 	changeChapters,
 	changeKnowledges
-	
+
 } = createActions(
 		'changeUser',
 		'changeEducations',
@@ -85,11 +85,10 @@ export const changeSubject = (edu,sub) => (dispatch) =>{
 	//根据subject_id获取知识点树状数据
 	_axios.get(url.knowledges+'?subject_id='+sub.id)
 		.then(data=>{
-			dispatch(changeChapters(data.knowledge.children))
+			dispatch(changeKnowledges(data.knowledge.children))
 		})
 	//清空购物车
 	dispatch(initialCart())
 
 	eventEmitter.emit('subjectChanged');
 }
-

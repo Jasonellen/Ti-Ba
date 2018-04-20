@@ -1,13 +1,9 @@
 
 import React, { Component }from 'react';
-import { Breadcrumb, Icon, Tooltip, Checkbox, Card,Modal, Input, Radio,Button } from 'antd';
+import { Icon, Tooltip, Checkbox, Card, Input, Radio,Button } from 'antd';
 import './index.scss'
-import SmallNavBar from '@/Components/SmallNavBar'
 import ZuJuanSider from '@/Components/ZuJuanSider'
-import ShiTiLan from '@/Components/ShiTiLan'
 const CheckboxGroup = Checkbox.Group;
-import {Link} from 'react-router-dom'
-const { TextArea } = Input;
 const RadioGroup = Radio.Group;
 
 export default class ZNZJ extends Component{
@@ -126,7 +122,7 @@ export default class ZNZJ extends Component{
 							</div>
 						</Card>
 						<div className="submit"><Button type='primary' size='large'>生成试卷</Button></div>
-						
+
 					</div>
 				</div>
 			</div>

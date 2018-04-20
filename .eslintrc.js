@@ -38,7 +38,8 @@ module.exports = {
             "axios":true,
             "_axios": true,
             "eventEmitter":true,
-            "_history":true
+            "_history":true,
+						"log":true
     },
     rules: {
 			'indent': ['error', 'tab'],
