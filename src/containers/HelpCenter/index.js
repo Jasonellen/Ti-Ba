@@ -1,11 +1,8 @@
 
 import React, { Component }from 'react';
-import { Menu, Input,Select, Button } from 'antd';
-import {Route,Link, Redirect} from 'react-router-dom'
+import { Menu } from 'antd';
 import './index.scss'
-const { TextArea } = Input;
-const Option = Select.Option;
-const InputGroup = Input.Group;
+
 const SubMenu = Menu.SubMenu;
 
 
@@ -31,7 +28,11 @@ export default class HelpCenter extends Component{
 			.then(data=>{
 				this.setState({
 					data:data.helps
-				},()=>this.handleClick({key:data.helps[0].id}))
+				},()=>{
+					if(data.helps[0]){
+						this.handleClick({key:data.helps[0].id})
+					}
+				})
 			})
 	}
 	render(){
@@ -52,7 +53,7 @@ export default class HelpCenter extends Component{
 						<Menu
 			        onClick={this.handleClick}
 			        style={{ width: 256 }}
-			        defaultSelectedKeys={['1']}
+			        defaultSelectedKeys={[defaultSelectedKeys]}
 			        defaultOpenKeys={defaultOpenKeys}
 			        mode="inline"
 			      >

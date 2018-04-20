@@ -40,6 +40,9 @@ export const beginSearch = () => (dispatch,getState) =>{
 		order,page,per_page
 	})
 		.then(data=>{
+			data.data.map(function(item){
+				item.select = false
+			})
 			dispatch(zjzujuanChangeSubmitId({key:'data',value:data.data}))
 			dispatch(zjzujuanChangeSubmitId({key:'current_page',value:data.meta.current_page}))
 			dispatch(zjzujuanChangeSubmitId({key:'total_pages',value:data.meta.total_pages}))
@@ -66,6 +69,7 @@ export const initParamsAndSearch = () => (dispatch,getState) =>{
 //搜索条件改变
 export const handleOptionChange = (key,value) => (dispatch) =>{
 	dispatch(zjzujuanChangeSubmitId({key,value}))
+	dispatch(zjzujuanChangeSubmitId({key:'current_page',value:1}))
 	dispatch(beginSearch())
 }
 //年级点击
@@ -81,6 +85,7 @@ export const handleCheckGroup = (x) => (dispatch, getState) =>{
 	})
 	dispatch(zjzujuanChangeSubmitId({key:'grades',value:grades}))
 	dispatch(zjzujuanChangeSubmitId({key:'grade_id',value:x}))
+	dispatch(zjzujuanChangeSubmitId({key:'current_page',value:1}))
 	dispatch(beginSearch())
 }
 

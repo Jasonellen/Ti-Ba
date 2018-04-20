@@ -26,17 +26,10 @@ export default class XuanTi extends Component{
 		side:this.props.location.pathname,
 	};
 	componentDidMount(){
-		console.log(this.props,1234)
 		this.props.history.listen((location)=>{
 			this.setState({
 				side:location.pathname
 			})
-			"/XuanTi/zsd"
-			// if(location.action == 'POP'){
-			// 	this.setState({display:'none'})
-			// }else{
-			// 	this.setState({display:'block'})
-			// }
 		})
 
 		this.props.initParamsAndSearch()

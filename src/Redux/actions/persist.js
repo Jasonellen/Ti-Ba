@@ -1,6 +1,7 @@
 import { createActions } from 'redux-actions';
 import { setCookie, deleteCookie } from '@/service/cookie'
 import { notification } from 'antd';
+import { initialCart } from './cart'
 
 export const {
 	changeUser,
@@ -17,12 +18,11 @@ export const {
 		'changeKnowledges',
 	)
 
-export const getUser = (token) => (dispatch) =>{
-	_axios.get(url.get_users+'?token='+token)
+export const getUser = () => (dispatch) =>{
+	_axios.get(url.get_users)
 		.then(data=>{
 			if(data.user){
 				dispatch(changeUser(data.user))
-				setCookie('tiba_key',token)
 				notification.success({
 					message: '通知提醒',
 					description: '恭喜登录成功！',
@@ -87,6 +87,9 @@ export const changeSubject = (edu,sub) => (dispatch) =>{
 		.then(data=>{
 			dispatch(changeChapters(data.knowledge.children))
 		})
+	//清空购物车
+	dispatch(initialCart())
+
 	eventEmitter.emit('subjectChanged');
 }
 

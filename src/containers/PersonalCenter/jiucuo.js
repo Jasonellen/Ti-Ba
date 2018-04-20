@@ -1,7 +1,5 @@
 
 import React,{ Component } from 'react'
-import { Icon, Button } from 'antd';
-import text from 'static/text.jpg'
 import { Link } from 'react-router-dom'
 
 export default class Pjiucuo extends Component{

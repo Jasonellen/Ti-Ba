@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import {  Icon, Button, Form, Modal, Input, Checkbox, notification } from 'antd';
+import {  Icon, Button, Form, Modal, Input, Checkbox } from 'antd';
 const FormItem = Form.Item;
 import {connect} from 'react-redux';
 import * as navAction from '@/Redux/actions/nav.js';
 import * as persistAction from '@/Redux/actions/persist.js';
 import { bindActionCreators } from 'redux'
+import { setCookie } from '@/service/cookie'
 
 @connect(
 	state => {
@@ -41,7 +42,8 @@ class Login extends Component {
 				})
 					.then(data=>{
 						this.props.navAction.changeLoginModalShow(false)
-						this.props.persistAction.getUser(data.token)
+						setCookie('tiba_key',data.token)
+						this.props.persistAction.getUser()
 					})
 			}
 		});

@@ -21,7 +21,7 @@ if (module.hot) {
 // 做本地持久化
 persistStore(store, {
 	storage: asyncSessionStorage,
-	whitelist: ['persist']  //黑白名单只能选择一个,优先选择白名单
+	whitelist: ['persist','cart','zjzujuan']  //黑白名单只能选择一个,优先选择白名单
 }, ()=>{
 	render((
 		<Provider store={store}>

@@ -14,7 +14,7 @@ const Beike = asyncComponent(() => import("~/Beike"));
 const XuanTi = asyncComponent(() => import("~/XuanTi"));
 const AnswerDetail = asyncComponent(() => import("~/AnswerDetail"));
 const VIP = asyncComponent(() => import("~/Vip"));
-const VIPActivate = asyncComponent(() => import("~/Vip/activate"));
+// const VIPActivate = asyncComponent(() => import("~/Vip/activate"));
 const SchoolService = asyncComponent(() => import("~/SchoolService"));
 const ZNZJ = asyncComponent(() => import("~/ZNZJ"));
 const Papers = asyncComponent(() => import("~/Papers"));
@@ -28,6 +28,7 @@ const Double = asyncComponent(() => import("~/Double"));
 const DoubleDetail = asyncComponent(() => import("~/DoubleDetail"));
 const DownloadPage = asyncComponent(() => import("~/DownloadPage"));
 const PersonalCenter = asyncComponent(() => import("~/PersonalCenter"));
+const NoticeDetail = asyncComponent(() => import("~/NoticeDetail"));
 
 export default function Routers(){
 	return (
@@ -42,7 +43,7 @@ export default function Routers(){
 						<Route path="/XuanTi/:id" component={XuanTi}/>
 						<Route path="/AnswerDetail/:id" component={AnswerDetail}/>
 						<Route path="/VIP" component={VIP}/>
-						<Route path="/VIPActivate" component={VIPActivate}/>
+						{/*<Route path="/VIPActivate" component={VIPActivate}/>*/}
 						<Route path="/SchoolService" component={SchoolService}/>
 						<Route path="/znzj/:id" component={ZNZJ}/>
 						<Route path="/Papers" component={Papers}/>
@@ -56,6 +57,7 @@ export default function Routers(){
 						<Route path="/DoubleDetail/:id" component={DoubleDetail}/>
 						<Route path="/DownloadPage/:id" component={DownloadPage}/>
 						<Route path="/PersonalCenter" component={PersonalCenter}/>
+						<Route path="/NoticeDetail/:id" component={NoticeDetail}/>
 					</Switch>
 				</div>
 				<Footer />

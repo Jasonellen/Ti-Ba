@@ -7,7 +7,7 @@ import {autoRehydrate} from 'redux-persist' // 做本地持久化
 
 const middleWares = [thunk]
 if (process.env.NODE_ENV == 'development') {
-	const logger = createLogger()
+	const logger = createLogger({collapsed:true})
 	middleWares.push(logger)
 }
 const store = compose(applyMiddleware(...middleWares),autoRehydrate())(createStore)(reducers)

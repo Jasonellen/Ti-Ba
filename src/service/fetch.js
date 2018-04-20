@@ -1,9 +1,10 @@
 import axios from 'axios'
 import { notification } from 'antd';
+import { getCookie } from '@/service/cookie'
 
-let token = JSON.parse(sessionStorage['reduxPersist:persist']).user.token
 export default {
 	get: async (url1='', params = {})=>{
+		let token = getCookie('tiba_key')
 		try {
 			const response = await axios.get(url1,{
 				params:Object.assign({},params,{token}),
@@ -26,6 +27,7 @@ export default {
 		}
 	},
 	post:async (url1='', params = {})=>{
+		let token = getCookie('tiba_key')
 		try {
 			const response = await axios.post(url1,Object.assign({},params,{token}))
 				.then(({data})=>{
@@ -45,6 +47,7 @@ export default {
 		}
 	},
 	delete:async (url1='', params = {})=>{  //del参数需要用data包裹
+		let token = getCookie('tiba_key')
 		try {
 			const response = await axios.delete( url1,{data:Object.assign({},params,{token})} )
 				.then(({data})=>{

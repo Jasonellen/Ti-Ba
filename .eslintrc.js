@@ -37,7 +37,8 @@ module.exports = {
             "Swiper":true,
             "axios":true,
             "_axios": true,
-            "eventEmitter":true
+            "eventEmitter":true,
+            "_history":true
     },
     rules: {
 			'indent': ['error', 'tab'],

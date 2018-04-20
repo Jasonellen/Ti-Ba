@@ -285,7 +285,7 @@ export default class Home extends Component {
 					{
 						notices.length>0 && notices.map(function(item,index){
 							return (
-								<li className='left' key={item.id}>
+								<li className='left' key={item.id} onClick={()=>_history.push('/NoticeDetail/'+item.id)}>
 									<h1>{index+1}&bull;</h1>
 									<h2>{item.title}</h2>
 									<div>阅读更多</div>
@@ -294,7 +294,7 @@ export default class Home extends Component {
 						})
 					}
 					</ul>
-					<Icon type="double-right"/>
+					{/*<Icon type="double-right"/>*/}
 				</div>
 				<div className="moudleTitle">
 					<h3>网站特色</h3>

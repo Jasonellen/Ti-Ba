@@ -76,9 +76,9 @@ export default class VIP extends Component{
 					</ul>
 					<hr/>
 					<div className="submit clearfix">
-						<Link className='left' to='/VIPActivate'>
+						{/*<Link className='left' to='/VIPActivate'>
 							&gt;&gt; 激活VIP体验卡
-						</Link>
+						</Link>*/}
 						<div className="right">
 							金额：<span className='price'>16</span> 元<Button type='primary'>立即支付</Button>
 						</div>

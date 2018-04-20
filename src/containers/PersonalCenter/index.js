@@ -1,9 +1,8 @@
 import React,{ Component } from 'react'
-import { Menu, Icon, Button } from 'antd';
+import { Menu, Icon } from 'antd';
 import './index.scss'
 import vip from 'static/vip.jpg'
-import text from 'static/text.jpg'
-import { Link,Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import Pdownload from './download'
 import Pzujuanrecord from './zujuanrecord'
 import Pshijuan from './Mycollection/shijuan'
@@ -13,7 +12,6 @@ import Pdingdan from './dingdan'
 import PersonalInfo from './personalInfo'
 
 const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 
 
 export default class PersonalCenter extends Component{

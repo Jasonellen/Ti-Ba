@@ -48,6 +48,7 @@ export default class Nav extends Component {
 	 router: PropTypes.object.isRequired
 	};
 	componentDidMount(){
+		global._history = this.context.router.history  //设置一下全局路由
 		this.getLogo()
 		this.props.persistAction.getEducations()
 
@@ -205,11 +206,11 @@ export default class Nav extends Component {
 				</div>
 				{/* 固定导航 */}
 		    <ul className="fixed">
-					<li onClick={()=>this.NavLinkTo('VipActivate')}><Icon type='rocket'/>激活vip</li>
+					{/*<li onClick={()=>this.NavLinkTo('VipActivate')}><Icon type='rocket'/>激活vip</li>*/}
 					<li onClick={()=>this.NavLinkTo('Vip')}><Icon type="pay-circle-o" />购买vip</li>
 					<li onClick={()=>this.NavLinkTo('SchoolService')}><Icon type="form" />申请试用</li>
 					<li><a href="http://wpa.qq.com/msgrd?v=1&uin=269248791&site=qq&menu=yes&from=message&isappinstalled=0" target='_blank' rel='noopener noreferrer'><Icon type="qq" />客服帮助</a></li>
-					<li onClick={()=>this.NavLinkTo('helpCenter/base')} className='last'><Icon type="flag" />帮助中心</li>
+					<li onClick={()=>this.NavLinkTo('helpCenter')} className='last'><Icon type="flag" />帮助中心</li>
 		    </ul>
 				{/* 登陆 */}
 				<Login/>

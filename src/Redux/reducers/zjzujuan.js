@@ -14,7 +14,7 @@ let initialState = {
 	//order
 	created_at:'asc', // desc
 	mix_times:'asc',
-	per_page:1,
+	per_page:10,
 
 	data:[], //列表数据
 	grades:[],

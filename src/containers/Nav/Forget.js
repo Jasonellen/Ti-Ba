@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {  Icon, Button, Form, Modal, Input, notification } from 'antd';
+import {  Icon, Button, Form, Modal, Input } from 'antd';
 const FormItem = Form.Item;
 import {connect} from 'react-redux';
 import * as navAction from '@/Redux/actions/nav.js';
@@ -28,7 +28,7 @@ class Forget extends Component {
 				mobile,
 				password,
 			})
-				.then(data=>{
+				.then(()=>{
 					// this.props.changeRegisterModalShow(false)
 					// notification.success({
 					// 	message: '通知提醒',
