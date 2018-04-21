@@ -10,7 +10,7 @@ export default class Pdownload extends Component{
 
 	render(){
 		return (
-      <div className="download">
+			<div className="download">
       	<h1>下载记录</h1>
 				<ul className='downloadItem'>
 					<li>
@@ -30,8 +30,7 @@ export default class Pdownload extends Component{
 						<Button icon='download' type='primary'>下载</Button>
 					</li>
 				</ul>
-      </div>
+			</div>
 		)
 	}
 }
-

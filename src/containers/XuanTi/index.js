@@ -26,6 +26,8 @@ export default class XuanTi extends Component{
 		side:this.props.location.pathname,
 	};
 	componentDidMount(){
+		this.props.zjzujuanChangeSubmitId({key:'chapters',value:[]})
+		this.props.zjzujuanChangeSubmitId({key:'knowledges',value:[]})
 		this.props.history.listen((location)=>{
 			this.setState({
 				side:location.pathname

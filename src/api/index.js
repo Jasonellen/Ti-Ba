@@ -28,5 +28,7 @@ Object.defineProperties(url, {
 	owner_users: {value: __host__ + '/owner/users/'},  //获取个人信息
 	orders: {value: __host__ + '/orders'},  //创建订单
 	owner_orders: {value: __host__ + '/owner/orders'},  //获取我的订单
+	correct_records: {value: __host__ + '/correct_records'},  //试题纠错
+	owner_correct_records: {value: __host__ + '/owner/correct_records'},  //纠错记录
 });
 export default url

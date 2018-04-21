@@ -4,7 +4,8 @@ let initialState = {
 	analyzeShow:false,
 	downloadShow:false,
 	answerSheetShow:false,
-	correctError:false
+	correctError:false,
+	topic_id:'',
 }
 const other = handleActions({
 	changeAnalyzeShow: (state, action) => ({
@@ -21,7 +22,8 @@ const other = handleActions({
 	}),
 	changeCorrectErrorShow: (state, action) => ({
 		...state,
-		correctError: action.payload
+		correctError: action.payload.modal,
+		topic_id: action.payload.topic_id,
 	}),
 
 }, initialState);

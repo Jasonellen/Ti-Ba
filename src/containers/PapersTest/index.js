@@ -1,8 +1,7 @@
 
 import React, { Component }from 'react';
-import { Table, Breadcrumb, Icon, Tree, Checkbox, Pagination,Modal, Input, Radio,Button, Select } from 'antd';
+import {  Pagination } from 'antd';
 import './index.scss'
-import {Link} from 'react-router-dom'
 import ZuJuanSider from '@/Components/ZuJuanSider'
 import PaperItem from '@/Components/PaperItem'
 import SmallNavBar from '@/Components/SmallNavBar'

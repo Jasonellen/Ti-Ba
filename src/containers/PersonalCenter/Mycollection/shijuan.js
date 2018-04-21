@@ -10,9 +10,9 @@ export default class Pshijuan extends Component{
 
 	render(){
 		return (
-      <div className="download">
+			<div className="download">
       	<h1>试卷收藏</h1>
-				<ul>
+				<ul className='downloadItem'>
 					<li>
 						<div className="search-list-left">
 							<img src={text} alt=""  className="test-pic"/>
@@ -30,8 +30,7 @@ export default class Pshijuan extends Component{
 						<Button icon='download' type='primary'>下载</Button>
 					</li>
 				</ul>
-      </div>
+			</div>
 		)
 	}
 }
-

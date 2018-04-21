@@ -1,11 +1,10 @@
 
 import React, { Component }from 'react';
-import { Table, Breadcrumb, Icon, Tree, Checkbox, Pagination,Modal, Input, Radio,Button, Select } from 'antd';
+import { Pagination } from 'antd';
 import './index.scss'
-import {Link} from 'react-router-dom'
 import Sider from './Sider'
 import PaperItem from '@/Components/PaperItem'
-var Highcharts = require('highcharts'); 
+var Highcharts = require('highcharts');
 require('highcharts/modules/variable-pie')(Highcharts);
 
 export default class Papers extends Component{
