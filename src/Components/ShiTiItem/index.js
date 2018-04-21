@@ -36,11 +36,11 @@ export default class ShiTiItem extends Component{
 		}
 	}
 	render(){
-		const { header=true, data={} } = this.props
+		const { header=true, data={},noselect=false } = this.props
 		const ease_type = {
 			'easy':'简单',
 			'normal':'普通',
-			'difficult':'困难' 
+			'difficult':'困难'
 		}
 		return (
 			<div className='ShiTiItem'>
@@ -53,7 +53,7 @@ export default class ShiTiItem extends Component{
 						<div onClick={()=>this.props.onCollect && this.props.onCollect(data.id,data.star)} className='cardLeft' key='1' >{data.star ? <Icon type="heart" style={{color:'#ff9600'}}/> : <Icon type="heart-o"/>}{data.star ? '已收藏' : '收藏'}</div>,
 						<div onClick={()=>this.props.otherAction.changeCorrectErrorShow(true)} className='cardLeft' key='2' >
 							<Icon type="exclamation-circle-o" />纠错</div>, <div className='cardRight' key='3'>组卷次数：{data.mix_times || 0}次
-							<i style={{background:data.select && '#999'}} className='i' onClick={()=>this.handleSelect(data.select,data.topic_type_title, data.id)}>+选题</i>
+							{ !noselect && <i style={{background:data.select && '#999'}} className='i' onClick={()=>this.handleSelect(data.select,data.topic_type_title, data.id)}>+选题</i>}
 						</div>
 					]}
 				>

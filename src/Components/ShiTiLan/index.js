@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon } from 'antd';
+import { Icon, Modal } from 'antd';
 import './index.scss'
 import {connect} from 'react-redux';
 import * as cartAction from '@/Redux/actions/cart.js';
@@ -28,7 +28,13 @@ export default class ShiTiLan extends Component{
 		carts.map(function(item){
 			topic_ids = topic_ids.concat(item.topic_ids)
 		})
-		_axios.post(url.owner_exam_records,{ 
+		if(topic_ids.length == 0){
+			Modal.error({
+				title:'请先选择试题'
+			})
+			return;
+		}
+		_axios.post(url.owner_exam_records,{
 			education_id,
 			subject_id,
 			topic_ids,
@@ -46,15 +52,15 @@ export default class ShiTiLan extends Component{
 				</div>
 				<div className='right'>
 					<div className="title">共计 ( <span>{total_count}</span> ) 道题</div>
-						<ul>
-							{
-								carts.length > 0 && carts.map((item,index)=>{
-									if(item.topic_ids.length>0){
-										return <li key={index}>{item.name}：<span>{item.topic_ids.length}</span>道&nbsp;&nbsp;&nbsp;<Icon type="close-circle-o" onClick={()=>this.props.delCartItem(item)}/></li>
-									}
-								})
-							}
-						</ul>
+					<ul>
+						{
+							carts.length > 0 && carts.map((item,index)=>{
+								if(item.topic_ids.length>0){
+									return <li key={index}>{item.name}：<span>{item.topic_ids.length}</span>道&nbsp;&nbsp;&nbsp;<Icon type="close-circle-o" onClick={()=>this.props.delCartItem(item)}/></li>
+								}
+							})
+						}
+					</ul>
 					<div className="bottom" onClick={this.handleSubmit}>生成试卷</div>
 				</div>
 			</div>

@@ -39,7 +39,8 @@ module.exports = {
             "_axios": true,
             "eventEmitter":true,
             "_history":true,
-						"log":true
+						"log":true,
+						"QRCode":true
     },
     rules: {
 			'indent': ['error', 'tab'],

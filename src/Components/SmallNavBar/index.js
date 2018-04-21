@@ -9,8 +9,19 @@ export default class SmallNavBar extends Component{
 		width:this.props.width
 	}
 	componentDidMount(){
+		this.initial()
+
+	}
+	componentWillReceiveProps(nextprops){
+		if(this.state.data !== nextprops.data){
+			this.setState({
+				data:nextprops.data
+			},this.initial)
+		}		
+	}
+
+	initial = ()=>{
 		let newData = this.state.data
-		console.log(newData,232323)
 		newData.map(function(item){
 			item.checked = false
 		})
@@ -26,7 +37,6 @@ export default class SmallNavBar extends Component{
 				data:[{id:'',title:'全部',name:'全部',checked:true}].concat(newData)
 			})
 		}
-
 	}
 	handleClick=(id)=>{
 		let newData = this.state.data

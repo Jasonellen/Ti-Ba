@@ -1,6 +1,6 @@
 
 import React, { Component }from 'react';
-import { Icon, Pagination, Checkbox,Modal } from 'antd';
+import { Icon, Pagination, Checkbox } from 'antd';
 import './index.scss'
 import SmallNavBar from '@/Components/SmallNavBar'
 import ZuJuanSider from '@/Components/ZuJuanSider'
