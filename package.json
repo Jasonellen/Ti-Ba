@@ -5,7 +5,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node build/dev-server.js",
     "build": "cross-env NODE_ENV=production node build/build.js",
-    "lint": "eslint --ext .js src"
+    "lint": "eslint --ext .js src",
+		"deploy":"npm run build && scp -r /Users/nannan/Desktop/Ti-Ba/dist  deploy@114.115.215.249:/data/www/development"
   },
   "keywords": [
     "webpack",

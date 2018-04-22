@@ -156,7 +156,7 @@ class Register extends Component {
 						})(
 							<Checkbox style={{marginLeft:115}}>我同意<a href="">《xx注册协议》</a></Checkbox>
 						)}
-						<Button type="primary" htmlType="submit" className="register_button">登陆</Button>
+						<Button type="primary" htmlType="submit" className="register_button">注册</Button>
 					</FormItem>
 				</Form>
 			</Modal>

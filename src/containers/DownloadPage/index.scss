@@ -4,6 +4,14 @@
 	strong{
 		font-weight: bold;
 	}
+	h1,h2,h3,h4,h5,h6{
+		font-weight: normal;
+		font-size: 16px;
+		text-indent: 4em;
+	}
+	.h1,.h2,.h3{
+		text-indent: 0;
+	}
 	*[contenteditable=true]{
 		display: inline-block;padding:0 10px;
 		border-radius: 5px;
@@ -33,7 +41,7 @@
 			margin: 6px;
 			cursor: pointer;
 		}
-		h3{
+		.h3{
 	    background: #efefef;
 	    font-size: 14px;
 	    color: #333;
@@ -71,7 +79,7 @@
 	    border: 1px solid #dcdcdc;
 	    border-top: none;
 	    border-left: none;
-	    h2{
+	    .h2{
   	    padding: 15px 15px 5px;
 		    font-size: 14px;
 		    color: #333;
@@ -140,13 +148,13 @@
 		.rightpage{
 			padding:30px 10px 10px;
 			width: 870px;
-			h1{
+			.h1{
 		    height: 50px;
     		line-height: 50px;
     		text-align: center;
     		font-size: 20px;
 			}
-			h2{
+			.h2{
 				font-size: 16px;
 				color: #333;
 				text-align: center;
@@ -200,7 +208,7 @@
 				font-size: 14px;
 				line-height: 2;
 			}
-			h3{
+			.h3{
 				font-size: 14px;
 			}
 			.paper-types,.types{
@@ -257,9 +265,9 @@
 			    }
 		    }
 			}
-			.paper-types:hover,.types:hover{
-				border-color:$c;
-			}
+			// .paper-types:hover,.types:hover{
+			// 	border-color:$c;
+			// }
 			.types{
 			 	height: auto;
 		    background: $f;

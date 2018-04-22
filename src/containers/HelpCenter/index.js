@@ -48,9 +48,9 @@ export default class HelpCenter extends Component{
 		return (
 			<div className='HelpCenter contentCenter clearfix'>
 				<div className="left">
-				{
-					data.length>0 && (
-						<Menu
+					{
+						data.length>0 && (
+							<Menu
 			        onClick={this.handleClick}
 			        style={{ width: 256 }}
 			        defaultSelectedKeys={[defaultSelectedKeys]}
@@ -60,11 +60,11 @@ export default class HelpCenter extends Component{
 			      {
 			      	data.map((item)=>{
 			      		return(
-									<SubMenu key={String(item.id)} title={<span className='subTitle'><img src={item.avatar_data.original} alt=""/><span>{item.title}</span></span>}>
+											<SubMenu key={String(item.id)} title={<span className='subTitle'><img src={item.avatar_data.original} alt=""/><span>{item.title}</span></span>}>
 					          {
 					          	item.datas.length>0 && item.datas.map((iitem)=>{
 					          		return(
-													<Menu.Item key={String(iitem.id)}>{iitem.title}</Menu.Item>
+															<Menu.Item key={String(iitem.id)}>{iitem.title}</Menu.Item>
 					          		)
 					          	})
 					          }
@@ -73,8 +73,8 @@ export default class HelpCenter extends Component{
 			      	})
 			      }
 			      </Menu>
-					)
-				}
+						)
+					}
 				</div>
 				<div className="right right_content">
 					<div className="title">{help_detail.title}</div>

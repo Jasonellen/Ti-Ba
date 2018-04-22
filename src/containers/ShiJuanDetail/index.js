@@ -1,17 +1,13 @@
 
 import React, { Component }from 'react';
-import { Breadcrumb, Icon, Pagination, Checkbox, Button,Modal, Input } from 'antd';
+import {Icon, Button } from 'antd';
 import './index.scss'
-import SmallNavBar from '@/Components/SmallNavBar'
-import ZuJuanSider from '@/Components/ZuJuanSider'
 import ShiTiLan from '@/Components/ShiTiLan'
 import ShiTiItem from '@/Components/ShiTiItem'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import * as otherAction from '@/Redux/actions/other.js';
 import { bindActionCreators } from 'redux'
-const { TextArea } = Input;
-const CheckboxGroup = Checkbox.Group;
 
 @connect(
 	state => {

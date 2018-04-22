@@ -2,7 +2,7 @@
 let url={}  //导出url
 let __host__ = 'http://rqiang.mynatapp.cc/api/v1';
 // __host__ = 'http://192.168.0.111:3008/api/v1';
-// __host__ = 'http://192.168.0.110:3000/api/v1';
+__host__ = 'http://admin.gbtibawang.com/api/v1';
 
 
 
@@ -22,7 +22,7 @@ Object.defineProperties(url, {
 	topics: {value: __host__ + '/topics'},  //题目列表
 	action_stores: {value: __host__ + '/action_stores'},  //收藏点赞
 	knowledges: {value: __host__ + '/knowledges'},  //知识点树
-	owner_exam_records: {value: __host__ + '/owner/exam_records'},  //手动生成试卷
+	owner_exam_records: {value: __host__ + '/exam_records'},  //手动生成试卷
 	packages: {value: __host__ + '/packages'},  //VIP套餐列表
 	owner_star_topics: {value: __host__ + '/owner/star/topics'},  //试题收藏
 	owner_users: {value: __host__ + '/owner/users/'},  //获取个人信息
@@ -30,5 +30,6 @@ Object.defineProperties(url, {
 	owner_orders: {value: __host__ + '/owner/orders'},  //获取我的订单
 	correct_records: {value: __host__ + '/correct_records'},  //试题纠错
 	owner_correct_records: {value: __host__ + '/owner/correct_records'},  //纠错记录
+	download_records: {value: __host__ + '/download_records'},  //试卷下载
 });
 export default url

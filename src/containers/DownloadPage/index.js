@@ -1,13 +1,11 @@
 
 import React, { Component }from 'react';
-import { Icon,Table, Select, Modal, Button,Input, Radio,message,Checkbox, Anchor, InputNumber } from 'antd';
+import { Modal, Button, Radio,Checkbox, Anchor, InputNumber } from 'antd';
 import './index.scss'
 const { Link } = Anchor;
 import {connect} from 'react-redux';
 import * as otherAction from '@/Redux/actions/other.js';
 import { bindActionCreators } from 'redux'
-const Option = Select.Option;
-const confirm = Modal.confirm;
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 
@@ -23,11 +21,11 @@ export default class DownloadPage extends Component{
 	state={
 		contentEditable:false,
 		plainOptions:[
-			{ label: '密封线', value: '1', },
-			{ label: '大题评分区', value: '2' },
+			// { label: '密封线', value: '1', },
+			// { label: '大题评分区', value: '2' },
 			{ label: '主标题', value: '3' },
 			{ label: '注意事项', value: '4' },
-			{ label: '副标题', value: '5' },
+			// { label: '副标题', value: '5' },
 			{ label: '考试时间', value: '6' },
 			{ label: '考生填写', value: '7' },
 			{ label: '分大题', value: '8' },
@@ -40,7 +38,14 @@ export default class DownloadPage extends Component{
 			{ label: '选择题', value: '1' },
 			{ label: '填空题', value: '2' },
 			{ label: '解答题', value: '2' },
-		]
+		],
+		data:{
+			title:'',
+			topics:[]
+		}
+	}
+	componentDidMount(){
+		this.getExamDetail()
 	}
 	handleRedioGroupClick = (e)=>{
 		// console.log(e.target.value,1)
@@ -51,72 +56,90 @@ export default class DownloadPage extends Component{
 	}
 	handleSingleCheck = (v)=>{
 		this.setState({
-			CheckedList:v
+			CheckedList:v 
 		})
 	}
+
+	//获取试卷详情
+	getExamDetail = ()=>{
+		const { id } = this.props.match.params
+		_axios.get(url.owner_exam_records +'/'+id)
+			.then(data=>{
+				this.setState({data:data.data})
+			})
+	}
+	handleDownload = ()=>{
+		// this.props.changeDownloadShow(true)
+		_axios.post(url.download_records,{
+			type : 'exam_record',
+			id : this.props.match.params.id
+		})
+			.then(data=>{
+				$(document).googoose({
+					area: '#download_exam',
+					filename: `${data.name}.doc`
+				});
+
+			})
+	}
 	render(){
-		const { CheckedList,redioCheck,contentEditable } = this.state
+		const { CheckedList,redioCheck,contentEditable, data } = this.state
 		return (
 			<div className='DownloadPage contentCenter clearfix'>
 				<div className="left leftBar">
 					<div className="pad">
-						<Button type="primary" icon="download" size='large' onClick={()=>this.props.changeDownloadShow(true)}>下载试卷</Button>
-						<div className="clearfix small_title">
+						<Button type="primary" icon="download" size='large' onClick={this.handleDownload}>下载试卷</Button>
+						{/*<div className="clearfix small_title">
 							<div className="left" onClick={()=>this.props.changeAnswerSheetShow(true)}><Icon type="file-word" style={{color:'#ff9600'}}/> 下载答题卡</div>
 							<div className="left" onClick={()=>this.props.changeAnalyzeShow(true)}><Icon type="line-chart" style={{color:'#ff9600',cursor:'pointer'}}/> 分析试卷</div>
 							<div className="left"><Icon type="save" style={{color:'#ff9600'}}/> 保存组卷</div>
-						</div>
+						</div>*/}
 					</div>
-					<h3>试卷结构调整<span>收起</span></h3>
+					<h3 className='h3'>试卷结构调整<span>收起</span></h3>
 					<div className="group">
 						<RadioGroup onChange={this.handleRedioGroupClick} value={redioCheck} size='small'>
 			        <Radio value={JSON.stringify(['3', '8','10'])}>简易模办</Radio>
-			        <Radio value={JSON.stringify(['3','4','5','6','7','8','9','10'])}>普通模板</Radio>
-			        <Radio value={JSON.stringify(['1','2','3','4','5','6','7','8','9','10'])}>正式模板</Radio>
+			        <Radio value={JSON.stringify(['3','4','6','7','8','9','10'])}>普通模板</Radio>
+			        {/*<Radio value={JSON.stringify(['1','2','3','4','6','7','8','9','10'])}>正式模板</Radio>*/}
 			      </RadioGroup>
 					</div>
 					<div className="checkgroup pad">
 						<CheckboxGroup options={this.state.plainOptions} value={CheckedList} onChange={this.handleSingleCheck}/>
 					</div>
-					<h3>试题统计<span>收起</span></h3>
+					<h3 className='h3'>试题统计{/*<span>收起</span>*/}</h3>
 					<Anchor>
 						<div className="answer-number">
-							<h2>一、单选题 <div className="right">排序<span>删除</span></div></h2>
-					    <div className="answer-num">
-						    <ul>
-							    <li><Link href='#s_1' title="1"></Link></li>
-							    <li className="active"><Link title="2"></Link></li>
-							    <li><Link title="3"></Link></li>
-							    <li><Link title="4"></Link></li>
-							    <li><Link title="5"></Link></li>
-						    </ul>
-					    </div>
-					    <h2>二、填空题 <div className="right">排序<span>删除</span></div></h2>
-					    <div className="answer-num">
-						    <ul>
-							    <li className="active"><Link title="1"></Link></li>
-							    <li><Link title="1"></Link></li>
-						    </ul>
-					    </div>
-					    <h2>三、综合题 <div className="right">排序<span>删除</span></div></h2>
-					    <div className="answer-num">
-						    <ul>
-							    <li><Link title="1"></Link></li>
-							    <li><Link title="1"></Link></li>
-						    </ul>
-					    </div>
+							{
+								data.topics.length> 0 && data.topics.map((item, index)=>{
+									return (
+										<div key={index}>
+											<h2 className='h2'>{index+1}、{item.name}{/*<div className="right">排序<span>删除</span></div>*/}</h2>
+									    <div className="answer-num">
+										    <ul>
+													{
+														item.children.length>0 && item.children.map(function(iitem,i){
+															return <li key={iitem.id}><Link href={'#'+item.name+iitem.id} title={i+1}></Link></li>
+														})
+													}
+											    {/*<li className="active"><Link title="2"></Link></li>*/}
+										    </ul>
+									    </div>
+										</div>
+									)
+								})
+							}
 					  </div>
 					</Anchor>
 				</div>
-				<div className="right rightContent clearfix">
-					{CheckedList.indexOf('1') !== -1 && <div className="left editing"></div>}
-					<div className="right rightpage">
+				<div className="right rightContent clearfix" id='download_exam'>
+					{/*CheckedList.indexOf('1') !== -1 && <div className="left editing"></div>*/}
+					<div className="left rightpage">
 						{
-							CheckedList.indexOf('3') !== -1 && <div style={{textAlign:'center'}}><h1 contentEditable={contentEditable}>2017年江苏省泰州市中考数学试卷</h1></div>
+							CheckedList.indexOf('3') !== -1 && <div style={{textAlign:'center'}}><h1 className='h1' contentEditable={contentEditable}>{data.title}</h1></div>
 						}
-						{
-							CheckedList.indexOf('5') !== -1 && <div style={{textAlign:'center'}}><h2 contentEditable={contentEditable}>数学考试</h2></div>
-						}
+						{/*
+							CheckedList.indexOf('5') !== -1 && <div style={{textAlign:'center'}}><h2 className='h2' contentEditable={contentEditable}>数学考试</h2></div>
+						*/}
 						{
 							CheckedList.indexOf('6') !== -1 && (
 								<div className="test-time">
@@ -171,44 +194,79 @@ export default class DownloadPage extends Component{
 				    	<small className="left" style={{color:'#999'}} contentEditable={contentEditable}>第Ⅰ卷的注释</small>
 				    	<h3 contentEditable={contentEditable}>第Ⅰ卷 客观题</h3>
 				    </div>*/}
-				    <div className="paper-types">
-							{
-								CheckedList.indexOf('2') !== -1 && (
-									<table>
-							    	<tbody>
-							    		<tr>
-							    			<th>阅卷人</th>
-							    			<td></td>
-							    		</tr>
-							    		<tr>
-							    			<th>得&nbsp;&nbsp;分</th>
-							    			<td></td>
-							    		</tr>
-							    	</tbody>
-							    </table>
-								)
-							}
-							{
-								CheckedList.indexOf('8') !== -1 && (
-									<p>
-							    	<strong>
-							    		<b className="t-order">一</b>
-							    		、<span contentEditable={contentEditable}>解答题</span>
-							    		{
-												CheckedList.indexOf('10') !== -1 && <span>(共<b className="t-num">2</b>题；共<b className="t-score">20</b>分)</span>
-											}
-							    	</strong>
-							    </p>
-								)
-							}
 
-					    <div className="types-btngroup">
-				        <span onClick={()=>this.setState({visible1: true})}><Icon type="switcher" />批量设置得分</span>
-				        <span onClick={()=>this.setState({visible2: true})}><Icon type="filter" />排序</span>
-				        <span onClick={()=>this.setState({visible3: true})}><Icon type="delete" />删除</span>
-					    </div>
-				    </div>
-				    <div className="selectQ types">
+						{
+							data.topics.length> 0 && data.topics.map((item, index)=>{
+								return (
+									<div key={index}>
+										<div className="paper-types">
+											{/*
+												CheckedList.indexOf('2') !== -1 && (
+													<table>
+											    	<tbody>
+											    		<tr>
+											    			<th>阅卷人</th>
+											    			<td></td>
+											    		</tr>
+											    		<tr>
+											    			<th>得&nbsp;&nbsp;分</th>
+											    			<td></td>
+											    		</tr>
+											    	</tbody>
+											    </table>
+												)
+											*/}
+											{
+												CheckedList.indexOf('8') !== -1 && (
+													<p>
+											    	<strong>
+											    		<b className="t-order">{index+1}</b>
+											    		、<span contentEditable={contentEditable}>{item.name}</span>
+											    		{
+																CheckedList.indexOf('10') !== -1 && <span>(共<b className="t-num">{item.children.length}</b>题；共<b className="t-score">{item.score_count}</b>分)</span>
+															}
+											    	</strong>
+											    </p>
+												)
+											}
+
+									    {/*<div className="types-btngroup">
+								        <span onClick={()=>this.setState({visible1: true})}><Icon type="switcher" />批量设置得分</span>
+								        <span onClick={()=>this.setState({visible2: true})}><Icon type="filter" />排序</span>
+								        <span onClick={()=>this.setState({visible3: true})}><Icon type="delete" />删除</span>
+									    </div>*/}
+								    </div>
+
+										{
+											item.children.length> 0 && item.children.map((iitem, i)=>{
+												return (
+													<div key={iitem.id} className="selectQ types" id={item.name+iitem.id}>
+														<div style={{overflow:'hidden',position:'relative'}}>
+															<div className="question-num" style={{position:'absolute'}}>
+																<span className="q-sn">{i+1}.</span>
+																<span className="q-scoreval">（{iitem.remark.score}分）</span>
+															</div>
+															<div dangerouslySetInnerHTML={{__html: iitem.content }}></div>
+														</div>
+
+														{/*<div className="types-btngroup">
+											        <span onClick={()=>this.props.history.push('/AnswerDetail/1')}><Icon type="eye-o" />答案解析</span>
+											        <span onClick={()=>this.setState({visible4: true})}><Icon type="switcher" />设定得分</span>
+											        <span onClick={()=>message.success('试题收藏成功')}><Icon type="heart-o" /><Icon type="heart" />收藏</span>
+											        <span onClick={()=>this.props.changeCorrectErrorShow(true)}><Icon type="form" />纠错</span>
+											        <span onClick={()=>{}}><Icon type="delete" />删除</span>
+												    </div>*/}
+											    </div>
+												)
+											})
+										}
+									</div>
+								)
+							})
+						}
+
+
+				    {/*<div className="selectQ types">
 							<div className="question-num">
 								<span className="q-sn">1.</span>
 								<span className="q-scoreval">（2分）</span>
@@ -227,14 +285,33 @@ export default class DownloadPage extends Component{
 				        <span onClick={()=>this.props.changeCorrectErrorShow(true)}><Icon type="form" />纠错</span>
 				        <span onClick={()=>{}}><Icon type="delete" />删除</span>
 					    </div>
-				    </div>
+				    </div>*/}
 
 						<div className="answer">
-							答案部分：
-							1.【答案】B
-							【考点】拼音，jqx
-							【解析】【分析】首先需要认识鸟和虫两个字，再根据字音去判断哪两个音节拼写正确。
-							【点评】本题考查字音和音节的正确拼写。
+							{
+								data.topics.length> 0 && data.topics.map((item, index)=>{
+									return (
+										<div key={index} className='answer_title'>
+											<div style={{fontSize:18}}>{index+1+' 、'+ item.name}</div>
+											{
+												item.children.length>0 && item.children.map(function(iitem, i){
+													return (
+														<div key={iitem.id}>
+															<span style={{textIndent: '1em',display:'inline-block'}}>{i+1+' . '}</span>
+															<span style={{color:'#ff9600'}}>【答案】</span>
+															<span style={{textIndent: '5em'}} dangerouslySetInnerHTML={{__html: iitem.remark.right_answer }}></span>
+															<div style={{color:'#ff9600',textIndent: '2em'}}>【解析】</div>
+															<div style={{textIndent: '5em'}} dangerouslySetInnerHTML={{__html: iitem.remark.answer_analysis }}></div>
+															<div style={{color:'#ff9600',textIndent: '2em'}}>【知识点】</div>
+															<div style={{textIndent: '5em'}} dangerouslySetInnerHTML={{__html: iitem.remark.test_point }}></div>
+														</div>
+													)
+												})
+											}
+										</div>
+									)
+								})
+							}
 						</div>
 					</div>
 

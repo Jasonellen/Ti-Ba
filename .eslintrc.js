@@ -40,7 +40,8 @@ module.exports = {
             "eventEmitter":true,
             "_history":true,
 						"log":true,
-						"QRCode":true
+						"QRCode":true,
+						"$":true
     },
     rules: {
 			'indent': ['error', 'tab'],

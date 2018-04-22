@@ -158,13 +158,13 @@ export default class Nav extends Component {
 			        <SubMenu title={<span>自动组卷</span>}>
 								<Menu.Item key="znzj/zj">章节智能组卷</Menu.Item>
 								<Menu.Item key="znzj/zsd">知识点智能组卷</Menu.Item>
-								<Menu.Item key="double">双向细目表组卷</Menu.Item>
+								{/*<Menu.Item key="double">双向细目表组卷</Menu.Item>*/}
 			        </SubMenu>
-			        <SubMenu title={<span>试卷库</span>}>
-			          	<Menu.Item key="Papers">同步试卷</Menu.Item>
+			        {/*<SubMenu title={<span>试卷库</span>}>
+			          <Menu.Item key="Papers">同步试卷</Menu.Item>
 								<Menu.Item key="PapersTest">测试试卷</Menu.Item>
-			            <Menu.Item key="realPapers">真卷&模拟卷</Menu.Item>
-			        </SubMenu>
+			          <Menu.Item key="realPapers">真卷&模拟卷</Menu.Item>
+			        </SubMenu>*/}
 			        {/*<Menu.Item key="beike">备课中心</Menu.Item>*/}
 				    </Menu>
 						{
