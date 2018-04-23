@@ -50,8 +50,8 @@ export default function Routers(){
 						<Route path="/PapersTest" component={PapersTest}/>
 						<Route path="/ShiJuanDetail/:id" component={ShiJuanDetail}/>
 						<Route path="/HelpCenter" component={HelpCenter}/>
-						<Route path="/OnlineTest/:id" component={OnlineTest}/>
-						<Route path="/TestResult/:id" component={TestResult}/>
+						{/*<Route path="/OnlineTest/:id" component={OnlineTest}/>*/}
+						{/*<Route path="/TestResult/:id" component={TestResult}/>*/}
 						<Route path="/BeiKeDetail/:id" component={BeiKeDetail}/>
 						<Route path="/Double" component={Double}/>
 						<Route path="/DoubleDetail/:id" component={DoubleDetail}/>

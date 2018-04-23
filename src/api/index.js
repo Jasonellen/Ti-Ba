@@ -1,8 +1,8 @@
 
 let url={}  //导出url
-let __host__ = 'http://rqiang.mynatapp.cc/api/v1';
-// __host__ = 'http://192.168.0.111:3008/api/v1';
-__host__ = 'http://admin.gbtibawang.com/api/v1';
+let __host__ = 'http://admin.gbtibawang.com/api/v1';
+__host__ = 'http://rqiang.mynatapp.cc/api/v1';
+__host__ = 'http://192.168.0.115:3008/api/v1';
 
 
 

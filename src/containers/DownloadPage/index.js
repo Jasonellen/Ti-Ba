@@ -2,10 +2,10 @@
 import React, { Component }from 'react';
 import { Modal, Button, Radio,Checkbox, Anchor, InputNumber } from 'antd';
 import './index.scss'
-const { Link } = Anchor;
 import {connect} from 'react-redux';
 import * as otherAction from '@/Redux/actions/other.js';
 import { bindActionCreators } from 'redux'
+const { Link } = Anchor;
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 
@@ -21,15 +21,15 @@ export default class DownloadPage extends Component{
 	state={
 		contentEditable:false,
 		plainOptions:[
-			// { label: '密封线', value: '1', },
-			// { label: '大题评分区', value: '2' },
+			{ label: '密封线', value: '1', },
+			{ label: '大题评分区', value: '2' },
 			{ label: '主标题', value: '3' },
 			{ label: '注意事项', value: '4' },
 			// { label: '副标题', value: '5' },
 			{ label: '考试时间', value: '6' },
 			{ label: '考生填写', value: '7' },
 			{ label: '分大题', value: '8' },
-			{ label: '总评分', value: '9' },
+			// { label: '总评分', value: '9' },
 			{ label: '大题注释', value: '10' },
 		],
 		CheckedList:['3', '8','10'],
@@ -74,12 +74,11 @@ export default class DownloadPage extends Component{
 			type : 'exam_record',
 			id : this.props.match.params.id
 		})
-			.then(data=>{
+			.then((data)=>{
 				$(document).googoose({
 					area: '#download_exam',
 					filename: `${data.name}.doc`
 				});
-
 			})
 	}
 	render(){
@@ -95,12 +94,12 @@ export default class DownloadPage extends Component{
 							<div className="left"><Icon type="save" style={{color:'#ff9600'}}/> 保存组卷</div>
 						</div>*/}
 					</div>
-					<h3 className='h3'>试卷结构调整<span>收起</span></h3>
+					<h3 className='h3'>试卷结构调整{/*<span>收起</span>*/}</h3>
 					<div className="group">
 						<RadioGroup onChange={this.handleRedioGroupClick} value={redioCheck} size='small'>
 			        <Radio value={JSON.stringify(['3', '8','10'])}>简易模办</Radio>
-			        <Radio value={JSON.stringify(['3','4','6','7','8','9','10'])}>普通模板</Radio>
-			        {/*<Radio value={JSON.stringify(['1','2','3','4','6','7','8','9','10'])}>正式模板</Radio>*/}
+			        <Radio value={JSON.stringify(['3','4','6','7','8','10'])}>普通模板</Radio>
+			        <Radio value={JSON.stringify(['1','2','3','4','6','7','8','10'])}>正式模板</Radio>
 			      </RadioGroup>
 					</div>
 					<div className="checkgroup pad">
@@ -132,8 +131,9 @@ export default class DownloadPage extends Component{
 					</Anchor>
 				</div>
 				<div className="right rightContent clearfix" id='download_exam'>
-					{/*CheckedList.indexOf('1') !== -1 && <div className="left editing"></div>*/}
+					
 					<div className="left rightpage">
+						{ CheckedList.indexOf('1') !== -1 && <img className='editing' src='/static/editing.png' alt=""/>}
 						{
 							CheckedList.indexOf('3') !== -1 && <div style={{textAlign:'center'}}><h1 className='h1' contentEditable={contentEditable}>{data.title}</h1></div>
 						}
@@ -143,11 +143,14 @@ export default class DownloadPage extends Component{
 						{
 							CheckedList.indexOf('6') !== -1 && (
 								<div className="test-time">
-									考试时间：<span contentEditable={contentEditable} className='total_time'>* *</span>分钟 <span contentEditable={contentEditable}>* *</span>分
+									考试时间：<span contentEditable={true} className='total_time'>* *</span>分钟 <span contentEditable={true}>* *</span>分
 								</div>
 							)
 						}
 						{
+							CheckedList.indexOf('7') !== -1 && <img src="/static/name.jpg" alt=""/>
+						}
+						{/*
 							CheckedList.indexOf('7') !== -1 && (
 								<ul className="stu-info">
 									<li>姓名：<span>____________</span></li>
@@ -155,9 +158,9 @@ export default class DownloadPage extends Component{
 									<li>学号：<span>____________</span></li>
 								</ul>
 							)
-						}
+						*/}
 
-						{
+						{/*
 							CheckedList.indexOf('9') !== -1 && (
 								<table className="top_table">
 									<tbody>
@@ -176,13 +179,13 @@ export default class DownloadPage extends Component{
 									</tbody>
 								</table>
 							)
-						}
+						*/}
 
 						{
 							CheckedList.indexOf('4') !== -1 && (
 								<div className="warning">
 									<p>* 注意事项：</p>
-									<div className="warningText" contentEditable={contentEditable}>
+									<div className="warningText" contentEditable={true}>
 										1、填写答题卡的内容用2B铅笔填写<br/>
 										2、提前 xx 分钟收取答题卡;
 									</div>
@@ -200,25 +203,10 @@ export default class DownloadPage extends Component{
 								return (
 									<div key={index}>
 										<div className="paper-types">
-											{/*
-												CheckedList.indexOf('2') !== -1 && (
-													<table>
-											    	<tbody>
-											    		<tr>
-											    			<th>阅卷人</th>
-											    			<td></td>
-											    		</tr>
-											    		<tr>
-											    			<th>得&nbsp;&nbsp;分</th>
-											    			<td></td>
-											    		</tr>
-											    	</tbody>
-											    </table>
-												)
-											*/}
+											
 											{
 												CheckedList.indexOf('8') !== -1 && (
-													<p>
+													<p className='p'>
 											    	<strong>
 											    		<b className="t-order">{index+1}</b>
 											    		、<span contentEditable={contentEditable}>{item.name}</span>
@@ -228,6 +216,9 @@ export default class DownloadPage extends Component{
 											    	</strong>
 											    </p>
 												)
+											}
+											{
+												CheckedList.indexOf('2') !== -1 && <img src="/static/yjr.jpg" alt=""/>
 											}
 
 									    {/*<div className="types-btngroup">
@@ -242,7 +233,7 @@ export default class DownloadPage extends Component{
 												return (
 													<div key={iitem.id} className="selectQ types" id={item.name+iitem.id}>
 														<div style={{overflow:'hidden',position:'relative'}}>
-															<div className="question-num" style={{position:'absolute'}}>
+															<div className="question-num">
 																<span className="q-sn">{i+1}.</span>
 																<span className="q-scoreval">（{iitem.remark.score}分）</span>
 															</div>
@@ -297,7 +288,7 @@ export default class DownloadPage extends Component{
 												item.children.length>0 && item.children.map(function(iitem, i){
 													return (
 														<div key={iitem.id}>
-															<span style={{textIndent: '1em',display:'inline-block'}}>{i+1+' . '}</span>
+															<span>{i+1+' . '}</span>
 															<span style={{color:'#ff9600'}}>【答案】</span>
 															<span style={{textIndent: '5em'}} dangerouslySetInnerHTML={{__html: iitem.remark.right_answer }}></span>
 															<div style={{color:'#ff9600',textIndent: '2em'}}>【解析】</div>

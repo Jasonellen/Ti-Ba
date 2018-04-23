@@ -71,13 +71,13 @@ var webpackConfig = merge(baseWebpackConfig, {
     }),
     // copy custom static assets
 		//将根目录的static 拷贝到'static'中(outpath+static == dist/static)
-    // new CopyWebpackPlugin([
-    //   {
-    //     from: path.resolve(__dirname, '../static'),
-    //     to: config.build.assetsSubDirectory,
-    //     ignore: ['.*']
-    //   }
-    // ])
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../static'),
+        to: config.build.staticPath,
+        // ignore: ['.*']
+      }
+    ])
   ]
 })
 
