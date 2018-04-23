@@ -2,7 +2,7 @@
 let url={}  //导出url
 let __host__ = 'http://admin.gbtibawang.com/api/v1';
 __host__ = 'http://rqiang.mynatapp.cc/api/v1';
-__host__ = 'http://192.168.0.115:3008/api/v1';
+// __host__ = 'http://192.168.0.115:3008/api/v1';
 
 
 
@@ -32,6 +32,6 @@ Object.defineProperties(url, {
 	owner_correct_records: {value: __host__ + '/owner/correct_records'},  //纠错记录
 	download_records: {value: __host__ + '/download_records'},  //试卷下载
 	attachments: {value: __host__ + '/attachments'},  //保存图片
+	owner_download_records: {value: __host__ + '/owner/download_records'},  //下载记录
 });
 export default url
-     

@@ -17,7 +17,7 @@ function dataURItoBlob (base64Data) {
 		byteString = atob(base64Data.split(',')[1]);
 	}else{
 		byteString = unescape(base64Data.split(',')[1]);
-	}	
+	}
 	var type = base64Data.split(',')[0].split(':')[1].split(';')[0];
 	var ia = new Uint8Array(byteString.length);
 	for (var i = 0; i < byteString.length; i++) {
@@ -64,25 +64,6 @@ export default class DownloadPage extends Component{
 	}
 	componentDidMount(){
 		this.getExamDetail()
-		// console.log(dataURItoBlob(img))
-		// var querystring = require('querystring');
-		// axios.post(url.attachments, querystring.stringify({ 
-		// 	token:"CUhLA9Gst9nVNYGQYU2DKSPg",
-		// 	base64_image: dataURItoBlob(img)
-		// }));
-		var fd=new FormData();
-		fd.append('file',dataURItoBlob(img),'1.png');
-		//如果需要多图上传只需要把对象添加进数组就可以了，向这样：fd.append('file[]',file);
-		$.ajax({
-			url:url.attachments,
-			type:"POST",
-			data:fd,
-			processData: false,
-			contentType: false,
-			success:function(data){
-			 	console.log(data)
-			}
-		}); 
 	}
 	handleRedioGroupClick = (e)=>{
 		// console.log(e.target.value,1)
@@ -93,7 +74,7 @@ export default class DownloadPage extends Component{
 	}
 	handleSingleCheck = (v)=>{
 		this.setState({
-			CheckedList:v 
+			CheckedList:v
 		})
 	}
 
@@ -107,18 +88,22 @@ export default class DownloadPage extends Component{
 	}
 	handleDownload = ()=>{
 		// this.props.changeDownloadShow(true)
-		
+
 
 		html2canvas(document.querySelector("#download_exam")).then(canvas => {
-			// document.body.appendChild(canvas)
+			document.body.appendChild(canvas)
 
-			var base64Data = canvas.toDataURL("image/png"); //.replace(/^data:image\/\w+;base64,/, "");
-			
-			
+			var base64Data = canvas.toDataURL("image/png");
+			document.querySelector("#test").src=base64Data
+			_axios.formData(url.attachments,{
+				base64_image:dataURItoBlob(base64Data),
+				type:'exam_record',
+				id:this.props.match.params.id
+			});
 
 	    // var dataBuffer = new Buffer(base64Data, 'base64');
 	    // var querystring = require('querystring');
-	    // axios.post(url.attachments, querystring.stringify({ 
+	    // axios.post(url.attachments, querystring.stringify({
 	    // 	token:"CUhLA9Gst9nVNYGQYU2DKSPg",
 	    // 	base64_image: dataURItoBlob(img)
 	    // }));
@@ -126,21 +111,21 @@ export default class DownloadPage extends Component{
 			// 	base64_image:
 			// })
 
-	   
+
 			// document.querySelector("#test").src=base64Data
-			_axios.post(url.download_records,{
-				type : 'exam_record',
-				id : this.props.match.params.id
-			})
-				.then(data=>{
-					$(document).googoose({
-						area: "#download",
-						filename: `${data.name}.doc`
-					});
+			// _axios.post(url.download_records,{
+			// 	type : 'exam_record',
+			// 	id : this.props.match.params.id
+			// })
+			// 	.then(data=>{
+			// 		$(document).googoose({
+			// 			area: "#download",
+			// 			filename: `${data.name}.doc`
+			// 		});
+			//
+			// 	})
 
-				})
 
-			
 		});
 	}
 	render(){
@@ -204,7 +189,7 @@ export default class DownloadPage extends Component{
 						{
 							CheckedList.indexOf('6') !== -1 && (
 								<div className="test-time">
-									考试时间：<span contentEditable={contentEditable} className='total_time'>* *</span>分钟 <span contentEditable={contentEditable}>* *</span>分
+									考试时间：<span contentEditable={true} className='total_time'>* *</span>分钟 <span contentEditable={true}>* *</span>分
 								</div>
 							)
 						}
@@ -243,7 +228,7 @@ export default class DownloadPage extends Component{
 							CheckedList.indexOf('4') !== -1 && (
 								<div className="warning">
 									<p>* 注意事项：</p>
-									<div className="warningText" contentEditable={contentEditable}>
+									<div className="warningText" contentEditable={true}>
 										1、填写答题卡的内容用2B铅笔填写<br/>
 										2、提前 xx 分钟收取答题卡;
 									</div>
@@ -376,11 +361,11 @@ export default class DownloadPage extends Component{
 						</div>
 
 						<div id="download">
-						
+
 						</div>
 						<img id='test' src='' alt=""/>
 					</div>
-					
+
 				</div>
 
 				 <Modal
