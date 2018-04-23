@@ -33,7 +33,6 @@ module.exports = {
             "fetchJsonp":true,
             "WeixinJSBridge":true,
             "wx":true,
-            "_dev_api":true,
             "Swiper":true,
             "axios":true,
             "_axios": true,
@@ -42,7 +41,6 @@ module.exports = {
 						"log":true,
 						"QRCode":true,
 						"$":true,
-                        "html2canvas":true
     },
     rules: {
 			'indent': ['error', 'tab'],

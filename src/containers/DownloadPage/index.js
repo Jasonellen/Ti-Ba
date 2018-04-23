@@ -56,7 +56,7 @@ export default class DownloadPage extends Component{
 	}
 	handleSingleCheck = (v)=>{
 		this.setState({
-			CheckedList:v 
+			CheckedList:v
 		})
 	}
 
@@ -80,6 +80,11 @@ export default class DownloadPage extends Component{
 					filename: `${data.name}.doc`
 				});
 			})
+		// var b = document.body.innerHTML
+		// var a = document.querySelector('#download_exam')
+		// document.body.innerHTML = a.innerHTML
+		// window.print();
+		// document.body.innerHTML = b
 	}
 	render(){
 		const { CheckedList,redioCheck,contentEditable, data } = this.state
@@ -131,7 +136,6 @@ export default class DownloadPage extends Component{
 					</Anchor>
 				</div>
 				<div className="right rightContent clearfix" id='download_exam'>
-					
 					<div className="left rightpage">
 						{ CheckedList.indexOf('1') !== -1 && <img className='editing' src='/static/editing.png' alt=""/>}
 						{
@@ -203,7 +207,7 @@ export default class DownloadPage extends Component{
 								return (
 									<div key={index}>
 										<div className="paper-types">
-											
+
 											{
 												CheckedList.indexOf('8') !== -1 && (
 													<p className='p'>
