@@ -31,5 +31,7 @@ Object.defineProperties(url, {
 	correct_records: {value: __host__ + '/correct_records'},  //试题纠错
 	owner_correct_records: {value: __host__ + '/owner/correct_records'},  //纠错记录
 	download_records: {value: __host__ + '/download_records'},  //试卷下载
+	attachments: {value: __host__ + '/attachments'},  //保存图片
 });
 export default url
+     
