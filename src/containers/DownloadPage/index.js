@@ -79,7 +79,7 @@ export default class DownloadPage extends Component{
 					area: '#download_exam',
 					filename: `${data.name}.doc`
 				});
-			})
+			}) 
 	}
 	render(){
 		const { CheckedList,redioCheck,contentEditable, data } = this.state

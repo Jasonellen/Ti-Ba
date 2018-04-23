@@ -41,7 +41,8 @@ module.exports = {
             "_history":true,
 						"log":true,
 						"QRCode":true,
-						"$":true
+						"$":true,
+                        "html2canvas":true
     },
     rules: {
 			'indent': ['error', 'tab'],
