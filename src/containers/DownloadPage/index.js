@@ -261,7 +261,7 @@ export default class DownloadPage extends Component{
 								return (
 									<div key={index}>
 										<div className="paper-types">
-											{/*
+											{
 												CheckedList.indexOf('2') !== -1 && (
 													<table>
 											    	<tbody>
@@ -276,7 +276,7 @@ export default class DownloadPage extends Component{
 											    	</tbody>
 											    </table>
 												)
-											*/}
+											}
 											{
 												CheckedList.indexOf('8') !== -1 && (
 													<p>
