@@ -66,5 +66,28 @@ export default {
 			throw new Error(error)
 		}
 	},
+	formData:async (url1='', params = {})=>{  //del参数需要用data包裹
+		let token = getCookie('tiba_key')
+		var fd=new FormData();
+		for (var key in params){
+			fd.append(key,params[key]);
+		}
+		try {
+			const response = await axios.post( url1+'?token='+token,fd)
+				.then(({data})=>{
+					if(data.status === 'fail'){
+						notification.error({
+							message: '通知提醒',
+							description: data.msg,
+							duration:2
+						});
+					}else if(data.status === 'success'){
+						return data
+					}
+				})
+			return response
+		} catch (error) {
+			throw new Error(error)
+		}
+	},
 }
-

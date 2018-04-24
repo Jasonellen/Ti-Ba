@@ -7,7 +7,9 @@ export default class Pdownload extends Component{
 	state={
 
 	}
-
+	componentDidMount(){
+		_axios.get(url.owner_download_records)
+	}
 	render(){
 		return (
 			<div className="download">
