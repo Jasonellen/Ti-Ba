@@ -26,8 +26,6 @@ export default class XuanTi extends Component{
 		side:this.props.location.pathname.toLowerCase(),
 	};
 	componentDidMount(){
-		this.props.zjzujuanChangeSubmitId({key:'chapters',value:[]})
-		this.props.zjzujuanChangeSubmitId({key:'knowledges',value:[]})
 		this.props.history.listen((location)=>{
 			this.setState({
 				side:location.pathname.toLowerCase()
@@ -45,12 +43,14 @@ export default class XuanTi extends Component{
 		this.props.handleOptionChange(key,x)
 	}
 	handleC = (x)=>{
-		this.props.handleOptionChange('chapters',x)
-		this.props.handleOptionChange('knowledges',[])
+		this.props.zjzujuanChangeSubmitId({key:'chapter_ids',value:x})
+		this.props.zjzujuanChangeSubmitId({key:'knowledge_ids',value:[]})
+		this.props.beginSearch()
 	}
 	handleK = (x)=>{
-		this.props.handleOptionChange('chapters',[])
-		this.props.handleOptionChange('knowledges',x)
+		this.props.zjzujuanChangeSubmitId({key:'chapter_ids',value:[]})
+		this.props.zjzujuanChangeSubmitId({key:'knowledge_ids',value:x})
+		this.props.beginSearch()
 	}
 	render(){
 		const { versions, topic_types,topic_classes,levels, test_point_counts, chapter,knowledges } = this.props.persist

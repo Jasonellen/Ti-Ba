@@ -9,62 +9,65 @@ export const {
 
 export const beginSearch = () => (dispatch,getState) =>{
 
-	// const {
-	// 	education_id,
-	// 	subject_id,
-	// 	version_id,
-	// 	topic_type_id,
-	// 	level,
-	// 	topic_class_id,
-	// 	test_point_count,
-	// 	grade_id,
-	// 	created_at,
-	// 	mix_times,
-	// 	current_page:page,
-	// 	per_page,
-	// 	chapters,
-	// 	knowledges
-	// } = getState().zjzujuan
+	const {
+		level,
+		grade,
+		side,
+		chapter_ids,
+		knowledge_ids,
+		topic_data
+	} = getState().znzj
 
-	// const order = {
-	// 	created_at,
-	// 	mix_times
-	// }
-	// _axios.post(url.topics,{
-	// 	education_id,
-	// 	subject_id,
-	// 	version_id,
-	// 	topic_type_id,
-	// 	level,
-	// 	topic_class_id,
-	// 	test_point_count,
-	// 	grade_id,
-	// 	order,page,per_page,
-	// 	chapters,
-	// 	knowledges
-	// })
-	// 	.then(data=>{
-	// 		data.data.map(function(item){
-	// 			item.select = false
-	// 		})
-	// 		dispatch(znzjChangeSingle({key:'data',value:data.data}))
-	// 	})
+	let _ids = side == '/znzj/zj' ? chapter_ids : knowledge_ids
+	let ids = _ids.join(',')
+	let _grade = grade.join(',')
+	let type = side == '/znzj/zj' ? 'chapters' : 'knowledges'
+	_axios.get(url.smart_subjects,{
+		type,ids,level,grade:_grade
+	})
+		.then(data=>{
+			topic_data.map(function(iitem,i){
+				iitem.show=false
+				iitem.topics_count = 0
+				data.data.map(function(item){
+					item.show = true
+					if(item.topic_type_id == iitem.topic_type_id){
+						topic_data.splice(i,1,item)
+					}
+				})
+			})
+			dispatch(znzjChangeSingle({key:'topic_data',value:topic_data}))
+		})
 }
 
-export const InitParams = () => (dispatch,getState) =>{
+export const InitParams = (side) => (dispatch,getState) =>{
 	let data = getState().persist
+	//年级
 	let defaultGradesId = []
 	let grades = JSON.parse(JSON.stringify(data.grades))
 	grades.map(function(item){
 		defaultGradesId.push(item.id)
 	})
+	//题型
+	let topic_data = []
+	data.topic_types.map(function(item){
+		topic_data.push({
+			topic_type_id:item.id,
+			topic_type_name:item.title,
+			topics_count:0,
+			show:false,
+		})
+	})
 	//初始化试题搜索信息
 	dispatch(znzjChangeSingle({key:'education_id',value:data.education_id}))
 	dispatch(znzjChangeSingle({key:'subject_id',value:data.subject_id}))
-	dispatch(znzjChangeSingle({key:'grade_id',value:defaultGradesId}))
+	dispatch(znzjChangeSingle({key:'grade',value:defaultGradesId}))
 	dispatch(znzjChangeSingle({key:'grades',value:grades}))
-
-	// dispatch(beginSearch())
+	dispatch(znzjChangeSingle({key:'chapters',value:[]}))
+	dispatch(znzjChangeSingle({key:'knowledges',value:[]}))
+	dispatch(znzjChangeSingle({key:'side',value:side}))
+	dispatch(znzjChangeSingle({key:'topic_data',value:topic_data}))
+	dispatch(beginSearch())
 }
 
 //搜索条件改变
@@ -74,7 +77,7 @@ export const handleOptionChange = (key,value) => (dispatch) =>{
 }
 //年级点击
 export const handleCheckGroup = (x) => (dispatch, getState) =>{
-	let grades = getState().zjzujuan.grades
+	let grades = getState().znzj.grades
 	grades.map(function(item){
 		item.checked = false
 		x.map(function(iitem){
@@ -84,7 +87,37 @@ export const handleCheckGroup = (x) => (dispatch, getState) =>{
 		})
 	})
 	dispatch(znzjChangeSingle({key:'grades',value:grades}))
-	dispatch(znzjChangeSingle({key:'grade_id',value:x}))
+	dispatch(znzjChangeSingle({key:'grade',value:x}))
 	dispatch(beginSearch())
 }
 
+//输入框值改变
+export const hanldeInputChange = (num, id) => (dispatch, getState) =>{
+	let topic_data = getState().znzj.topic_data
+	topic_data.map(function(item){
+		if(item.topic_type_id == id){
+			item.topics_count =num
+		}
+	})
+	//dispatch(znzjChangeSingle({key:'topic_data',value:topic_data})) //这里不做渲染，就不会改变 最大值，实际值是变的
+}
+//删除试题左边列表
+export const handleTopicDataDel = (id) => (dispatch, getState) =>{
+	let topic_data = [...getState().znzj.topic_data]
+	topic_data.map(function(item){
+		if(item.topic_type_id == id){
+			item.show = false
+		}
+	})
+	dispatch(znzjChangeSingle({key:'topic_data',value:topic_data}))
+}
+//添加试题左边列表
+export const handleTopicDataAdd = (id) => (dispatch, getState) =>{
+	let topic_data = [...getState().znzj.topic_data]
+	topic_data.map(function(item){
+		if(item.topic_type_id == id){
+			item.show = true
+		}
+	})
+	dispatch(znzjChangeSingle({key:'topic_data',value:topic_data}))
+}

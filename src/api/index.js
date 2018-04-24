@@ -2,8 +2,8 @@
 let url={}  //导出url
 let __host__ = 'http://admin.gbtibawang.com/api/v1';
 // __host__ = 'http://admin.imzzb.cn/api/v1';
-// __host__ = 'http://rqiang.mynatapp.cc/api/v1';
-__host__ = 'http://192.168.0.115:3008/api/v1';
+__host__ = 'http://rqiang.mynatapp.cc/api/v1';
+// __host__ = 'http://192.168.0.115:3008/api/v1';
 
 
 
@@ -35,6 +35,8 @@ Object.defineProperties(url, {
 	attachments: {value: __host__ + '/attachments'},  //保存图片
 	owner_download_records: {value: __host__ + '/owner/download_records'},  //下载记录
 	owner_exam_records: {value: __host__ + '/owner/exam_records'},  //组卷记录
+	smart_subjects: {value: __host__ + '/smart/subjects'},  //自动组卷获取试题数量
+	smart_smart_exams: {value: __host__ + '/smart/smart_exams'},  //自动组卷
+
 });
 export default url
-

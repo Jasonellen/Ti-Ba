@@ -1,6 +1,6 @@
 
 import React, { Component }from 'react';
-import { Icon, Tooltip, Checkbox, Card, Input, Radio,Button } from 'antd';
+import { Icon, Tooltip, Checkbox, Card, InputNumber, Radio,Button } from 'antd';
 import './index.scss'
 import ZuJuanSider from '@/Components/ZuJuanSider'
 import {connect} from 'react-redux';
@@ -19,114 +19,75 @@ const RadioGroup = Radio.Group;
 	dispatch => bindActionCreators(znzjAction, dispatch)
 )
 export default class ZNZJ extends Component{
-	state = {
-		side:this.props.location.pathname.toLowerCase(),
-		RadioGroupSelectValue:'',
-		group_method:'relevance',
-	};
+
 	componentDidMount(){
+		let side = this.props.location.pathname.toLowerCase()
 		this.props.history.listen((location)=>{
-			if(location.pathname.toLowerCase() !== this.state.side){
-				this.setState({
-					side:location.pathname.toLowerCase(),
-				},()=>{
-					this.props.handleOptionChange('select_data',[])
-				})
+			if(location.pathname.toLowerCase() !== this.props.znzj.side){
+				this.props.handleOptionChange('side',location.pathname.toLowerCase())
 			}
-			
 		})
 
-		this.props.InitParams()
+		this.props.InitParams(side)
 		eventEmitter.on('subjectChanged',()=>{
-			this.props.InitParams()
+			this.props.InitParams(side)
 		});
+
 	}
 	//章节选择
 	handleC = (x)=>{
-		const { chapter } = this.props.persist
-		let select_data = []
-		chapter.map(function(item){
-			if(item.children.length > 0){
-				x.map(function(iitem){
-					if(item.id == iitem){
-						item.checked = true
-						select_data.push({id:item.id,name:item.name})
-					}
-				})
-			}else{
-				x.map(function(iitem){
-					if(item.id == iitem){
-						item.checked = true
-						select_data.push({id:item.id,name:item.name})
-					}
-				})
-			}
-			
-		})
-
-		this.props.handleOptionChange('chapter_ids',x)
-		this.props.handleOptionChange('knowledge_ids',[])
-		this.props.handleOptionChange('select_data',select_data)
+		this.props.znzjChangeSingle({key:'chapter_ids',value:x})
+		this.props.znzjChangeSingle({key:'knowledge_ids',value:[]})
+		this.props.beginSearch()
 	}
 
 	//知识点选择
 	handleK = (x)=>{
-		const { knowledges } = this.props.persist
-		let select_data = []
-		knowledges.map(function(item){
-			x.map(function(iitem){
-				if(item.id == iitem){
-					item.checked = true
-					select_data.push({id:item.id,name:item.name})
-				}
-			})
-		})
-		this.props.handleOptionChange('chapter_ids',[])
-		this.props.handleOptionChange('knowledge_ids',x)
-		this.props.handleOptionChange('select_data',select_data)
+		this.props.znzjChangeSingle({key:'chapter_ids',value:[]})
+		this.props.znzjChangeSingle({key:'knowledge_ids',value:x})
+		this.props.beginSearch()
 	}
-	//已选章节/知识点点击删除
-	handleDelSelect = (id)=>{
-		let { chapter_ids, knowledge_ids, select_data } = this.props.znzj
-		if(this.state.side == '/znzj/zj'){
-			chapter_ids.map(function(item,i){
-				if(item == id){
-					chapter_ids.splice(i,1)
-				}
-			})
-		}else{
-			knowledge_ids.map(function(item,i){
-				if(item == id){
-					knowledge_ids.splice(i,1)
-				}
-			})
-		}
-		select_data.map(function(item,i){
-			if(item.id == id){
-				select_data.splice(i,1)
-			}
-		})
-		this.props.handleOptionChange('chapter_ids',chapter_ids)
-		this.props.handleOptionChange('knowledge_ids',knowledge_ids)
-		this.props.handleOptionChange('select_data',select_data)
-	}
+
 	handleRadioGroup = (e)=>{
-		this.setState({
-			RadioGroupSelectValue:e.target.value
-		})
+		this.props.handleOptionChange('level',e.target.value)
 	}
 	handleGLChange = (e)=>{
-		this.setState({
-			group_method:e.target.value
-		})
+		this.props.handleOptionChange('group_method',e.target.value)
 	}
-	
+	//提交
+	huandleSubmit = ()=>{
+		const {
+			education_id,
+			subject_id,
+			level,
+			group_method,
+			chapter_ids,
+			knowledge_ids,
+			grade:grade_ids,
+			topic_data
+		} = this.props.znzj
+		let topic_types = topic_data.filter(function(item){
+			return item.show == true
+		})
+		_axios.post(url.smart_smart_exams,{
+			education_id,
+			subject_id,
+			level,
+			group_method,
+			chapter_ids,
+			knowledge_ids,
+			grade_ids,
+			topic_types
+		})
+			.then(data=>{
+				_history.push('/downloadpage/'+data.exam_record_id)
+			})
+	}
 	render(){
-		const { topic_types,levels, chapter,knowledges } = this.props.persist
-		const { grades, data, select_data, chapter_ids, knowledge_ids } = this.props.znzj
-		const { RadioGroupSelectValue, group_method } = this.state
+		const { levels, chapter,knowledges } = this.props.persist
+		const { grades, chapter_ids, knowledge_ids, level, group_method, side, topic_data } = this.props.znzj
 		const _levels = [{label:"不限",value:""}].concat(levels)
-		
+
 		let select_grades=[]
 		grades.map(function(item){
 			if(item.checked == true){
@@ -142,25 +103,26 @@ export default class ZNZJ extends Component{
 				<div className="warp clearfix">
 					<div className="leftSide">
 						{
-							this.state.side == '/znzj/zj'
+							side == '/znzj/zj'
 								?
-								<ZuJuanSider 
-									data={chapter} 
-									title='选择章节' 
-									onCheck={(x)=>this.handleC(x)} 
+								<ZuJuanSider
+									data={chapter}
+									title='选择章节'
+									onCheck={(x)=>this.handleC(x)}
 									checkable
 									checkedKeys = {chapter_ids}
 								/>
 								: <ZuJuanSider
-										data={knowledges} 
-										title='选择知识点' 
-										onCheck={(x)=>this.handleK(x)} 
-										checkable
-									/>
+									data={knowledges}
+									title='选择知识点'
+									onCheck={(x)=>this.handleK(x)}
+									checkable
+									checkedKeys = {knowledge_ids}
+								/>
 						}
 					</div>
 					<div className="rightSide">
-						<Card
+						{/*<Card
 							hoverable={true}
 							type="inner"
 							title='题型：填空题'
@@ -172,7 +134,7 @@ export default class ZNZJ extends Component{
 									})
 								}
 							</ul>
-						</Card>
+						</Card>*/}
 						<Card
 							hoverable={true}
 							type="inner"
@@ -180,12 +142,12 @@ export default class ZNZJ extends Component{
 						>
 							<div style={{marginBottom:10}}>
 	    					试题难度：
-								<RadioGroup onChange={this.handleRadioGroup} value={RadioGroupSelectValue}>
-								{
-									_levels.map((item)=>{
-										return <Radio key={item.value} value={item.value}>{item.label}</Radio>
-									})
-								}
+								<RadioGroup onChange={this.handleRadioGroup} value={level}>
+									{
+										_levels.map((item)=>{
+											return <Radio key={item.value} value={item.value}>{item.label}</Radio>
+										})
+									}
 								</RadioGroup>
 							</div>
 							<div style={{marginBottom:10}}>
@@ -215,39 +177,30 @@ export default class ZNZJ extends Component{
 						>
 							<div className="btm clearfix">
 								<ul className='left'>
-									<li className='clearfix'>
-										<div className="left">单选题<small>999+道试题可用</small></div>
-										<div className="right"><Input type="number" />道 <Icon type="delete" /></div>
-									</li>
-									<li className='clearfix'>
-										<div className="left">单选题<small>999+道试题可用</small></div>
-										<div className="right"><Input type="number" />道 <Icon type="delete" /></div>
-									</li>
-									<li className='clearfix'>
-										<div className="left">单选题<small>999+道试题可用</small></div>
-										<div className="right"><Input type="number" />道 <Icon type="delete" /></div>
-									</li>
-									<li className='clearfix'>
-										<div className="left">单选题<small>999+道试题可用</small></div>
-										<div className="right"><Input type="number" />道 <Icon type="delete" /></div>
-									</li>
-									<li className='clearfix'>
-										<div className="left">单选题<small>999+道试题可用</small></div>
-										<div className="right"><Input type="number" />道 <Icon type="delete" /></div>
-									</li>
+									{
+										topic_data.length>0 && topic_data.map((item)=>{
+											if(item.show){
+												return (
+													<li key={item.topic_type_id} className='clearfix'>
+														<div className="left">{item.topic_type_name}<small>{item.topics_count>999?'999+':item.topics_count}道试题可用</small></div>
+														<div className="right"><InputNumber max={item.topics_count} min={0} onChange={(num)=>this.props.hanldeInputChange(num,item.topic_type_id)}/> 道 <Icon type="delete" onClick={()=>this.props.handleTopicDataDel(item.topic_type_id)}/></div>
+													</li>
+												)
+											}
+
+										})
+									}
     						</ul>
 								<div className="right">
-									<Button type='primary'>单选题</Button>
-									<Button type='primary'>单选题</Button>
-									<Button type='primary'>单选题</Button>
-									<Button type='primary'>单选题</Button>
-									<Button type='primary'>单选题</Button>
-									<Button type='primary'>单选题</Button>
+									{
+										topic_data.length>0 && topic_data.map((item)=>{
+											return <Button disabled={item.show} key={item.topic_type_id} type='primary' onClick={()=>this.props.handleTopicDataAdd(item.topic_type_id)}>{item.topic_type_name}</Button>
+										})
+									}
 								</div>
 							</div>
 						</Card>
-						<div className="submit"><Button type='primary' size='large'>生成试卷</Button></div>
-
+						<div className="submit" onClick={this.huandleSubmit}><Button type='primary' size='large'>生成试卷</Button></div>
 					</div>
 				</div>
 			</div>

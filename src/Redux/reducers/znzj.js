@@ -1,17 +1,15 @@
 import { handleActions } from 'redux-actions';
 
 let initialState = {
-	//con
 	education_id:'',
 	subject_id:'',
-	version_id:'',
-	topic_type_id:'',
 	level:'',
 	grades:[],
-	grade_ids:'',
+	grade:[],
 	chapter_ids:[],
 	knowledge_ids:[],
-	select_data:[],
+	group_method:'relevance',
+	topic_data:[],
 }
 const znzj = handleActions({
 	znzjChangeSingle: (state, action) => ({

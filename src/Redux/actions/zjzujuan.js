@@ -66,7 +66,8 @@ export const initParamsAndSearch = () => (dispatch,getState) =>{
 	dispatch(zjzujuanChangeSubmitId({key:'subject_id',value:data.subject_id}))
 	dispatch(zjzujuanChangeSubmitId({key:'grade_id',value:defaultGradesId}))
 	dispatch(zjzujuanChangeSubmitId({key:'grades',value:grades}))
-
+	dispatch(zjzujuanChangeSubmitId({key:'chapters',value:[]}))
+	dispatch(zjzujuanChangeSubmitId({key:'knowledges',value:[]}))
 	dispatch(beginSearch())
 }
 
