@@ -26,7 +26,7 @@ Object.defineProperties(url, {
 	exam_records: {value: __host__ + '/exam_records'},  //手动生成试卷
 	packages: {value: __host__ + '/packages'},  //VIP套餐列表
 	owner_star_topics: {value: __host__ + '/owner/star/topics'},  //试题收藏
-	owner_users: {value: __host__ + '/owner/users/'},  //获取个人信息
+	owner_users: {value: __host__ + '/owneexam_recordsr/users/'},  //获取个人信息
 	orders: {value: __host__ + '/orders'},  //创建订单
 	owner_orders: {value: __host__ + '/owner/orders'},  //获取我的订单
 	correct_records: {value: __host__ + '/correct_records'},  //试题纠错

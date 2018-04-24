@@ -5,9 +5,9 @@ import './index.scss'
 import {connect} from 'react-redux';
 import * as otherAction from '@/Redux/actions/other.js';
 import { bindActionCreators } from 'redux'
-const { Link } = Anchor;
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
+const { Link } = Anchor;
 
 @connect(
 	state => {
@@ -29,7 +29,7 @@ export default class DownloadPage extends Component{
 			{ label: '考试时间', value: '6' },
 			{ label: '考生填写', value: '7' },
 			{ label: '分大题', value: '8' },
-			// { label: '总评分', value: '9' },
+			{ label: '总评分', value: '9' },
 			{ label: '大题注释', value: '10' },
 		],
 		CheckedList:['3', '8','10'],
@@ -48,7 +48,6 @@ export default class DownloadPage extends Component{
 		this.getExamDetail()
 	}
 	handleRedioGroupClick = (e)=>{
-		// console.log(e.target.value,1)
 		this.setState({
 			CheckedList:JSON.parse(e.target.value),
 			redioCheck:e.target.value
@@ -74,17 +73,30 @@ export default class DownloadPage extends Component{
 			type : 'exam_record',
 			id : this.props.match.params.id
 		})
-			.then((data)=>{
-				$(document).googoose({
-					area: '#download_exam',
-					filename: `${data.name}.doc`
+			.then(()=>{
+				var _this = this
+				Modal.info({
+					title: '下载提示',
+					content: <div>请点击 <span style={{color:'#ff9600'}}>保存</span> 下载,点击 <span style={{color:'#ff9600'}}>更多设置</span> 可以选择纸张</div>,
+					onOk(){
+						_this.download_exam.id = 'download_exam'
+						window.print()
+						_this.download_exam.id = ''
+					},
 				});
 			})
-		// var b = document.body.innerHTML
-		// var a = document.querySelector('#download_exam')
-		// document.body.innerHTML = a.innerHTML
-		// window.print();
-		// document.body.innerHTML = b
+	}
+	toUpperCase = {
+		1:'一',
+		2:'二',
+		3:'三',
+		4:'四',
+		5:'五',
+		6:'六',
+		7:'七',
+		8:'八',
+		9:'九',
+		10:'十',
 	}
 	render(){
 		const { CheckedList,redioCheck,contentEditable, data } = this.state
@@ -99,12 +111,12 @@ export default class DownloadPage extends Component{
 							<div className="left"><Icon type="save" style={{color:'#ff9600'}}/> 保存组卷</div>
 						</div>*/}
 					</div>
-					<h3 className='h3'>试卷结构调整{/*<span>收起</span>*/}</h3>
+					<h3 className='h3'>试卷结构调整<span>收起</span></h3>
 					<div className="group">
 						<RadioGroup onChange={this.handleRedioGroupClick} value={redioCheck} size='small'>
 			        <Radio value={JSON.stringify(['3', '8','10'])}>简易模办</Radio>
-			        <Radio value={JSON.stringify(['3','4','6','7','8','10'])}>普通模板</Radio>
-			        <Radio value={JSON.stringify(['1','2','3','4','6','7','8','10'])}>正式模板</Radio>
+			        <Radio value={JSON.stringify(['3','4','6','7','8','9','10'])}>普通模板</Radio>
+			        <Radio value={JSON.stringify(['1','2','3','4','6','7','8','9','10'])}>正式模板</Radio>
 			      </RadioGroup>
 					</div>
 					<div className="checkgroup pad">
@@ -135,9 +147,9 @@ export default class DownloadPage extends Component{
 					  </div>
 					</Anchor>
 				</div>
-				<div className="right rightContent clearfix" id='download_exam'>
+				<div className="right rightContent clearfix" id='' ref={x=>this.download_exam = x}>
+					{ CheckedList.indexOf('1') !== -1 && <div className="left editing"><img src="/static/editing.png" alt=""/></div>}
 					<div className="left rightpage">
-						{ CheckedList.indexOf('1') !== -1 && <img className='editing' src='/static/editing.png' alt=""/>}
 						{
 							CheckedList.indexOf('3') !== -1 && <div style={{textAlign:'center'}}><h1 className='h1' contentEditable={contentEditable}>{data.title}</h1></div>
 						}
@@ -152,9 +164,6 @@ export default class DownloadPage extends Component{
 							)
 						}
 						{
-							CheckedList.indexOf('7') !== -1 && <img src="/static/name.jpg" alt=""/>
-						}
-						{/*
 							CheckedList.indexOf('7') !== -1 && (
 								<ul className="stu-info">
 									<li>姓名：<span>____________</span></li>
@@ -162,28 +171,32 @@ export default class DownloadPage extends Component{
 									<li>学号：<span>____________</span></li>
 								</ul>
 							)
-						*/}
+						}
 
-						{/*
+						{
 							CheckedList.indexOf('9') !== -1 && (
 								<table className="top_table">
 									<tbody>
 										<tr>
 											<th>题号</th>
-											<td>一</td>
-											<td>二</td>
-											<td>三</td>
+											{
+												data.topics.length> 0 && data.topics.map((item,i)=>{
+													return <td key={item.id}>{this.toUpperCase[i+1]}</td>
+												})
+											}
 										</tr>
 										<tr>
 											<th>评分</th>
-											<td>&nbsp;</td>
-											<td>&nbsp;</td>
-											<td>&nbsp;</td>
+											{
+												data.topics.length> 0 && data.topics.map((item)=>{
+													return <td key={item.id}></td>
+												})
+											}
 										</tr>
 									</tbody>
 								</table>
 							)
-						*/}
+						}
 
 						{
 							CheckedList.indexOf('4') !== -1 && (
@@ -207,7 +220,7 @@ export default class DownloadPage extends Component{
 								return (
 									<div key={index}>
 										<div className="paper-types">
-											{/*
+											{
 												CheckedList.indexOf('2') !== -1 && (
 													<table>
 											    	<tbody>
@@ -222,12 +235,12 @@ export default class DownloadPage extends Component{
 											    	</tbody>
 											    </table>
 												)
-											*/}
+											}
 											{
 												CheckedList.indexOf('8') !== -1 && (
-													<p className='p'>
+													<p>
 											    	<strong>
-											    		<b className="t-order">{index+1}</b>
+											    		<b className="t-order">{this.toUpperCase[index+1]}</b>
 											    		、<span contentEditable={contentEditable}>{item.name}</span>
 											    		{
 																CheckedList.indexOf('10') !== -1 && <span>(共<b className="t-num">{item.children.length}</b>题；共<b className="t-score">{item.score_count}</b>分)</span>
@@ -235,9 +248,6 @@ export default class DownloadPage extends Component{
 											    	</strong>
 											    </p>
 												)
-											}
-											{
-												CheckedList.indexOf('2') !== -1 && <img src="/static/yjr.jpg" alt=""/>
 											}
 
 									    {/*<div className="types-btngroup">
@@ -252,7 +262,7 @@ export default class DownloadPage extends Component{
 												return (
 													<div key={iitem.id} className="selectQ types" id={item.name+iitem.id}>
 														<div style={{overflow:'hidden',position:'relative'}}>
-															<div className="question-num">
+															<div className="question-num" style={{position:'absolute'}}>
 																<span className="q-sn">{i+1}.</span>
 																<span className="q-scoreval">（{iitem.remark.score}分）</span>
 															</div>
@@ -297,17 +307,17 @@ export default class DownloadPage extends Component{
 					    </div>
 				    </div>*/}
 
-						<div className="answer">
+						<div className="answer" style={{fontSize:14}}>
 							{
 								data.topics.length> 0 && data.topics.map((item, index)=>{
 									return (
 										<div key={index} className='answer_title'>
-											<div style={{fontSize:18}}>{index+1+' 、'+ item.name}</div>
+											<div style={{fontSize:18,marginBottom:20,marginTop:20}}>{this.toUpperCase[index+1]+' 、'+ item.name}</div>
 											{
 												item.children.length>0 && item.children.map(function(iitem, i){
 													return (
 														<div key={iitem.id}>
-															<span>{i+1+' . '}</span>
+															<span style={{textIndent: '1em',display:'inline-block'}}>{i+1+' . '}</span>
 															<span style={{color:'#ff9600'}}>【答案】</span>
 															<span style={{textIndent: '5em'}} dangerouslySetInnerHTML={{__html: iitem.remark.right_answer }}></span>
 															<div style={{color:'#ff9600',textIndent: '2em'}}>【解析】</div>
@@ -323,6 +333,11 @@ export default class DownloadPage extends Component{
 								})
 							}
 						</div>
+
+						<div id="download">
+
+						</div>
+						<img id='test' src='' alt=""/>
 					</div>
 
 				</div>
