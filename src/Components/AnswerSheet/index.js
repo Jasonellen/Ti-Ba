@@ -1,6 +1,6 @@
 
 import React, { Component }from 'react';
-import { Table, Icon, Radio, Checkbox, Select } from 'antd';
+import { Icon, Select } from 'antd';
 import './index.scss'
 import {connect} from 'react-redux';
 import * as otherAction from '@/Redux/actions/other.js';

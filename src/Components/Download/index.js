@@ -1,6 +1,6 @@
 
 import React, { Component }from 'react';
-import { Table, Breadcrumb, Icon, Radio,Button, Checkbox } from 'antd';
+import { Icon, Radio, Checkbox } from 'antd';
 import './index.scss'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';

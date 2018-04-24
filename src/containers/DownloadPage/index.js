@@ -63,7 +63,7 @@ export default class DownloadPage extends Component{
 	//获取试卷详情
 	getExamDetail = ()=>{
 		const { id } = this.props.match.params
-		_axios.get(url.owner_exam_records +'/'+id)
+		_axios.get(url.exam_records +'/'+id)
 			.then(data=>{
 				this.setState({data:data.data})
 			})
@@ -207,7 +207,7 @@ export default class DownloadPage extends Component{
 								return (
 									<div key={index}>
 										<div className="paper-types">
-											{
+											{/*
 												CheckedList.indexOf('2') !== -1 && (
 													<table>
 											    	<tbody>
@@ -222,7 +222,7 @@ export default class DownloadPage extends Component{
 											    	</tbody>
 											    </table>
 												)
-											}
+											*/}
 											{
 												CheckedList.indexOf('8') !== -1 && (
 													<p className='p'>

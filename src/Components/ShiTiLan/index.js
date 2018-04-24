@@ -34,7 +34,7 @@ export default class ShiTiLan extends Component{
 			})
 			return;
 		}
-		_axios.post(url.owner_exam_records,{
+		_axios.post(url.exam_records,{
 			education_id,
 			subject_id,
 			topic_ids,

@@ -14,7 +14,9 @@ export default function ZuJuanSider(props){
 						<Tree
 							checkable = {props.checkable}
 							showLine
+							checkedKeys={props.checkedKeys || []}
 							onSelect={(selectedKeys)=>props.onSelect && props.onSelect(selectedKeys)}
+							onCheck={(selectedKeys)=>props.onCheck && props.onCheck(selectedKeys)}
 						>
 							{
 								data.map(function(item){

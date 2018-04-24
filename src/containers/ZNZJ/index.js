@@ -3,22 +3,136 @@ import React, { Component }from 'react';
 import { Icon, Tooltip, Checkbox, Card, Input, Radio,Button } from 'antd';
 import './index.scss'
 import ZuJuanSider from '@/Components/ZuJuanSider'
+import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux'
+import * as znzjAction from '@/Redux/actions/znzj.js';
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
 
+@connect(
+	state => {
+		return {
+			persist:state.persist,
+			znzj:state.znzj,
+		}
+	},
+	dispatch => bindActionCreators(znzjAction, dispatch)
+)
 export default class ZNZJ extends Component{
 	state = {
-		value: 1,
-		plainOptions:['一年级','二年级','三年级','一年级'],
-		checkedList:['一年级']
+		side:this.props.location.pathname.toLowerCase(),
+		RadioGroupSelectValue:'',
+		group_method:'relevance',
 	};
 	componentDidMount(){
-		console.log(this.props,123)
+		this.props.history.listen((location)=>{
+			if(location.pathname.toLowerCase() !== this.state.side){
+				this.setState({
+					side:location.pathname.toLowerCase(),
+				},()=>{
+					this.props.handleOptionChange('select_data',[])
+				})
+			}
+			
+		})
+
+		this.props.InitParams()
+		eventEmitter.on('subjectChanged',()=>{
+			this.props.InitParams()
+		});
 	}
-	onChange = (value)=>{
-		console.log(value)
+	//章节选择
+	handleC = (x)=>{
+		const { chapter } = this.props.persist
+		let select_data = []
+		chapter.map(function(item){
+			if(item.children.length > 0){
+				x.map(function(iitem){
+					if(item.id == iitem){
+						item.checked = true
+						select_data.push({id:item.id,name:item.name})
+					}
+				})
+			}else{
+				x.map(function(iitem){
+					if(item.id == iitem){
+						item.checked = true
+						select_data.push({id:item.id,name:item.name})
+					}
+				})
+			}
+			
+		})
+
+		this.props.handleOptionChange('chapter_ids',x)
+		this.props.handleOptionChange('knowledge_ids',[])
+		this.props.handleOptionChange('select_data',select_data)
 	}
+
+	//知识点选择
+	handleK = (x)=>{
+		const { knowledges } = this.props.persist
+		let select_data = []
+		knowledges.map(function(item){
+			x.map(function(iitem){
+				if(item.id == iitem){
+					item.checked = true
+					select_data.push({id:item.id,name:item.name})
+				}
+			})
+		})
+		this.props.handleOptionChange('chapter_ids',[])
+		this.props.handleOptionChange('knowledge_ids',x)
+		this.props.handleOptionChange('select_data',select_data)
+	}
+	//已选章节/知识点点击删除
+	handleDelSelect = (id)=>{
+		let { chapter_ids, knowledge_ids, select_data } = this.props.znzj
+		if(this.state.side == '/znzj/zj'){
+			chapter_ids.map(function(item,i){
+				if(item == id){
+					chapter_ids.splice(i,1)
+				}
+			})
+		}else{
+			knowledge_ids.map(function(item,i){
+				if(item == id){
+					knowledge_ids.splice(i,1)
+				}
+			})
+		}
+		select_data.map(function(item,i){
+			if(item.id == id){
+				select_data.splice(i,1)
+			}
+		})
+		this.props.handleOptionChange('chapter_ids',chapter_ids)
+		this.props.handleOptionChange('knowledge_ids',knowledge_ids)
+		this.props.handleOptionChange('select_data',select_data)
+	}
+	handleRadioGroup = (e)=>{
+		this.setState({
+			RadioGroupSelectValue:e.target.value
+		})
+	}
+	handleGLChange = (e)=>{
+		this.setState({
+			group_method:e.target.value
+		})
+	}
+	
 	render(){
+		const { topic_types,levels, chapter,knowledges } = this.props.persist
+		const { grades, data, select_data, chapter_ids, knowledge_ids } = this.props.znzj
+		const { RadioGroupSelectValue, group_method } = this.state
+		const _levels = [{label:"不限",value:""}].concat(levels)
+		
+		let select_grades=[]
+		grades.map(function(item){
+			if(item.checked == true){
+				select_grades.push(item.value)
+			}
+		})
 		return (
 			<div className='ZNZJ contentCenter'>
 				{/*<Breadcrumb separator=">">
@@ -27,9 +141,23 @@ export default class ZNZJ extends Component{
 			  </Breadcrumb>*/}
 				<div className="warp clearfix">
 					<div className="leftSide">
-						<ZuJuanSider
-							checkable
-						/>
+						{
+							this.state.side == '/znzj/zj'
+								?
+								<ZuJuanSider 
+									data={chapter} 
+									title='选择章节' 
+									onCheck={(x)=>this.handleC(x)} 
+									checkable
+									checkedKeys = {chapter_ids}
+								/>
+								: <ZuJuanSider
+										data={knowledges} 
+										title='选择知识点' 
+										onCheck={(x)=>this.handleK(x)} 
+										checkable
+									/>
+						}
 					</div>
 					<div className="rightSide">
 						<Card
@@ -37,13 +165,13 @@ export default class ZNZJ extends Component{
 							type="inner"
 							title='题型：填空题'
 						>
-    						<ul className='select clearfix'>
-								<li className='left'>一年级下册 <Icon type="close-circle" /></li>
-								<li className='left'>一年级下册 <Icon type="close-circle" /></li>
-								<li className='left'>一年级下册 <Icon type="close-circle" /></li>
-								<li className='left'>一年级下册 <Icon type="close-circle" /></li>
-    							<li className='left'>一年级下册 <Icon type="close-circle" /></li>
-    						</ul>
+							<ul className='select clearfix'>
+								{
+									select_data.length>0 && select_data.map((item)=>{
+										return <li key={item.id} className='left'>{item.name} <Icon type="close-circle" onClick={()=>this.handleDelSelect(item.id)}/></li>
+									})
+								}
+							</ul>
 						</Card>
 						<Card
 							hoverable={true}
@@ -52,23 +180,24 @@ export default class ZNZJ extends Component{
 						>
 							<div style={{marginBottom:10}}>
 	    					试题难度：
-								<RadioGroup onChange={this.onChange} value={this.state.value}>
-									<Radio value={1}>不易</Radio>
-									<Radio value={2}>容易</Radio>
-									<Radio value={3}>普通</Radio>
-									<Radio value={4}>困难</Radio>
+								<RadioGroup onChange={this.handleRadioGroup} value={RadioGroupSelectValue}>
+								{
+									_levels.map((item)=>{
+										return <Radio key={item.value} value={item.value}>{item.label}</Radio>
+									})
+								}
 								</RadioGroup>
 							</div>
 							<div style={{marginBottom:10}}>
 	    					出题方式：
-								<RadioGroup onChange={this.onChange} value={this.state.value}>
-									<Radio value={1}>关联出题&nbsp;
-										<Tooltip placement="topRight" title="Prompt Text" arrowPointAtCenter>
+								<RadioGroup onChange={this.handleGLChange} value={group_method}>
+									<Radio value={'relevance'}>关联出题&nbsp;
+										<Tooltip placement="topRight" title="匹配出来的试题包含的知识点（章节），最少有一个在已选的知识点（章节）中，这个方式适用于期末考试、学业考试、升学考试等试卷类型。出题的综合性较强。" arrowPointAtCenter>
 											<Icon type="question-circle" />
 										</Tooltip>
 									</Radio>
-									<Radio value={2}>精准出题&nbsp;
-										<Tooltip placement="topRight" title="Prompt Text" arrowPointAtCenter>
+									<Radio value={'precise'}>精准出题&nbsp;
+										<Tooltip placement="topRight" title="匹配出来的试题包含的知识点（章节）。都在已选的知识点（章节）中，这个方式保证了组卷的精准性，避免超纲试题的出现，适用于同步类型的试卷。" arrowPointAtCenter>
 											<Icon type="question-circle" />
 										</Tooltip>
 									</Radio>
@@ -76,11 +205,7 @@ export default class ZNZJ extends Component{
 							</div>
 							<div>
 								试用年级：
-								<CheckboxGroup
-									options={this.state.plainOptions}
-									value={this.state.checkedList}
-									onChange={this.onChange}
-								/>
+								<CheckboxGroup options={grades} value={select_grades} onChange={(x)=>this.props.handleCheckGroup(x)} />
 							</div>
 						</Card>
 						<Card

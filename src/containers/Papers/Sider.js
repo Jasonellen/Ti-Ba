@@ -1,6 +1,6 @@
 
 import React, { Component }from 'react';
-import { Table, Breadcrumb, Icon, Tree,Button, Select } from 'antd';
+import { Icon, Tree,Button, Select } from 'antd';
 import './Sider.scss'
 const TreeNode = Tree.TreeNode;
 const Option = Select.Option;

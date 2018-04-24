@@ -1,5 +1,5 @@
 import React , { Component } from 'react'
-import {  Icon, Button, Select } from 'antd';
+import {  Icon, Button } from 'antd';
 import {Link} from 'react-router-dom'
 import './index.scss'
 import {connect} from 'react-redux';

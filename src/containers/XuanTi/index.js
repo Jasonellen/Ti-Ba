@@ -23,14 +23,14 @@ const CheckboxGroup = Checkbox.Group;
 
 export default class XuanTi extends Component{
 	state = {
-		side:this.props.location.pathname,
+		side:this.props.location.pathname.toLowerCase(),
 	};
 	componentDidMount(){
 		this.props.zjzujuanChangeSubmitId({key:'chapters',value:[]})
 		this.props.zjzujuanChangeSubmitId({key:'knowledges',value:[]})
 		this.props.history.listen((location)=>{
 			this.setState({
-				side:location.pathname
+				side:location.pathname.toLowerCase()
 			})
 		})
 
@@ -83,7 +83,7 @@ export default class XuanTi extends Component{
 				<div className="warp clearfix">
 					<div className="leftSide">
 						{
-							this.state.side == '/XuanTi/tb'
+							this.state.side == '/xuanti/tb'
 								?
 								<ZuJuanSider data={chapter} title='选择章节' onSelect={(x)=>this.handleC(x)}/>
 								: <ZuJuanSider data={knowledges} title='选择知识点' onSelect={(x)=>this.handleK(x)}/>

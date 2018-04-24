@@ -1,9 +1,9 @@
 
 let url={}  //导出url
 let __host__ = 'http://admin.gbtibawang.com/api/v1';
-__host__ = 'http://admin.imzzb.cn/api/v1';
-__host__ = 'http://rqiang.mynatapp.cc/api/v1';
-// __host__ = 'http://192.168.0.115:3008/api/v1';
+// __host__ = 'http://admin.imzzb.cn/api/v1';
+// __host__ = 'http://rqiang.mynatapp.cc/api/v1';
+__host__ = 'http://192.168.0.115:3008/api/v1';
 
 
 
@@ -23,7 +23,7 @@ Object.defineProperties(url, {
 	topics: {value: __host__ + '/topics'},  //题目列表
 	action_stores: {value: __host__ + '/action_stores'},  //收藏点赞
 	knowledges: {value: __host__ + '/knowledges'},  //知识点树
-	owner_exam_records: {value: __host__ + '/exam_records'},  //手动生成试卷
+	exam_records: {value: __host__ + '/exam_records'},  //手动生成试卷
 	packages: {value: __host__ + '/packages'},  //VIP套餐列表
 	owner_star_topics: {value: __host__ + '/owner/star/topics'},  //试题收藏
 	owner_users: {value: __host__ + '/owner/users/'},  //获取个人信息
@@ -34,5 +34,7 @@ Object.defineProperties(url, {
 	download_records: {value: __host__ + '/download_records'},  //试卷下载
 	attachments: {value: __host__ + '/attachments'},  //保存图片
 	owner_download_records: {value: __host__ + '/owner/download_records'},  //下载记录
+	owner_exam_records: {value: __host__ + '/owner/exam_records'},  //组卷记录
 });
 export default url
+

@@ -82,7 +82,7 @@ export const handleCheckGroup = (x) => (dispatch, getState) =>{
 	grades.map(function(item){
 		item.checked = false
 		x.map(function(iitem){
-			if(item.id === iitem){
+			if(item.id == iitem){
 				item.checked = true
 			}
 		})

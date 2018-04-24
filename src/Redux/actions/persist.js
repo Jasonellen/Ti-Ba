@@ -1,5 +1,5 @@
 import { createActions } from 'redux-actions';
-import { setCookie, deleteCookie } from '@/service/cookie'
+import { deleteCookie } from '@/service/cookie'
 import { notification } from 'antd';
 import { initialCart } from './cart'
 
