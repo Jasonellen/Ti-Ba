@@ -10,6 +10,7 @@ import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux'
 import * as zjzujuanAction from '@/Redux/actions/zjzujuan.js';
 const CheckboxGroup = Checkbox.Group;
+const confirm = Modal.confirm;
 
 @connect(
 	state => {
@@ -91,18 +92,27 @@ export default class XuanTi extends Component{
 					this.getCarts() //重新获取购物车列表
 				})
 		}
-		
+
 	}
 	//删除购物车行
 	handleDelShiTiLan = (topic_ids)=>{
-		const { cart_id } = this.state.cart_data[0]
-		_axios.delete(url.owner_carts+'/'+cart_id,{
-			topic_ids,
-		})
-			.then(()=>{
-				this.props.beginSearch() //重新获取试题列表
-				this.getCarts() //重新获取购物车列表
-			})
+		var _this = this
+		confirm({
+			title: `确定要删除  么`,
+			okText: '确定',
+			okType: 'danger',
+			cancelText: '取消',
+			onOk() {
+				const { cart_id } = _this.state.cart_data[0]
+				_axios.delete(url.owner_carts+'/'+cart_id,{
+					topic_ids,
+				})
+					.then(()=>{
+						_this.props.beginSearch() //重新获取试题列表
+						_this.getCarts() //重新获取购物车列表
+					})
+			}
+		});
 	}
 	//生成组卷
 	handleSubmit = ()=>{
@@ -123,7 +133,7 @@ export default class XuanTi extends Component{
 		}
 	}
 	render(){
-		const { subject_id, versions, topic_types,topic_classes,levels, test_point_counts, chapter,knowledges } = this.props.persist
+		const { versions, topic_types,topic_classes,levels, test_point_counts, chapter,knowledges } = this.props.persist
 		const { grades, data,current_page, total_pages, total_count, created_at, mix_times } = this.props.zjzujuan
 		const { cart_data } = this.state
 		let select_grades=[]
@@ -203,8 +213,8 @@ export default class XuanTi extends Component{
 								data.length>0 && data.map((item)=>{
 									return (
 										<li key={item.id}>
-											<ShiTiItem 
-												data={item} 
+											<ShiTiItem
+												data={item}
 												onCollect={this.props.handleCollect}
 												onSelect={this.handleSelect}
 											/>

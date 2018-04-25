@@ -1,13 +1,12 @@
 
 import React, { Component }from 'react';
-import { Icon, Card, Modal } from 'antd';
+import { Icon, Card } from 'antd';
 import './index.scss'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 // import * as cartAction from '@/Redux/actions/cart.js';
 import * as otherAction from '@/Redux/actions/other.js';
 import { bindActionCreators } from 'redux'
-const confirm = Modal.confirm;
 
 @connect(
 	state => {
@@ -27,7 +26,7 @@ export default class ShiTiItem extends Component{
 		showAnswer:this.props.open || false
 	};
 	componentDidMount(){
-		
+
 	}
 	handleCorrect = (id)=>{
 		this.props.otherAction.changeCorrectErrorShow({modal:true,topic_id:id})

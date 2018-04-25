@@ -1,5 +1,4 @@
 import { createActions } from 'redux-actions';
-import { Modal } from 'antd';
 
 export const {
 	znzjChangeSingle,

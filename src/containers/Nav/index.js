@@ -48,7 +48,7 @@ export default class Nav extends Component {
 	 router: PropTypes.object.isRequired
 	};
 	componentDidMount(){
-		global._history = this.context.router.history  //设置一下全局路由	
+		global._history = this.context.router.history  //设置一下全局路由
 
 		let token = getCookie('tiba_key')
 		if(token){
@@ -213,11 +213,11 @@ export default class Nav extends Component {
 				{/* 返回顶部 */}
 				<BackTop />
 				{/* 试卷分析 */}
-				<Analyze />
+				{/*<Analyze />*/}
 				{/* 试卷下载 */}
 				<Download />
 				{/* 答题卡下载 */}
-				<AnswerSheet />
+				{/*<AnswerSheet />*/}
 				{/* 试题纠错 */}
 				<CorrectError />
 			</div>

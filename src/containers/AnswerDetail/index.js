@@ -8,6 +8,7 @@ import ShiTiLan from '@/Components/ShiTiLan'
 import {connect} from 'react-redux';
 import * as otherAction from '@/Redux/actions/other.js';
 import { bindActionCreators } from 'redux'
+const confirm = Modal.confirm;
 
 @connect(
 	state => {
@@ -87,17 +88,26 @@ export default class AnswerDetail extends Component{
 					this.getData() //重新获取购物车列表
 				})
 		}
-		
+
 	}
 	//删除购物车行
 	handleDelShiTiLan = (topic_ids)=>{
-		const { cart_id } = this.state.cart_data[0]
-		_axios.delete(url.owner_carts+'/'+cart_id,{
-			topic_ids,
-		})
-			.then(()=>{
-				this.getData() //重新获取购物车列表
-			})
+		var _this = this
+		confirm({
+			title: `确定要删除  么`,
+			okText: '确定',
+			okType: 'danger',
+			cancelText: '取消',
+			onOk() {
+				const { cart_id } = _this.state.cart_data[0]
+				_axios.delete(url.owner_carts+'/'+cart_id,{
+					topic_ids,
+				})
+					.then(()=>{
+						_this.getData() //重新获取购物车列表
+					})
+			}
+		});
 	}
 	//生成组卷
 	handleSubmit = ()=>{
@@ -132,8 +142,8 @@ export default class AnswerDetail extends Component{
 					<div className="leftSide">
 						<ul className="st">
 							<li>
-								<ShiTiItem 
-									data={data} 
+								<ShiTiItem
+									data={data}
 									open
 									nodetail
 									onCollect = {this.handleCollect}
@@ -160,11 +170,11 @@ export default class AnswerDetail extends Component{
 						<Link to='/SchoolService'><img src="https://zujuan.21cnjy.com//images/paper.png" alt=""/></Link>
 						<h2>相关试卷</h2>
 						<ul>
-						{
-							data.relation_exams.length>0 && data.relation_exams.map((item)=>{
-								return <li key={item.id}><Link to=''>{item.title}</Link></li>
-							})
-						}
+							{
+								data.relation_exams.length>0 && data.relation_exams.map((item)=>{
+									return <li key={item.id}><Link to=''>{item.title}</Link></li>
+								})
+							}
 						</ul>
 					</div>
 				</div>

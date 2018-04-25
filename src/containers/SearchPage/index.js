@@ -1,28 +1,34 @@
-import React,{ Component } from 'react'
+
+import React, { Component }from 'react';
+import { Modal, Pagination } from 'antd';
+import './index.scss'
 import ShiTiItem from '@/Components/ShiTiItem'
 import ShiTiLan from '@/Components/ShiTiLan'
-import SmallNavBar from '@/Components/SmallNavBar'
 import {connect} from 'react-redux';
-import { Modal, Pagination } from 'antd';
+import SmallNavBar from '@/Components/SmallNavBar'
 const confirm = Modal.confirm;
 
 @connect(
 	state => state.persist,
 	null
 )
-export default class Pshiti extends Component{
-	state={
+export default class SearchPage extends Component{
+	state = {
 		educations:[],
 		educations_id:'',
 		subjects:[],
 		subjects_id:'',
 		page:1,
 		per_page:10,
-		data:[],
-		total_pages:0,
+		total_pages:10,
 		cart_data:[],
-	}
+	};
 	componentDidMount(){
+		// this.getData()
+	}
+
+	//初始化搜索条件
+	InitialSeatchOption = ()=>{
 		const { educations } = this.props
 		let subjects = []
 		let educations_id = ''
@@ -41,6 +47,11 @@ export default class Pshiti extends Component{
 			this.getList()
 		})
 	}
+	//搜索列表
+	getList = ()=>{
+
+	}
+	//教育点击
 	handleE = (x)=>{
 		const { educations } = this.props
 		let subjects = educations.find(function(item){
@@ -59,39 +70,13 @@ export default class Pshiti extends Component{
 			this.getList()
 		})
 	}
+	//学科点击
 	handleS = (subjects_id)=>{
 		this.setState({subjects_id,page:1},()=>{
 			this.getList()
 		})
 	}
-	getList = ()=>{
-		const { subjects_id:subject_id, page, per_page } = this.state
-		_axios.get(url.owner_star_topics,{
-			subject_id,page, per_page
-		})
-			.then(data=>{
-				data.topics.map(function(item){
-					item.star = true
-				})
-				this.setState({
-					data:data.topics,
-					total_pages:data.meta.total_pages,
-				},this.getCarts)
-			})
-	}
-	handleCollect = (id)=>{
-		_axios.delete(url.action_stores+'/'+id,{
-			action_type:'star',
-			target_type:'topic',
-		})
-			.then(()=>{
-				this.getList()
-				Modal.success({
-				 	title: '消息提醒',
-	    		content: '取消收藏成功！',
-				});
-			})
-	}
+	//翻页
 	handlePage = (page)=>{
 		this.setState({page},this.getList)
 	}
@@ -105,6 +90,24 @@ export default class Pshiti extends Component{
 				this.setState({
 					cart_data:data.data
 				})
+			})
+	}
+	//收藏/取消收藏
+	handleCollect = (id,star) =>{
+		let method = star ? 'delete' : 'post'
+		let _url = star ? url.action_stores+'/'+id : url.action_stores
+		let msg = star ? '取消收藏成功！' : '收藏成功！'
+		_axios[method](_url,{
+			action_type:'star',
+			target_type:'topic',
+			id,
+		})
+			.then(()=>{
+				this.getList()
+				Modal.success({
+					title: '消息提醒',
+					content: msg,
+				});
 			})
 	}
 	//选题点击
@@ -169,38 +172,55 @@ export default class Pshiti extends Component{
 	}
 	render(){
 		const { educations, subjects, data, total_pages, page, cart_data } = this.state
-
 		return (
-			<div className="download">
-      	<h1>试题收藏</h1>
-				<SmallNavBar
-					noall
-					title='学段'
-					data={educations}
-					onChange={this.handleE}
-				/>
-				<SmallNavBar
-					noall
-					title='学科'
-					data={subjects}
-					onChange={this.handleS}
-				/><br/>
-				<ul style={{marginBottom:30}}>
-					{
-						data.length>0 && data.map((item)=>{
-							return (
-								<li key={item.id}>
-									<ShiTiItem
-										data={item}
-										onCollect = {this.handleCollect}
-										onSelect={this.handleSelect}
-									/>
-								</li>
-							)
-						})
-					}
+			<div className='SearchPage contentCenter'>
+				<div className="upoption">
+					<SmallNavBar
+						noall
+						title='学段'
+						data={educations}
+						onChange={this.handleE}
+					/>
+					<SmallNavBar
+						noall
+						title='学科'
+						data={subjects}
+						onChange={this.handleS}
+					/>
+				</div>
+				<div className="downoption">
+					<SmallNavBar
+						title='题型'
+						data={educations}
+					/>
+				</div>
+				<p className='about'>和<span> “语文” </span>相关试题相关试卷共<span> 20622 </span>道张</p>
+				<ul>
+					<li>
+						<ShiTiItem
+							data={{}}
+							onCollect = {this.handleCollect}
+							onSelect={this.handleSelect}
+						/>
+					</li>
+					{/*
+					<li key={item.id}>
+						<div className="search-list-left">
+							<img src={text} alt=""  className="test-pic"/>
+							<div className="test-txt">
+								<p className="test-txt-p1">
+									<Link to={`/ShiJuanDetail/${item.id}/exam_record`} target="_blank">{item.name}</Link>
+								</p>
+								<p>
+									<span><Icon type="clock-circle-o" />下载时间：{moment(item.created_at).format('YYYY-MM-DD')}</span>
+									<span><Icon type="file-text" />学科：{item.subject}</span>
+								</p>
+							</div>
+						</div>
+						<Button icon='download' type='primary' onClick={()=>this.props.history.push(`/downloadpage/${item.id}`)}>下载</Button>
+					</li>*/}
 				</ul>
-				{!!total_pages && <Pagination current={page} total={total_pages*10} onChange={this.handlePage}/> }
+				{!!total_pages && <Pagination showQuickJumper style={{marginTop:50}} current={page} total={total_pages*10} onChange={this.handlePage}/> }
 				<ShiTiLan
 					data = {cart_data}
 					onDel = {this.handleDelShiTiLan}

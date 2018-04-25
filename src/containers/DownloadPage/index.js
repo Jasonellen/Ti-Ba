@@ -45,7 +45,12 @@ export default class DownloadPage extends Component{
 		}
 	}
 	componentDidMount(){
-		this.getExamDetail()
+		const { direct } = this.props.match.params
+		if(direct){
+			this.getDatafromExamDetail()
+		}else{
+			this.getExamDetail()
+		}
 	}
 	handleRedioGroupClick = (e)=>{
 		this.setState({
@@ -65,6 +70,16 @@ export default class DownloadPage extends Component{
 		_axios.get(url.exam_records +'/'+id)
 			.then(data=>{
 				this.setState({data:data.data})
+			})
+	}
+	//从试卷详情页过来的获取详情数据
+	getDatafromExamDetail = ()=>{
+		const { id } = this.props.match.params
+		_axios.get(url.owner_exam_records+'/'+id)
+			.then(data=>{
+				this.setState({
+					data:data.data
+				})
 			})
 	}
 	handleDownload = ()=>{
@@ -104,6 +119,7 @@ export default class DownloadPage extends Component{
 			<div className='DownloadPage contentCenter clearfix'>
 				<div className="left leftBar">
 					<div className="pad">
+						{/* onClick={()=>this.props.changeDownloadShow(true)} 打开下载modal*/}
 						<Button type="primary" icon="download" size='large' onClick={this.handleDownload}>下载试卷</Button>
 						{/*<div className="clearfix small_title">
 							<div className="left" onClick={()=>this.props.changeAnswerSheetShow(true)}><Icon type="file-word" style={{color:'#ff9600'}}/> 下载答题卡</div>

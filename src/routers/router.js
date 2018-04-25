@@ -29,6 +29,7 @@ const BeiKeDetail = asyncComponent(() => import("~/BeiKeDetail"));
 const DownloadPage = asyncComponent(() => import("~/DownloadPage"));
 const PersonalCenter = asyncComponent(() => import("~/PersonalCenter"));
 const NoticeDetail = asyncComponent(() => import("~/NoticeDetail"));
+const SearchPage = asyncComponent(() => import("~/SearchPage"));
 
 export default function Routers(){
 	return (
@@ -48,16 +49,18 @@ export default function Routers(){
 						<Route path="/znzj/:id" component={ZNZJ}/>
 						<Route path="/Papers" component={Papers}/>
 						<Route path="/PapersTest" component={PapersTest}/>
-						<Route path="/ShiJuanDetail/:id" component={ShiJuanDetail}/>
+						<Route exact path="/ShiJuanDetail/:id/:type" component={ShiJuanDetail}/>
 						<Route path="/HelpCenter" component={HelpCenter}/>
 						{/*<Route path="/OnlineTest/:id" component={OnlineTest}/>*/}
 						{/*<Route path="/TestResult/:id" component={TestResult}/>*/}
 						<Route path="/BeiKeDetail/:id" component={BeiKeDetail}/>
 						{/*<Route path="/Double" component={Double}/>*/}
 						{/*<Route path="/DoubleDetail/:id" component={DoubleDetail}/>*/}
-						<Route path="/DownloadPage/:id" component={DownloadPage}/>
+						<Route exact path="/DownloadPage/:id" component={DownloadPage}/>
+						<Route exact path="/DownloadPage/:id/:direct" component={DownloadPage}/>
 						<Route path="/PersonalCenter" component={PersonalCenter}/>
 						<Route path="/NoticeDetail/:id" component={NoticeDetail}/>
+						<Route path="/SearchPage" component={SearchPage}/>
 					</Switch>
 				</div>
 				<Footer />
