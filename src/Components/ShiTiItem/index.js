@@ -1,12 +1,13 @@
 
 import React, { Component }from 'react';
-import { Icon, Card } from 'antd';
+import { Icon, Card, Modal } from 'antd';
 import './index.scss'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
-import * as cartAction from '@/Redux/actions/cart.js';
+// import * as cartAction from '@/Redux/actions/cart.js';
 import * as otherAction from '@/Redux/actions/other.js';
 import { bindActionCreators } from 'redux'
+const confirm = Modal.confirm;
 
 @connect(
 	state => {
@@ -16,7 +17,7 @@ import { bindActionCreators } from 'redux'
 	},
 	dispatch => {
 		return {
-			cartAction:bindActionCreators(cartAction, dispatch),
+			// cartAction:bindActionCreators(cartAction, dispatch),
 			otherAction:bindActionCreators(otherAction, dispatch),
 		}
 	}
@@ -26,20 +27,13 @@ export default class ShiTiItem extends Component{
 		showAnswer:this.props.open || false
 	};
 	componentDidMount(){
-		// console.log(this.props,123)
-	}
-	handleSelect = (select,name,id)=>{
-		if(select){
-		 this.props.cartAction.cancelToCart(name, id)
-		}else{
-			this.props.cartAction.addToCart(name, id)
-		}
+		
 	}
 	handleCorrect = (id)=>{
 		this.props.otherAction.changeCorrectErrorShow({modal:true,topic_id:id})
 	}
 	render(){
-		const { header=true, data={},noselect=false, nodetail=false } = this.props
+		const { header=true, data={},nodetail=false } = this.props
 		const ease_type = {
 			'easy':'简单',
 			'normal':'普通',
@@ -56,7 +50,7 @@ export default class ShiTiItem extends Component{
 						<div onClick={()=>this.props.onCollect && this.props.onCollect(data.id,data.star)} className='cardLeft' key='1' >{data.star ? <Icon type="heart" style={{color:'#ff9600'}}/> : <Icon type="heart-o"/>}{data.star ? '已收藏' : '收藏'}</div>,
 						<div onClick={()=>this.handleCorrect(data.id)} className='cardLeft' key='2' >
 							<Icon type="exclamation-circle-o" />纠错</div>, <div className='cardRight' key='3'>组卷次数：{data.mix_times || 0}次
-							{ !noselect && <i style={{background:data.select && '#999'}} className='i' onClick={()=>this.handleSelect(data.select,data.topic_type_title, data.id)}>+选题</i>}
+							<i style={{background:data.in_cart && '#999'}} className='i' onClick={()=>this.props.onSelect && this.props.onSelect(data.id,data.subject_id, data.in_cart)}>+选题</i>
 						</div>
 					]}
 				>

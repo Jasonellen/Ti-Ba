@@ -5,10 +5,9 @@ import persist from './persist';
 import other from './other';
 import zjzujuan from './zjzujuan';
 import znzj from './znzj';
-import cart from './cart';
 
 const reducersApp = combineReducers({
-	nav, persist, other, zjzujuan, cart, znzj
+	nav, persist, other, zjzujuan, znzj
 });
 
 export default reducersApp;

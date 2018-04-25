@@ -69,7 +69,7 @@ export default class ZNZJ extends Component{
 		let topic_types = topic_data.filter(function(item){
 			return item.show == true
 		})
-		_axios.post(url.smart_smart_exams,{
+		_axios.post(url.group_exam_smart_exams,{
 			education_id,
 			subject_id,
 			level,

@@ -1,6 +1,6 @@
 
 import React,{ Component } from 'react'
-import { Icon, Pagination } from 'antd';
+import { Icon, Pagination, Button } from 'antd';
 import text from 'static/text.jpg'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
@@ -45,7 +45,7 @@ export default class Pzujuanrecord extends Component{
 									<img src={text} alt=""  className="test-pic"/>
 									<div className="test-txt">
 										<p className="test-txt-p1">
-											<Link to={`/downloadpage/${item.id}`} target="_blank">{item.name}</Link>
+											<Link to={`/ShiJuanDetail/${item.id}`} target="_blank">{item.name}</Link>
 										</p>
 										<p>
 											<span><Icon type="clock-circle-o" />下载时间：{moment(item.created_at).format('YYYY-MM-DD')}</span>
@@ -53,7 +53,7 @@ export default class Pzujuanrecord extends Component{
 										</p>
 									</div>
 								</div>
-								{/*<Button icon='download' type='primary'>下载</Button>*/}
+								<Button icon='download' type='primary' onClick={()=>this.props.history.push(`/downloadpage/${item.source_id}`)}>下载</Button>
 							</li>
 						)
 					})

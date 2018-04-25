@@ -1,9 +1,10 @@
 
 import React, { Component }from 'react';
-import { Card, Modal } from 'antd';
+import { Modal } from 'antd';
 import {Link} from 'react-router-dom'
 import './index.scss'
 import ShiTiItem from '@/Components/ShiTiItem'
+import ShiTiLan from '@/Components/ShiTiLan'
 import {connect} from 'react-redux';
 import * as otherAction from '@/Redux/actions/other.js';
 import { bindActionCreators } from 'redux'
@@ -22,7 +23,8 @@ export default class AnswerDetail extends Component{
 		data:{
 			remark:{},
 			relation_exams:[]
-		}
+		},
+		cart_data:[]
 	};
 	componentDidMount(){
 		this.getData()
@@ -32,7 +34,7 @@ export default class AnswerDetail extends Component{
 			.then(data=>{
 				this.setState({
 					data:data.data
-				})
+				},this.getCarts)
 			})
 	}
 	handleCollect = (id,star) =>{
@@ -52,9 +54,72 @@ export default class AnswerDetail extends Component{
 				});
 			})
 	}
+	//获取购物车信息
+	getCarts = ()=>{
+		const { subject_id } = this.state.data
+		_axios.get(url.owner_carts,{
+			subject_id
+		})
+			.then(data=>{
+				this.setState({
+					cart_data:data.data
+				})
+			})
+	}
+	//选题点击
+	handleSelect = (topic_id,subject_id,in_cart)=>{
+		if(!in_cart){
+			//添加购物车
+			_axios.post(url.owner_carts,{
+				topic_id,
+				subject_id
+			})
+				.then(()=>{
+					this.getData() //重新获取购物车列表
+				})
+		}else{
+			const { cart_id } = this.state.cart_data[0]
+			//删除购物车试题
+			_axios.delete(url.owner_carts+'/'+cart_id,{
+				topic_ids:[topic_id],
+			})
+				.then(()=>{
+					this.getData() //重新获取购物车列表
+				})
+		}
+		
+	}
+	//删除购物车行
+	handleDelShiTiLan = (topic_ids)=>{
+		const { cart_id } = this.state.cart_data[0]
+		_axios.delete(url.owner_carts+'/'+cart_id,{
+			topic_ids,
+		})
+			.then(()=>{
+				this.getData() //重新获取购物车列表
+			})
+	}
+	//生成组卷
+	handleSubmit = ()=>{
+		const { cart_data } = this.state
+		if(!cart_data[0]){
+			Modal.error({
+				title:'请先选择试题'
+			})
+			return;
+		}else{
+			const { cart_id } = cart_data[0]
+			_axios.post(url.group_exam_hand_exams,{
+				cart_id
+			})
+				.then(data=>{
+					_history.push('/DownloadPage/'+data.exam_record_id)
+				})
+		}
+	}
 
 	render(){
-		const { data } = this.state
+		const { data, cart_data } = this.state
 		return (
 			<div className='AnswerDetail contentCenter'>
 				{/*<Breadcrumb separator=">">
@@ -69,10 +134,10 @@ export default class AnswerDetail extends Component{
 							<li>
 								<ShiTiItem 
 									data={data} 
-									open 
-									noselect 
+									open
 									nodetail
 									onCollect = {this.handleCollect}
+									onSelect={this.handleSelect}
 								/>
 							</li>
 							{/*<li>
@@ -92,7 +157,7 @@ export default class AnswerDetail extends Component{
 						</ul>
 					</div>
 					<div className="rightSide">
-						<img src="https://zujuan.21cnjy.com//images/paper.png" alt=""/>
+						<Link to='/SchoolService'><img src="https://zujuan.21cnjy.com//images/paper.png" alt=""/></Link>
 						<h2>相关试卷</h2>
 						<ul>
 						{
@@ -103,6 +168,11 @@ export default class AnswerDetail extends Component{
 						</ul>
 					</div>
 				</div>
+				<ShiTiLan
+					data = {cart_data}
+					onDel = {this.handleDelShiTiLan}
+					onSubmit = {this.handleSubmit}
+				/>
 			</div>
 		)
 	}

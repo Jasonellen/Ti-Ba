@@ -48,24 +48,15 @@ export default class Nav extends Component {
 	 router: PropTypes.object.isRequired
 	};
 	componentDidMount(){
-		global._history = this.context.router.history  //设置一下全局路由
-		this.getLogo()
-		this.props.persistAction.getEducations()
+		global._history = this.context.router.history  //设置一下全局路由	
 
 		let token = getCookie('tiba_key')
 		if(token){
 			this.props.persistAction.getUser(token)
 		}
-	}
-	//获取logo和电话
-	getLogo = ()=>{
-		_axios.get(url.homelogo)
-			.then(data=>{
-				this.setState({
-					logo:data.web && data.web.avatar_data.original,
-					phone:data.web.telephone
-				})
-			})
+
+		this.props.persistAction.getEducations()
+		this.props.persistAction.getLogo()
 	}
 
 	//全部课程hover
@@ -90,16 +81,16 @@ export default class Nav extends Component {
 		this.context.router.history.push('/'+page)
 	}
 	render() {
-		const { alClassShow, logo, phone } = this.state
-		const { user,educations,full_name } = this.props.persist
+		const { alClassShow } = this.state
+		const { user,educations,full_name,web } = this.props.persist
 		return (
 			<div className="Nav">
 				<div className="head">
 					<div className="contentCenter clearfix">
-						<img src={logo} alt="" className="left"/>
+						<img src={web.avatar_data.original} alt="" className="left"/>
 						<div className="right">
 							<img src={phone_in_talk} alt=""/>
-							{phone}
+							{web.telephone}
 						</div>
 					</div>
 				</div>
@@ -116,16 +107,16 @@ export default class Nav extends Component {
 								<Dropdown overlay={
 									<Menu>
 										<Menu.Item key="download">
-											<Link to='/PersonalCenter/download' target="_blank">下载记录</Link>
+											<Link to='/PersonalCenter/download'>下载记录</Link>
 										</Menu.Item>
 										<Menu.Item key="Pzujuanrecord">
-											<Link to='/PersonalCenter/Pzujuanrecord' target="_blank">组卷记录</Link>
+											<Link to='/PersonalCenter/Pzujuanrecord'>组卷记录</Link>
 										</Menu.Item>
 										<Menu.Item key="Pshiti">
-											<Link to='/PersonalCenter/Pshiti' target="_blank">我的收藏</Link>
+											<Link to='/PersonalCenter/Pshiti'>我的收藏</Link>
 										</Menu.Item>
 										<Menu.Item key="personalcenter">
-											<Link to='/PersonalCenter/personalcenter' target="_blank">个人信息</Link>
+											<Link to='/PersonalCenter/personalcenter'>个人信息</Link>
 										</Menu.Item>
 										<Menu.Divider />
 										<Menu.Item key="exit">
@@ -209,8 +200,9 @@ export default class Nav extends Component {
 					{/*<li onClick={()=>this.NavLinkTo('VipActivate')}><Icon type='rocket'/>激活vip</li>*/}
 					<li onClick={()=>this.NavLinkTo('Vip')}><Icon type="pay-circle-o" />购买vip</li>
 					<li onClick={()=>this.NavLinkTo('SchoolService')}><Icon type="form" />申请试用</li>
-					<li><a href="http://wpa.qq.com/msgrd?v=1&uin=269248791&site=qq&menu=yes&from=message&isappinstalled=0" target='_blank' rel='noopener noreferrer'><Icon type="qq" />客服帮助</a></li>
-					<li onClick={()=>this.NavLinkTo('helpCenter')} className='last'><Icon type="flag" />帮助中心</li>
+					<li><a href="http://wpa.qq.com/msgrd?v=1&uin=3212088314&site=qq&menu=yes&from=message&isappinstalled=0" target='_blank' rel='noopener noreferrer'><Icon type="qq" />客服帮助</a></li>
+					<li onClick={()=>this.NavLinkTo('helpCenter')}><Icon type="flag" />帮助中心</li>
+					<li onClick={()=>this.NavLinkTo('SchoolService')} className='last'><Icon type="home" />学校服务</li>
 		    </ul>
 				{/* 登陆 */}
 				<Login/>

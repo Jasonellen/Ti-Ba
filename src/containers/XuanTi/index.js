@@ -1,6 +1,6 @@
 
 import React, { Component }from 'react';
-import { Icon, Pagination, Checkbox } from 'antd';
+import { Icon, Pagination, Checkbox, Modal } from 'antd';
 import './index.scss'
 import SmallNavBar from '@/Components/SmallNavBar'
 import ZuJuanSider from '@/Components/ZuJuanSider'
@@ -24,6 +24,7 @@ const CheckboxGroup = Checkbox.Group;
 export default class XuanTi extends Component{
 	state = {
 		side:this.props.location.pathname.toLowerCase(),
+		cart_data:[]
 	};
 	componentDidMount(){
 		this.props.history.listen((location)=>{
@@ -36,25 +37,95 @@ export default class XuanTi extends Component{
 		eventEmitter.on('subjectChanged',()=>{
 			this.props.initParamsAndSearch()
 		});
-	}
 
+		this.getCarts()
+	}
+	getCarts = ()=>{
+		const { subject_id } = this.props.persist
+		_axios.get(url.owner_carts,{
+			subject_id
+		})
+			.then(data=>{
+				this.setState({
+					cart_data:data.data
+				})
+			})
+	}
+	//排序
 	handleSort = (key,value)=>{
 		let x = value == 'asc' ? 'desc' : 'asc'
 		this.props.handleOptionChange(key,x)
 	}
+	//章节选择
 	handleC = (x)=>{
 		this.props.zjzujuanChangeSubmitId({key:'chapter_ids',value:x})
 		this.props.zjzujuanChangeSubmitId({key:'knowledge_ids',value:[]})
 		this.props.beginSearch()
 	}
+	//知识点选择
 	handleK = (x)=>{
 		this.props.zjzujuanChangeSubmitId({key:'chapter_ids',value:[]})
 		this.props.zjzujuanChangeSubmitId({key:'knowledge_ids',value:x})
 		this.props.beginSearch()
 	}
+	//选题点击
+	handleSelect = (topic_id,subject_id,in_cart)=>{
+		if(!in_cart){
+			//添加购物车
+			_axios.post(url.owner_carts,{
+				topic_id,
+				subject_id
+			})
+				.then(()=>{
+					this.props.beginSearch() //重新获取试题列表
+					this.getCarts() //重新获取购物车列表
+				})
+		}else{
+			const { cart_id } = this.state.cart_data[0]
+			//删除购物车试题
+			_axios.delete(url.owner_carts+'/'+cart_id,{
+				topic_ids:[topic_id],
+			})
+				.then(()=>{
+					this.props.beginSearch() //重新获取试题列表
+					this.getCarts() //重新获取购物车列表
+				})
+		}
+		
+	}
+	//删除购物车行
+	handleDelShiTiLan = (topic_ids)=>{
+		const { cart_id } = this.state.cart_data[0]
+		_axios.delete(url.owner_carts+'/'+cart_id,{
+			topic_ids,
+		})
+			.then(()=>{
+				this.props.beginSearch() //重新获取试题列表
+				this.getCarts() //重新获取购物车列表
+			})
+	}
+	//生成组卷
+	handleSubmit = ()=>{
+		const { cart_data } = this.state
+		if(!cart_data[0]){
+			Modal.error({
+				title:'请先选择试题'
+			})
+			return;
+		}else{
+			const { cart_id } = cart_data[0]
+			_axios.post(url.group_exam_hand_exams,{
+				cart_id
+			})
+				.then(data=>{
+					_history.push('/DownloadPage/'+data.exam_record_id)
+				})
+		}
+	}
 	render(){
-		const { versions, topic_types,topic_classes,levels, test_point_counts, chapter,knowledges } = this.props.persist
+		const { subject_id, versions, topic_types,topic_classes,levels, test_point_counts, chapter,knowledges } = this.props.persist
 		const { grades, data,current_page, total_pages, total_count, created_at, mix_times } = this.props.zjzujuan
+		const { cart_data } = this.state
 		let select_grades=[]
 		grades.map(function(item){
 			if(item.checked == true){
@@ -132,7 +203,11 @@ export default class XuanTi extends Component{
 								data.length>0 && data.map((item)=>{
 									return (
 										<li key={item.id}>
-											<ShiTiItem data={item} onCollect={this.props.handleCollect}/>
+											<ShiTiItem 
+												data={item} 
+												onCollect={this.props.handleCollect}
+												onSelect={this.handleSelect}
+											/>
 										</li>
 									)
 								})
@@ -141,7 +216,11 @@ export default class XuanTi extends Component{
 						{ !!total_pages && <Pagination current={current_page} total={total_pages*10} onChange={x=>this.props.handleOptionChange('current_page',x)}/> }
 					</div>
 				</div>
-				<ShiTiLan />
+				<ShiTiLan
+					data = {cart_data}
+					onDel = {this.handleDelShiTiLan}
+					onSubmit = {this.handleSubmit}
+				/>
 			</div>
 		)
 	}

@@ -1,14 +1,14 @@
 import { createActions } from 'redux-actions';
 import { deleteCookie } from '@/service/cookie'
 import { notification } from 'antd';
-import { initialCart } from './cart'
 
 export const {
 	changeUser,
 	changeEducations,
 	changeEducationsId,
 	changeChapters,
-	changeKnowledges
+	changeKnowledges,
+	changeLogo,
 
 } = createActions(
 		'changeUser',
@@ -16,6 +16,7 @@ export const {
 		'changeEducationsId',
 		'changeChapters',
 		'changeKnowledges',
+		'changeLogo'
 	)
 
 export const getUser = () => (dispatch) =>{
@@ -87,8 +88,13 @@ export const changeSubject = (edu,sub) => (dispatch) =>{
 		.then(data=>{
 			dispatch(changeKnowledges(data.knowledge.children))
 		})
-	//清空购物车
-	dispatch(initialCart())
 
 	eventEmitter.emit('subjectChanged');
+}
+
+export const getLogo = () => (dispatch) =>{
+	_axios.get(url.homelogo)
+		.then(data=>{
+			dispatch(changeLogo(data.web))
+		})
 }

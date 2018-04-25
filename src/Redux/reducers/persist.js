@@ -13,6 +13,7 @@ let initialState = {
 	grades:[], //适用年级
 	chapter:[], //章节树形数据 ------data
 	knowledges:[],
+	web:{avatar_data:{}}
 }
 const persist = handleActions({
 	changeUser: (state, action) => ({
@@ -42,6 +43,10 @@ const persist = handleActions({
 	changeKnowledges: (state, action) => ({
 		...state,
 		knowledges: action.payload,
+	}),
+	changeLogo: (state, action) => ({
+		...state,
+		web: action.payload,
 	}),
 
 }, initialState);

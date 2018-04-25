@@ -19,7 +19,7 @@ const SchoolService = asyncComponent(() => import("~/SchoolService"));
 const ZNZJ = asyncComponent(() => import("~/ZNZJ"));
 const Papers = asyncComponent(() => import("~/Papers"));
 const PapersTest = asyncComponent(() => import("~/PapersTest"));
-// const ShiJuanDetail = asyncComponent(() => import("~/ShiJuanDetail"));
+const ShiJuanDetail = asyncComponent(() => import("~/ShiJuanDetail"));
 const HelpCenter = asyncComponent(() => import("~/HelpCenter"));
 // const OnlineTest = asyncComponent(() => import("~/OnlineTest"));
 // const TestResult = asyncComponent(() => import("~/OnlineTest/TestResult"));
@@ -48,7 +48,7 @@ export default function Routers(){
 						<Route path="/znzj/:id" component={ZNZJ}/>
 						<Route path="/Papers" component={Papers}/>
 						<Route path="/PapersTest" component={PapersTest}/>
-						{/*<Route path="/ShiJuanDetail/:id" component={ShiJuanDetail}/>*/}
+						<Route path="/ShiJuanDetail/:id" component={ShiJuanDetail}/>
 						<Route path="/HelpCenter" component={HelpCenter}/>
 						{/*<Route path="/OnlineTest/:id" component={OnlineTest}/>*/}
 						{/*<Route path="/TestResult/:id" component={TestResult}/>*/}

@@ -1,4 +1,6 @@
 .SchoolService{
+	background: #fff;
+  margin-top: 20px;
 	h1{
 		text-align: center;
 		line-height: 4;
@@ -6,7 +8,7 @@
 	.left{
 		width: 60%;
 		padding-right: 30px;
-		border-right: 1px solid red;
+		border-right: 1px solid #ddd;
 		span.red{
 			color: red;
 		}

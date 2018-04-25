@@ -22,7 +22,7 @@ export const beginSearch = () => (dispatch,getState) =>{
 	let ids = _ids.join(',')
 	let _grade = grade.join(',')
 	let type = side == '/znzj/zj' ? 'chapters' : 'knowledges'
-	_axios.get(url.smart_subjects,{
+	_axios.get(url.group_exam_subjects,{
 		type,ids,level,grade:_grade
 	})
 		.then(data=>{

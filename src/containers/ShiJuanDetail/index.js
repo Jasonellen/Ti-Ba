@@ -22,11 +22,11 @@ export default class ShiJuanDetail extends Component{
 
 	};
 	componentDidMount(){
-		console.log(this.props,123)
-		document.body.style.background='#f5f5f5'
+		this.getDetail()
 	}
-	componentWillUnmount(){
-		document.body.style.background=''
+	getDetail = ()=>{
+		let id = this.props.match.params.id
+		_axios.get(url.owner_exam_records+'/'+id)
 	}
 	render(){
 		return (
