@@ -1,13 +1,18 @@
 import React, {Component} from 'react';
 import { Icon } from 'antd';
+import {connect} from 'react-redux';
 import './index.scss'
 
+@connect(
+	state => state.persist,
+	null
+)
 export default class Home extends Component {
 	constructor(props){
 		super(props)
 		this.state={
 			carousels:[],
-			educations:[],
+			educations:this.props.educations,
 			features:[],
 			Course:[],
 			School:[],

@@ -131,10 +131,10 @@ export default class Pshiti extends Component{
 
 	}
 	//删除购物车行
-	handleDelShiTiLan = (topic_ids)=>{
+	handleDelShiTiLan = (topic_ids,title)=>{
 		var _this = this
 		confirm({
-			title: `确定要删除  么`,
+			title: <div>确定要删除 <span style={{color:'#ff9600'}}>{title}</span> 么</div>,
 			okText: '确定',
 			okType: 'danger',
 			cancelText: '取消',

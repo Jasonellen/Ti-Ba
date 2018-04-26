@@ -1,11 +1,14 @@
 
 import React, { Component }from 'react';
-import { Modal, Pagination } from 'antd';
+import { Modal, Pagination, Icon, Button } from 'antd';
 import './index.scss'
+import { Link } from 'react-router-dom'
 import ShiTiItem from '@/Components/ShiTiItem'
 import ShiTiLan from '@/Components/ShiTiLan'
 import {connect} from 'react-redux';
 import SmallNavBar from '@/Components/SmallNavBar'
+import text from 'static/text.jpg'
+import moment from 'moment'
 const confirm = Modal.confirm;
 
 @connect(
@@ -20,11 +23,29 @@ export default class SearchPage extends Component{
 		subjects_id:'',
 		page:1,
 		per_page:10,
-		total_pages:10,
+		total_pages:0,
+		total_count:0,
 		cart_data:[],
+		key:'',
+		data:[],
+		exam_type_id:'',
 	};
 	componentDidMount(){
-		// this.getData()
+		const query = this.props.location.query
+		if(query){
+			this.setState({
+				key:query.key
+			},()=>{
+				this.InitialSeatchOption()
+			})
+		}else{
+			this.InitialSeatchOption()
+		}
+
+		eventEmitter.on('beginSearch',(key)=>{
+			this.setState({key},this.getList)
+		});
+
 	}
 
 	//初始化搜索条件
@@ -49,7 +70,26 @@ export default class SearchPage extends Component{
 	}
 	//搜索列表
 	getList = ()=>{
-
+		const { searchType } = this.props
+		const { key, subjects_id:subject_id, page, per_page, exam_type_id } = this.state
+		let option = {
+			type:searchType,
+			key,
+			subject_id,
+			page,
+			per_page
+		}
+		if(searchType == 'exam'){
+			option.exam_type_id = exam_type_id
+		}
+		_axios.post(url.home_search,option)
+			.then(data=>{
+				this.setState({
+					data:data.data,
+					total_count:data.meta.total_count,
+					total_pages:data.meta.total_pages,
+				},this.getCarts)
+			})
 	}
 	//教育点击
 	handleE = (x)=>{
@@ -75,6 +115,10 @@ export default class SearchPage extends Component{
 		this.setState({subjects_id,page:1},()=>{
 			this.getList()
 		})
+	}
+	//题型点击
+	handleExamTypes = (exam_type_id)=>{
+		this.setState({exam_type_id},this.getList)
 	}
 	//翻页
 	handlePage = (page)=>{
@@ -134,10 +178,10 @@ export default class SearchPage extends Component{
 
 	}
 	//删除购物车行
-	handleDelShiTiLan = (topic_ids)=>{
+	handleDelShiTiLan = (topic_ids,title)=>{
 		var _this = this
 		confirm({
-			title: `确定要删除  么`,
+			title: <div>确定要删除 <span style={{color:'#ff9600'}}>{title}</span> 么</div>,
 			okText: '确定',
 			okType: 'danger',
 			cancelText: '取消',
@@ -171,7 +215,8 @@ export default class SearchPage extends Component{
 		}
 	}
 	render(){
-		const { educations, subjects, data, total_pages, page, cart_data } = this.state
+		const { educations, subjects, data, total_pages, total_count, page, cart_data, key } = this.state
+		const { searchType, exam_types } = this.props
 		return (
 			<div className='SearchPage contentCenter'>
 				<div className="upoption">
@@ -188,44 +233,75 @@ export default class SearchPage extends Component{
 						onChange={this.handleS}
 					/>
 				</div>
-				<div className="downoption">
-					<SmallNavBar
-						title='题型'
-						data={educations}
-					/>
-				</div>
-				<p className='about'>和<span> “语文” </span>相关试题相关试卷共<span> 20622 </span>道张</p>
-				<ul>
-					<li>
-						<ShiTiItem
-							data={{}}
-							onCollect = {this.handleCollect}
-							onSelect={this.handleSelect}
-						/>
-					</li>
-					{/*
-					<li key={item.id}>
-						<div className="search-list-left">
-							<img src={text} alt=""  className="test-pic"/>
-							<div className="test-txt">
-								<p className="test-txt-p1">
-									<Link to={`/ShiJuanDetail/${item.id}/exam_record`} target="_blank">{item.name}</Link>
-								</p>
-								<p>
-									<span><Icon type="clock-circle-o" />下载时间：{moment(item.created_at).format('YYYY-MM-DD')}</span>
-									<span><Icon type="file-text" />学科：{item.subject}</span>
-								</p>
-							</div>
+				{
+					searchType == 'exam' && (
+						<div className="downoption">
+							<SmallNavBar
+								title='题型'
+								data={exam_types}
+								onChange={this.handleExamTypes}
+							/>
 						</div>
-						<Button icon='download' type='primary' onClick={()=>this.props.history.push(`/downloadpage/${item.id}`)}>下载</Button>
-					</li>*/}
-				</ul>
+					)
+				}
+				<p className='about'>{key && <me>和<span> “{key}” </span></me>}相关{searchType == 'topic' ? '试题' : '试卷'}共<span> {total_count} </span>{searchType == 'topic' ? '道' : '张'}</p>
+				{
+					searchType == 'topic' && (
+						<ul>
+						{
+							data.length>0 && data.map((item)=>{
+								return (
+									<li key={item.id} style={{marginBottom:20}}>
+										<ShiTiItem
+											data={item}
+											onCollect = {this.handleCollect}
+											onSelect={this.handleSelect}
+										/>
+									</li>
+								)
+							})
+						}
+						</ul>
+					)
+				}
+				{
+					searchType == 'exam' && (
+						<ul className='downloadItem'>
+						{
+							data.length>0 && data.map((item)=>{
+								return (
+									<li key={item.id}>
+										<div className="search-list-left">
+											<img src={text} alt=""  className="test-pic"/>
+											<div className="test-txt">
+												<p className="test-txt-p1">
+													<Link to={`/ShiJuanDetail/${item.id}/exam`} target="_blank">{item.title}</Link>
+												</p>
+												<p>
+													<span><Icon type="clock-circle-o" />下载时间：{moment(item.created_at).format('YYYY-MM-DD')}</span>
+													<span><Icon type="download" />下载次数：{item.download_times}</span>
+													<span><Icon type="file-text" />类型：{item.exam_type_name}</span>
+												</p>
+											</div>
+										</div>
+										<Button icon='download' type='primary' onClick={()=>this.props.history.push(`/downloadpage/${item.id}/exam`)}>下载</Button>
+									</li>
+								)
+							})
+						}
+						</ul>
+					)
+				}
 				{!!total_pages && <Pagination showQuickJumper style={{marginTop:50}} current={page} total={total_pages*10} onChange={this.handlePage}/> }
-				<ShiTiLan
-					data = {cart_data}
-					onDel = {this.handleDelShiTiLan}
-					onSubmit = {this.handleSubmit}
-				/>
+				{
+					searchType == 'topic' && (
+						<ShiTiLan
+							data = {cart_data}
+							onDel = {this.handleDelShiTiLan}
+							onSubmit = {this.handleSubmit}
+						/>
+					)
+				}
 			</div>
 		)
 	}

@@ -3,7 +3,7 @@ let url={}  //导出url
 let __host__ = 'http://admin.gbtibawang.com/api/v1';  //正式
 __host__ = 'http://admin.imzzb.cn/api/v1'; //测试
 // __host__ = 'http://rqiang.mynatapp.cc/api/v1';
-// __host__ = 'http://192.168.0.115:3008/api/v1';
+__host__ = 'http://192.168.0.115:3008/api/v1';
 
 
 Object.defineProperties(url, {
@@ -39,6 +39,8 @@ Object.defineProperties(url, {
 	group_exam_smart_exams: {value: __host__ + '/group_exam/smart_exams'},  //自动组卷
 	owner_carts: {value: __host__ + '/owner/carts'},  //get 获取购物车  post添加 put删除
 	applies: {value: __host__ + '/applies'},  //校园号申请
+	home_search: {value: __host__ + '/home/search'},  //首页搜索
+	exams: {value: __host__ + '/exams'},  //试卷列表 exams/1 详情页
 
 });
 export default url

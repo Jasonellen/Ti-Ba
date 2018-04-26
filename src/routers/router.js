@@ -57,7 +57,7 @@ export default function Routers(){
 						{/*<Route path="/Double" component={Double}/>*/}
 						{/*<Route path="/DoubleDetail/:id" component={DoubleDetail}/>*/}
 						<Route exact path="/DownloadPage/:id" component={DownloadPage}/>
-						<Route exact path="/DownloadPage/:id/:direct" component={DownloadPage}/>
+						<Route exact path="/DownloadPage/:id/:type" component={DownloadPage}/>
 						<Route path="/PersonalCenter" component={PersonalCenter}/>
 						<Route path="/NoticeDetail/:id" component={NoticeDetail}/>
 						<Route path="/SearchPage" component={SearchPage}/>

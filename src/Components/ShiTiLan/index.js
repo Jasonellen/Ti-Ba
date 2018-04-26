@@ -32,7 +32,7 @@ export default class ShiTiLan extends Component{
 										<Icon
 											type="close-circle-o"
 											style={{cursor:'pointer'}}
-											onClick={()=>this.props.onDel && this.props.onDel(item.topic_ids)}/>
+											onClick={()=>this.props.onDel && this.props.onDel(item.topic_ids,item.topic_type_title)}/>
 									</li>
 								)
 							})

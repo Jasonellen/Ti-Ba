@@ -45,10 +45,12 @@ export default class DownloadPage extends Component{
 		}
 	}
 	componentDidMount(){
-		const { direct } = this.props.match.params
-		if(direct){
+		const { type } = this.props.match.params
+		if(type){
+			//试卷详情页过来的
 			this.getDatafromExamDetail()
 		}else{
+			//手动组卷过来的
 			this.getExamDetail()
 		}
 	}
@@ -74,8 +76,9 @@ export default class DownloadPage extends Component{
 	}
 	//从试卷详情页过来的获取详情数据
 	getDatafromExamDetail = ()=>{
-		const { id } = this.props.match.params
-		_axios.get(url.owner_exam_records+'/'+id)
+		const { id,type } = this.props.match.params
+		let _url = type == 'exam_record' ? url.owner_exam_records : url.exams
+		_axios.get(_url+'/'+id)
 			.then(data=>{
 				this.setState({
 					data:data.data

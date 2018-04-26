@@ -9,6 +9,7 @@ export const {
 	changeChapters,
 	changeKnowledges,
 	changeLogo,
+	changeSearchType
 
 } = createActions(
 		'changeUser',
@@ -16,7 +17,8 @@ export const {
 		'changeEducationsId',
 		'changeChapters',
 		'changeKnowledges',
-		'changeLogo'
+		'changeLogo',
+		'changeSearchType'
 	)
 
 export const getUser = () => (dispatch) =>{
@@ -51,7 +53,23 @@ export const getEducations = () => (dispatch) =>{
 				item.id = item.value
 				item.name = item.label
 			})
-			dispatch(changeEducations({educations:data.educations,levels,test_point_counts}))
+			let exam_classes = data.exam_classes
+			exam_classes.map(function(item){
+				item.id = item.value
+				item.name = item.label
+			})
+			let exam_types = data.exam_types
+			exam_types.map(function(item){
+				item.id = item.value
+				item.name = item.label
+			})
+			dispatch(changeEducations({
+				educations:data.educations,
+				levels,
+				test_point_counts,
+				exam_classes,
+				exam_types
+			}))
 
 			let edu = data.educations[0]
 			let sub = ''

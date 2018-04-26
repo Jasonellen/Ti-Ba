@@ -8,6 +8,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import * as otherAction from '@/Redux/actions/other.js';
 import { bindActionCreators } from 'redux'
+import moment from 'moment'
 const confirm = Modal.confirm;
 
 @connect(
@@ -30,10 +31,15 @@ export default class ShiJuanDetail extends Component{
 	};
 	componentDidMount(){
 		this.getData()
+		// this.props.history.listen((location)=>{
+		// 	console.log(this.props.match.params)
+		// 	// this.getData()
+		// })
 	}
 	getData = ()=>{
-		let id = this.props.match.params.id
-		_axios.get(url.owner_exam_records+'/'+id)
+		const { id,type } = this.props.match.params
+		let _url = type == 'exam_record' ? url.owner_exam_records : url.exams
+		_axios.get(_url+'/'+id)
 			.then(data=>{
 				this.setState({
 					data:data.data
@@ -106,10 +112,10 @@ export default class ShiJuanDetail extends Component{
 		}
 	}
 	//删除购物车行
-	handleDelShiTiLan = (topic_ids)=>{
+	handleDelShiTiLan = (topic_ids,title)=>{
 		var _this = this
 		confirm({
-			title: `确定要删除  么`,
+			title: <div>确定要删除 <span style={{color:'#ff9600'}}>{title}</span> 么</div>,
 			okText: '确定',
 			okType: 'danger',
 			cancelText: '取消',
@@ -166,12 +172,13 @@ export default class ShiJuanDetail extends Component{
 
 	render(){
 		const { data, cart_data } = this.state
+		const { id,type } = this.props.match.params
 		return (
 			<div className='ShiJuanDetail contentCenter'>
 				<div className="warp clearfix">
 					<div className="leftSide">
 						<h1>{data.title}</h1>
-						{/*<p><Icon type="clock-circle-o" /> 修改时间：2018-01-22 &nbsp;&nbsp;&nbsp;<Icon type="eye-o" /> 浏览次数：60 &nbsp;&nbsp;&nbsp;<Icon type="form" /> 类型：单元试卷 </p>*/}
+						<p><Icon type="clock-circle-o" /> 修改时间：{moment(data.updated_at).format('YYYY-MM-DD')} &nbsp;&nbsp;&nbsp;<Icon type="eye-o" /> 下载次数：{data.download_times} &nbsp;&nbsp;&nbsp;<Icon type="form" /> 类型：{data.exam_type_name} </p>
 						<hr/>
 						{
 							data.topics.length>0 && data.topics.map((item,i)=>{
@@ -201,7 +208,7 @@ export default class ShiJuanDetail extends Component{
 					</div>
 					<div className="rightSide">
 						<div className="top">
-							<Button type="primary" icon="download" size='large' onClick={()=>this.props.history.push(`/downloadpage/${this.props.match.params.id}/direct`)}>下载试卷</Button>
+							<Button type="primary" icon="download" size='large' onClick={()=>this.props.history.push(`/downloadpage/${id}/${type}`)}>下载试卷</Button>
 							{/*<div className="clearfix">
 								<div className="left" style={{cursor:'pointer'}} onClick={()=>this.props.changeAnswerSheetShow(true)}><Icon type="file-word" style={{color:'#ff9600'}}/> 答题卡下载</div>
 								<Link to='/onlineTest/1' style={{color:'rgba(0, 0, 0, 0.65)'}}><div className="right"><Icon type="edit" style={{color:'#ff9600'}}/> 在线测试</div></Link>
@@ -216,7 +223,7 @@ export default class ShiJuanDetail extends Component{
 							<ul>
 								{
 									data.relation_exams.length>0 && data.relation_exams.map((item)=>{
-										return <li key={item.id}><Link to=''>{item.title}</Link></li>
+										return <li key={item.id}><Link to={`/ShiJuanDetail/${item.id+1}/exam`}>{item.title}</Link></li>
 									})
 								}
 							</ul>

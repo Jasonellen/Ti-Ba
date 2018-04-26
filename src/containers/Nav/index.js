@@ -40,7 +40,8 @@ export default class Nav extends Component {
 			alClassShow:false,
 			educations:[],
 			logo:'',
-			phone:''
+			phone:'',
+			searchkey:'',
 		}
 		this.timer=null
 	}
@@ -80,6 +81,15 @@ export default class Nav extends Component {
 	NavLinkTo = (page)=>{
 		this.context.router.history.push('/'+page)
 	}
+	handleSearch = ()=>{
+		const { searchkey } = this.state
+		if(location.pathname.toLowerCase() !== '/searchpage'){
+			this.context.router.history.push({pathname:'/searchpage',query:{key:searchkey}})
+		}else{
+			eventEmitter.emit('beginSearch',searchkey)
+		}
+	}
+	
 	render() {
 		const { alClassShow } = this.state
 		const { user,educations,full_name,web } = this.props.persist
@@ -184,13 +194,15 @@ export default class Nav extends Component {
 
 				    <div className="right search">
 							<Input
+								onChange = {(e)=>this.setState({searchkey:e.target.value})}
+								onPressEnter = {this.handleSearch}
 							 	placeholder='请输入关键词'
 							 	addonBefore={
-							 		<Select defaultValue="试卷" style={{ width: 90 }}>
-									   <Option value="试题">试题</Option>
-									   <Option value="试卷">试卷</Option>
+							 		<Select defaultValue="topic" style={{ width: 90 }} onChange={(x)=>this.props.persistAction.changeSearchType(x)}>
+									   <Option value="topic">试题</Option>
+									   <Option value="exam">试卷</Option>
 									</Select>}
-							 	addonAfter={<Icon type="search"/>}
+							 	addonAfter={<Icon type="search" onClick={this.handleSearch}/>}
 							 />
 					  </div>
 				  </div>

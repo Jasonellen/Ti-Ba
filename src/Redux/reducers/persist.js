@@ -13,7 +13,8 @@ let initialState = {
 	grades:[], //适用年级
 	chapter:[], //章节树形数据 ------data
 	knowledges:[],
-	web:{avatar_data:{}}
+	web:{avatar_data:{}},
+	searchType:'topic',
 }
 const persist = handleActions({
 	changeUser: (state, action) => ({
@@ -25,6 +26,8 @@ const persist = handleActions({
 		educations: action.payload.educations,
 		levels:action.payload.levels,
 		test_point_counts:action.payload.test_point_counts,
+		exam_classes:action.payload.exam_classes,
+		exam_types:action.payload.exam_types,
 	}),
 	changeEducationsId: (state, action) => ({
 		...state,
@@ -47,6 +50,10 @@ const persist = handleActions({
 	changeLogo: (state, action) => ({
 		...state,
 		web: action.payload,
+	}),
+	changeSearchType: (state, action) => ({
+		...state,
+		searchType: action.payload,
 	}),
 
 }, initialState);
