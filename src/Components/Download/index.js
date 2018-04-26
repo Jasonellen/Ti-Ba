@@ -27,7 +27,7 @@ export default class Download extends Component{
 		checkedList: defaultCheckedList,
 	};
 	componentDidMount(){
-		console.log(this.props,123)
+
 	}
 	onChange = (e) => {
 		console.log('radio checked', e.target.value);

@@ -12,8 +12,8 @@ export default function Footer(){
 				<li>使用帮助</li>
 				<li>友情链接</li>
 			</ul>
-			<p>xxxxxx备案号xxxxxxx</p>
-			<p>xxx公安网备案11121212121号</p>
+			<p>题霸网 网站编号：4299101 电话：13680906950</p>
+			<p>粤ICP备18046587号</p>
 		</div>
 	);
 }

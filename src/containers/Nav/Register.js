@@ -6,6 +6,7 @@ import * as navAction from '@/Redux/actions/nav.js';
 import * as persistAction from '@/Redux/actions/persist.js';
 import { bindActionCreators } from 'redux'
 import { setCookie } from '@/service/cookie'
+import Protocol from './Protocol'
 
 const formItemLayout = {
 	labelCol: {
@@ -34,10 +35,65 @@ const formItemLayout = {
 class Register extends Component {
 	state={
 		user_type:'teacher',
-		menuName:'老师'
+		menuName:'老师',
+		secondsText:'获取验证码',
+		seconds:59,
 	}
+	onOff=true
+	timer=null
 	componentDidMount(){
 
+	}
+	handleGetCode = ()=>{
+		const form = this.props.form;
+		const { mobile } = form.getFieldValue('mobile')
+		if(!mobile){
+			notification.error({
+				message: '通知提醒',
+				description: '请先输入手机号！',
+				duration:2
+			});
+			return
+		}
+		if(!this.onOff) return;
+		this.onOff = false;
+		
+		// _fetch(url.send_code,{mobile:mobile})
+		// 	.then(data=>{
+		// 		if(data.success){
+		// 			notification.success({
+		// 				message: '通知提醒',
+		// 				description: '验证码发送成功',
+		// 				duration:2
+		// 			});
+		// 			this.setState({code:data.code},()=>{
+		// 				this.setState({secondsText:`重新获取(${this.state.seconds+1})`},()=>{
+		// 					clearInterval(this.timer)
+		// 					this.timer=setInterval(()=>{
+		// 						if(this.state.seconds === 0){
+		// 							this.onOff = true;
+		// 							clearInterval(this.timer)
+		// 							this.setState({
+		// 								seconds:59,
+		// 								secondsText:'获取验证码',
+		// 							})
+		// 						}else{
+		// 							this.setState({
+		// 								seconds:this.state.seconds - 1,
+		// 								secondsText:`重新获取(${this.state.seconds})`
+		// 							})
+		// 						}
+		// 					},1000)
+		// 				})
+		// 			})
+		// 		}else{
+		// 			notification.error({
+		// 				message: '通知提醒',
+		// 				description: '验证码发送失败!',
+		// 				duration:2
+		// 			});
+		// 		}
+		// 	})
 	}
 	handleSubmit = (e) => {
 		e.preventDefault();
@@ -79,10 +135,22 @@ class Register extends Component {
 			callback();
 		}
 	}
+	handleProtocol = ()=>{
+		Modal.info({
+			title: <div style={{fontSize:24,marginBottom:20}}>题霸网用户注册协议</div>,
+			width: '80%',
+			content: (
+				<Protocol />
+			),
+		});
+	}
+	componentWillUnmount() {
+		clearInterval(this.timer)
+	}
 	render(){
 		const { getFieldDecorator } = this.props.form;
 		const { registerModal } = this.props.state
-		const { menuName } = this.state
+		const { menuName, secondsText } = this.state
 		return(
 			<Modal
 				title='注册'
@@ -139,22 +207,24 @@ class Register extends Component {
 							<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="请再次输入密码" />
 						)}
 					</FormItem>
-					{/*<FormItem
+					<FormItem
 						{...formItemLayout}
 						label="手机验证码"
 					>
 						{getFieldDecorator('password2', {
 							rules: [{ required: true, message: '请输入验证码!' }],
 						})(
-							<Input prefix={<Icon type="barcode" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="请输入验证码" addonAfter={<span className='getYanzhenma'>获取验证码</span>}/>
+							<Input prefix={<Icon type="barcode" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="请输入验证码" addonAfter={<span className='getYanzhenma'>{secondsText}</span>}/>
 						)}
-					</FormItem>*/}
+					</FormItem>
 					<FormItem>
 						{getFieldDecorator('remember', {
 							valuePropName: 'checked',
-							initialValue: true,
+							rules: [{
+								required: true, message: '请阅读并同意协议！'
+							}],
 						})(
-							<Checkbox style={{marginLeft:115}}>我同意<a href="">《xx注册协议》</a></Checkbox>
+							<div><Checkbox style={{marginLeft:115}}>我同意</Checkbox><strong onClick={this.handleProtocol} style={{color:'#ff9600',cursor:'pointer'}}>《题霸网用户注册协议》</strong></div>
 						)}
 						<Button type="primary" htmlType="submit" className="register_button">注册</Button>
 					</FormItem>
