@@ -10,31 +10,37 @@ require('highcharts/modules/variable-pie')(Highcharts);
 export default class Sider extends Component{
 	state = {
 		title_select:false,
+		version_id:'',
+		grade_id:''
 	};
 	componentDidMount(){
-
+		
 	}
 
 	render(){
-		const { title_select } = this.state
+		const { versions=[], grades=[] } = this.props
+		const { version_id, grade_id } = this.props
 		return (
 			<div className="Sider">
 				<div className="title clearfix" onClick={()=>this.setState({title_select:!this.state.title_select})}>
-					<div className="select_title left">选择章节</div>
-					<div className='right'><Icon type="caret-down"/></div>
+					<div className="select_title left">试卷筛选</div>
+					{/*<div className='right'><Icon type="caret-down"/></div>*/}
 				</div>
-				<div className={`pan ${!title_select && 'hide'} `}>
+				<div className='pan'>
 					<div className="title1">教材选择</div>
 					<div>
 						版本:&nbsp;&nbsp;
 						<Select
 							style={{width:'65%'}}
 							showSearch
-							placeholder="Select a person"
+							placeholder="选择版本"
+							onChange={version_id=>this.setState({version_id})}
 						>
-							<Option value="jack">Jack</Option>
-							<Option value="lucy">Lucy</Option>
-							<Option value="tom">Tom</Option>
+						{
+							versions.length>0 && versions.map((item)=>{
+								return <Option key={item.id} value={item.id}>{item.name}</Option>
+							})
+						}
 						</Select>
 					</div>
 					<div>
@@ -42,15 +48,19 @@ export default class Sider extends Component{
 						<Select
 							style={{width:'65%'}}
 							showSearch
-							placeholder="Select a person"
+							placeholder="选择年级"
+							onChange={grade_id=>this.setState({grade_id})}
 						>
-							<Option value="jack">Jack</Option>
-							<Option value="lucy">Lucy</Option>
-							<Option value="tom">Tom</Option>
+							{
+								grades.length>0 && grades.map((item)=>{
+									return <Option key={item.id} value={item.id}>{item.name}</Option>
+								})
+							}
 						</Select>
 					</div>
-					<Button type='primary'>确定</Button>
+					<Button type='primary' onClick={()=>this.props.onSubmit && this.props.onSubmit(version_id, grade_id) }>确定</Button>
 				</div>
+			{/*
 				<div className="content">
 					<Tree
 						showLine
@@ -109,7 +119,7 @@ export default class Sider extends Component{
 							</TreeNode>
 						</TreeNode>
 					</Tree>
-				</div>
+				</div>*/}
 			</div>
 		)
 	}

@@ -7,6 +7,7 @@ let initialState = {
 	subject_id:'',
 	full_name:'全部课程',
 	versions:[], //所属教材
+	topic_types:[],
 	topic_classes:[], //题类筛选
 	levels:[], //难易程度
 	test_point_counts:[], //知识点
@@ -15,6 +16,10 @@ let initialState = {
 	knowledges:[],
 	web:{avatar_data:{}},
 	searchType:'topic',
+	exam_types:[],
+	exam_classes:[], //试卷大类
+	exam_class:'', //试卷大类id
+
 }
 const persist = handleActions({
 	changeUser: (state, action) => ({
@@ -54,6 +59,10 @@ const persist = handleActions({
 	changeSearchType: (state, action) => ({
 		...state,
 		searchType: action.payload,
+	}),
+	changeExamClass: (state, action) => ({
+		...state,
+		exam_class: action.payload,
 	}),
 
 }, initialState);

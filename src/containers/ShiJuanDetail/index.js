@@ -31,10 +31,6 @@ export default class ShiJuanDetail extends Component{
 	};
 	componentDidMount(){
 		this.getData()
-		// this.props.history.listen((location)=>{
-		// 	console.log(this.props.match.params)
-		// 	// this.getData()
-		// })
 	}
 	getData = ()=>{
 		const { id,type } = this.props.match.params
@@ -169,7 +165,10 @@ export default class ShiJuanDetail extends Component{
 				});
 			})
 	}
-
+	handleReload = (id)=>{
+		this.props.history.push(`/ShiJuanDetail/${id+1}/exam`)
+		location.reload()
+	}
 	render(){
 		const { data, cart_data } = this.state
 		const { id,type } = this.props.match.params
@@ -223,7 +222,7 @@ export default class ShiJuanDetail extends Component{
 							<ul>
 								{
 									data.relation_exams.length>0 && data.relation_exams.map((item)=>{
-										return <li key={item.id}><Link to={`/ShiJuanDetail/${item.id+1}/exam`}>{item.title}</Link></li>
+										return <li key={item.id} onClick={()=>this.handleReload(item.id)}>{item.title}</li>
 									})
 								}
 							</ul>

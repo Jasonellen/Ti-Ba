@@ -79,6 +79,14 @@ export default class Nav extends Component {
 	}
 
 	NavLinkTo = (page)=>{
+		this.props.persistAction.changeExamClass(page)
+		if(page == 'synchronous'){
+			page = 'Papers'
+		}else if(page == 'test'){
+			page = 'PapersTest'
+		}else if(page == 'simulation'){
+			page = 'realPapers'
+		}
 		this.context.router.history.push('/'+page)
 	}
 	handleSearch = ()=>{
@@ -92,7 +100,7 @@ export default class Nav extends Component {
 	
 	render() {
 		const { alClassShow } = this.state
-		const { user,educations,full_name,web } = this.props.persist
+		const { user,educations,full_name,web, exam_classes } = this.props.persist
 		return (
 			<div className="Nav">
 				<div className="head">
@@ -161,11 +169,13 @@ export default class Nav extends Component {
 								<Menu.Item key="znzj/zsd">知识点智能组卷</Menu.Item>
 								{/*<Menu.Item key="double">双向细目表组卷</Menu.Item>*/}
 			        </SubMenu>
-			        {/*<SubMenu title={<span>试卷库</span>}>
-			          <Menu.Item key="Papers">同步试卷</Menu.Item>
-								<Menu.Item key="PapersTest">测试试卷</Menu.Item>
-			          <Menu.Item key="realPapers">真卷&模拟卷</Menu.Item>
-			        </SubMenu>*/}
+			        <SubMenu title={<span>试卷库</span>}>
+			        {
+								exam_classes.length>0 && exam_classes.map((item)=>{
+									return <Menu.Item key={item.value}>{item.label}</Menu.Item>
+								})
+			        }
+			        </SubMenu>
 			        {/*<Menu.Item key="beike">备课中心</Menu.Item>*/}
 				    </Menu>
 						{

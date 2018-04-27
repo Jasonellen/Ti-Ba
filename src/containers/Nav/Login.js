@@ -21,6 +21,11 @@ import { setCookie } from '@/service/cookie'
 	}
 )
 class Login extends Component {
+	componentDidMount() {
+		eventEmitter.on('notLogin',()=>{
+			this.props.navAction.changeLoginModalShow(true)
+		});
+	}
 	handleForget = ()=>{
 		this.props.navAction.changeLoginModalShow(false)
 		this.props.navAction.changeForgetModalShow(true)

@@ -75,3 +75,7 @@ body,html{
 .highcharts-credits{
 	display: none;
 }
+.ant-tree li .ant-tree-node-content-wrapper.ant-tree-node-selected{
+	background: $c;
+	color: $f;
+}

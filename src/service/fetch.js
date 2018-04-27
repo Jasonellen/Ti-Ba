@@ -32,11 +32,16 @@ export default {
 			const response = await axios.post(url1,Object.assign({},params,{token}))
 				.then(({data})=>{
 					if(data.status === 'fail'){
-						notification.error({
-							message: '通知提醒',
-							description: data.msg,
-							duration:2
-						});
+						if(data.code == 100004){  //有提交操作时判断没有有登录
+							eventEmitter.emit('notLogin');
+						}else{
+							notification.error({
+								message: '通知提醒',
+								description: data.msg,
+								duration:2
+							});
+							throw new Error('没有返回正确的数据')
+						}
 					}else if(data.status === 'success'){
 						return data
 					}

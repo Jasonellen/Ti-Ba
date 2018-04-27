@@ -9,7 +9,8 @@ export const {
 	changeChapters,
 	changeKnowledges,
 	changeLogo,
-	changeSearchType
+	changeSearchType,
+	changeExamClass,
 
 } = createActions(
 		'changeUser',
@@ -18,7 +19,8 @@ export const {
 		'changeChapters',
 		'changeKnowledges',
 		'changeLogo',
-		'changeSearchType'
+		'changeSearchType',
+		'changeExamClass'
 	)
 
 export const getUser = () => (dispatch) =>{
