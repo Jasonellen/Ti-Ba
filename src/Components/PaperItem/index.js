@@ -26,7 +26,7 @@ export default class PaperItem extends Component{
 					</div>
 				</div>
 				<div className="right fenxi">
-					<span onClick={()=>this.props.changeCorrectErrorShow(true)}><Icon type="line-chart" /> 试卷分析</span><Button type='primary'>下载</Button>
+					{/*<span onClick={()=>this.props.changeCorrectErrorShow(true)}><Icon type="line-chart" /> 试卷分析</span>*/}<Button type='primary'>下载</Button>
 				</div>
 
 			</div>
