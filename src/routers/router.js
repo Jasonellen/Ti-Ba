@@ -30,6 +30,7 @@ const DownloadPage = asyncComponent(() => import("~/DownloadPage"));
 const PersonalCenter = asyncComponent(() => import("~/PersonalCenter"));
 const NoticeDetail = asyncComponent(() => import("~/NoticeDetail"));
 const SearchPage = asyncComponent(() => import("~/SearchPage"));
+const RealPapers = asyncComponent(() => import("~/RealPapers"));
 
 export default function Routers(){
 	return (
@@ -61,6 +62,7 @@ export default function Routers(){
 						<Route path="/PersonalCenter" component={PersonalCenter}/>
 						<Route path="/NoticeDetail/:id" component={NoticeDetail}/>
 						<Route path="/SearchPage" component={SearchPage}/>
+						<Route path="/RealPapers" component={RealPapers}/>
 					</Switch>
 				</div>
 				<Footer />

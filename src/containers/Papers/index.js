@@ -71,20 +71,24 @@ export default class Papers extends Component{
 			  </Breadcrumb>*/}
 				<div className="warp clearfix">
 					<div className="leftSide">
-						<Sider 
+						<Sider
 							versions = { versions }
 							grades = { grades }
 							onSubmit = { this.handleSideChange }
 						/>
 					</div>
 					<div className="rightSide">
-						<ul className='ul_list'>
 						{
-							data.length>0 && data.map((item)=>{
-								return <li key={item.id}><PaperItem data={item}/></li>
-							})
+							data.length>0 && (
+								<ul className='ul_list'>
+									{
+										data.map((item)=>{
+											return <li key={item.id}><PaperItem data={item}/></li>
+										})
+									}
+								</ul>
+							)
 						}
-						</ul>
 						{!!total_pages && <Pagination showQuickJumper style={{marginTop:50}} current={page} total={total_pages*10} onChange={this.handlePage}/> }
 					</div>
 				</div>

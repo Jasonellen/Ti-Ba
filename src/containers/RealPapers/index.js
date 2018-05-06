@@ -6,7 +6,16 @@ import ZuJuanSider from '@/Components/ZuJuanSider'
 import PaperItem from '@/Components/PaperItem'
 import SmallNavBar from '@/Components/SmallNavBar'
 import {connect} from 'react-redux';
+import moment from 'moment'
 
+let now_year = +moment().format('YYYY')
+let years = [
+	{id:now_year-1,name:now_year-1},
+	{id:now_year-2,name:now_year-2},
+	{id:now_year-3,name:now_year-3},
+	{id:now_year-4,name:now_year-4},
+	{id:'ago',name:'ago'},
+]
 @connect(
 	state => {
 		return {
@@ -15,7 +24,7 @@ import {connect} from 'react-redux';
 	},
 	null
 )
-export default class PapersTest extends Component{
+export default class RealPapers extends Component{
 	state = {
 		exam_types:[],
 		area:[],
@@ -23,7 +32,7 @@ export default class PapersTest extends Component{
 		page:1,
 		per_page:10,
 		total_pages:0,
-		grade_id:'',
+		year:'',
 		region_id:'',
 		exam_type_id:''
 	};
@@ -37,15 +46,15 @@ export default class PapersTest extends Component{
 	}
 	getData = ()=>{
 		const { education_id, subject_id } = this.props.persist
-		const { grade_id, region_id, page, per_page, exam_type_id } = this.state
+		const { year, region_id, page, per_page, exam_type_id } = this.state
 		_axios.post(url.exams,{
 			education_id,
 			subject_id,
-			grade_id,
+			year,
 			region_id,
 			page,
 			per_page,
-			exam_class:'test',
+			exam_class:'simulation',
 			exam_type_id
 		})
 			.then(data=>{
@@ -90,9 +99,9 @@ export default class PapersTest extends Component{
 	handlePage = (page)=>{
 		this.setState({page},this.getData)
 	}
-	handleGrade = (grade_id)=>{
+	handleYears = (year)=>{
 		this.setState({
-			grade_id
+			year
 		},this.getData)
 	}
 	handleRegion = (region_id)=>{
@@ -106,9 +115,8 @@ export default class PapersTest extends Component{
 	}
 	render(){
 		const { exam_types, area, page, data, total_pages } = this.state
-		const { grades } = this.props.persist
 		return (
-			<div className='PapersTest contentCenter'>
+			<div className='RealPapers contentCenter'>
 				{/*<Breadcrumb separator=">">
 			    <Breadcrumb.Item href="/"><Icon type="home" />当前位置：首页</Breadcrumb.Item>
 					<Breadcrumb.Item>初中数学</Breadcrumb.Item>
@@ -119,7 +127,7 @@ export default class PapersTest extends Component{
 					</div>
 					<div className="rightSide">
 						<div className="bar">
-							<SmallNavBar title='适用年级' data={grades} width='120px' onChange={this.handleGrade}/>
+							<SmallNavBar title='年份' data={years} width='120px' onChange={this.handleYears}/>
 							<SmallNavBar title='适用地区' data={area} width='120px' onChange={this.handleRegion}/>
 						</div>
 						{

@@ -11,9 +11,9 @@ import { bindActionCreators } from 'redux'
 import Register from './Register'
 import Forget from './Forget'
 import Login from './Login'
-import Analyze from '@/Components/Analyze'
+// import Analyze from '@/Components/Analyze'
 import Download from '@/Components/Download'
-import AnswerSheet from '@/Components/AnswerSheet'
+// import AnswerSheet from '@/Components/AnswerSheet'
 import CorrectError from '@/Components/CorrectError'
 import { getCookie } from '@/service/cookie'
 const SubMenu = Menu.SubMenu;
@@ -36,7 +36,6 @@ export default class Nav extends Component {
 	constructor(){
 		super()
 		this.state={
-			allClassName:'全部课程',
 			alClassShow:false,
 			educations:[],
 			logo:'',
@@ -72,10 +71,9 @@ export default class Nav extends Component {
 		}
 	}
 	//课程点击
-	handleClassClick = (topic_id,topic_name,subject_id,subject_name)=>{
-		this.setState({
-			allClassName:'当前：'+topic_name+subject_name
-		})
+	handleClassClick = (item,iitem)=>{
+		this.props.persistAction.changeSubject(item,iitem)
+		this.props.persistAction.changeAllClassName('当前：'+item.name+iitem.name)
 	}
 
 	NavLinkTo = (page)=>{
@@ -97,10 +95,10 @@ export default class Nav extends Component {
 			eventEmitter.emit('beginSearch',searchkey)
 		}
 	}
-	
+
 	render() {
 		const { alClassShow } = this.state
-		const { user,educations,full_name,web, exam_classes } = this.props.persist
+		const { user,educations,allClassName,web, exam_classes } = this.props.persist
 		return (
 			<div className="Nav">
 				<div className="head">
@@ -157,7 +155,7 @@ export default class Nav extends Component {
 							className='NavAll left'
 							onMouseOver={()=>this.handleAllClass(true)}
 							onMouseOut={()=>this.handleAllClass(false)}
-						>{full_name} <Icon type="down" /></div>
+						>{allClassName} <Icon type="down" /></div>
 						<Menu mode="horizontal" onClick={(item)=>this.NavLinkTo(item.key)}>
 			        <Menu.Item key="home">网站首页</Menu.Item>
 			        <SubMenu title={<span>手动组卷</span>}>
@@ -171,12 +169,12 @@ export default class Nav extends Component {
 			        </SubMenu>
 			        <SubMenu title={<span>试卷库</span>}>
 			        {
-								exam_classes.length>0 && exam_classes.map((item)=>{
-									return <Menu.Item key={item.value}>{item.label}</Menu.Item>
-								})
+									exam_classes.length>0 && exam_classes.map((item)=>{
+										return <Menu.Item key={item.value}>{item.label}</Menu.Item>
+									})
 			        }
 			        </SubMenu>
-			        {/*<Menu.Item key="beike">备课中心</Menu.Item>*/}
+			        <Menu.Item key="beike">备课中心</Menu.Item>
 				    </Menu>
 						{
 							alClassShow && (
@@ -191,7 +189,7 @@ export default class Nav extends Component {
 													<h3>{item.name}</h3>
 													{
 														item.subjects.length>0 && item.subjects.map((iitem)=>{
-															return <span key={iitem.id} onClick={()=>this.props.persistAction.changeSubject(item,iitem)}>{iitem.name}</span>
+															return <span key={iitem.id} onClick={()=>this.handleClassClick(item,iitem)}>{iitem.name}</span>
 														})
 													}
 												</div>

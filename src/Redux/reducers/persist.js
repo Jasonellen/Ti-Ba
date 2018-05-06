@@ -5,7 +5,6 @@ let initialState = {
 	educations:'',
 	education_id:'',
 	subject_id:'',
-	full_name:'全部课程',
 	versions:[], //所属教材
 	topic_types:[],
 	topic_classes:[], //题类筛选
@@ -16,9 +15,9 @@ let initialState = {
 	knowledges:[],
 	web:{avatar_data:{}},
 	searchType:'topic',
-	exam_types:[],
 	exam_classes:[], //试卷大类
 	exam_class:'', //试卷大类id
+	allClassName:'全部课程',
 
 }
 const persist = handleActions({
@@ -38,9 +37,7 @@ const persist = handleActions({
 		...state,
 		education_id: action.payload.education_id,
 		subject_id:action.payload.subject_id,
-		full_name:action.payload.full_name,
 		versions:action.payload.versions,
-		topic_types:action.payload.topic_types,
 		topic_classes:action.payload.topic_classes,
 		grades:action.payload.grades,
 	}),
@@ -64,6 +61,11 @@ const persist = handleActions({
 		...state,
 		exam_class: action.payload,
 	}),
+	changeAllClassName: (state, action) => ({
+		...state,
+		allClassName: action.payload,
+	}),
+
 
 }, initialState);
 

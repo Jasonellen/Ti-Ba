@@ -3,7 +3,7 @@ let url={}  //导出url
 let __host__ = 'http://admin.gbtibawang.com/api/v1';  //正式
 __host__ = 'http://admin.imzzb.cn/api/v1'; //测试
 // __host__ = 'http://rqiang.mynatapp.cc/api/v1';
-__host__ = 'http://192.168.0.115:3008/api/v1';
+// __host__ = 'http://192.168.0.115:3008/api/v1';
 
 
 Object.defineProperties(url, {
@@ -41,6 +41,12 @@ Object.defineProperties(url, {
 	applies: {value: __host__ + '/applies'},  //校园号申请
 	home_search: {value: __host__ + '/home/search'},  //首页搜索
 	exams: {value: __host__ + '/exams'},  //试卷列表 exams/1 详情页
+	sms_new: {value: __host__ + '/sms/new'},  //验证码
+	users_change: {value: __host__ + '/users/change'},  //忘记密码
+	exam_types: {value: __host__ + '/exam_types'},  //试卷类型
+	regions: {value: __host__ + '/regions'},  //适用地区
+	course_categories: {value: __host__ + '/course_categories'},  //备课类型
+	courses: {value: __host__ + '/courses'},  //备课列表
 
 });
 export default url

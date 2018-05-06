@@ -29,6 +29,7 @@ export default class SearchPage extends Component{
 		key:'',
 		data:[],
 		exam_type_id:'',
+		exam_types:[]
 	};
 	componentDidMount(){
 		const query = this.props.location.query
@@ -44,6 +45,9 @@ export default class SearchPage extends Component{
 
 		eventEmitter.on('beginSearch',(key)=>{
 			this.setState({key},this.getList)
+		});
+		eventEmitter.on('subjectChanged',()=>{
+			this.getList()
 		});
 
 	}
@@ -66,7 +70,24 @@ export default class SearchPage extends Component{
 			subjects_id
 		},()=>{
 			this.getList()
+			this.getExamTypes()
 		})
+	}
+	getExamTypes = ()=>{
+		_axios.get(url.exam_types,{
+			exam_class:'',
+			educations_id:this.state.educations_id
+		})
+			.then(data=>{
+				let exam_types = data.data
+				exam_types.map(function(item){
+					item.id = item.value
+					item.name = item.label
+				})
+				this.setState({
+					exam_types
+				})
+			})
 	}
 	//搜索列表
 	getList = ()=>{
@@ -215,8 +236,8 @@ export default class SearchPage extends Component{
 		}
 	}
 	render(){
-		const { educations, subjects, data, total_pages, total_count, page, cart_data, key } = this.state
-		const { searchType, exam_types } = this.props
+		const { educations, subjects, data, total_pages, total_count, page, cart_data, key, exam_types } = this.state
+		const { searchType } = this.props
 		return (
 			<div className='SearchPage contentCenter'>
 				<div className="upoption">
@@ -248,47 +269,47 @@ export default class SearchPage extends Component{
 				{
 					searchType == 'topic' && (
 						<ul>
-						{
-							data.length>0 && data.map((item)=>{
-								return (
-									<li key={item.id} style={{marginBottom:20}}>
-										<ShiTiItem
-											data={item}
-											onCollect = {this.handleCollect}
-											onSelect={this.handleSelect}
-										/>
-									</li>
-								)
-							})
-						}
+							{
+								data.length>0 && data.map((item)=>{
+									return (
+										<li key={item.id} style={{marginBottom:20}}>
+											<ShiTiItem
+												data={item}
+												onCollect = {this.handleCollect}
+												onSelect={this.handleSelect}
+											/>
+										</li>
+									)
+								})
+							}
 						</ul>
 					)
 				}
 				{
 					searchType == 'exam' && (
 						<ul className='downloadItem'>
-						{
-							data.length>0 && data.map((item)=>{
-								return (
-									<li key={item.id}>
-										<div className="search-list-left">
-											<img src={text} alt=""  className="test-pic"/>
-											<div className="test-txt">
-												<p className="test-txt-p1">
-													<Link to={`/ShiJuanDetail/${item.id}/exam`} target="_blank">{item.title}</Link>
-												</p>
-												<p>
-													<span><Icon type="clock-circle-o" />下载时间：{moment(item.created_at).format('YYYY-MM-DD')}</span>
-													<span><Icon type="download" />下载次数：{item.download_times}</span>
-													<span><Icon type="file-text" />类型：{item.exam_type_name}</span>
-												</p>
+							{
+								data.length>0 && data.map((item)=>{
+									return (
+										<li key={item.id}>
+											<div className="search-list-left">
+												<img src={text} alt=""  className="test-pic"/>
+												<div className="test-txt">
+													<p className="test-txt-p1">
+														<Link to={`/ShiJuanDetail/${item.id}/exam`} target="_blank">{item.title}</Link>
+													</p>
+													<p>
+														<span><Icon type="clock-circle-o" />下载时间：{moment(item.created_at).format('YYYY-MM-DD')}</span>
+														<span><Icon type="download" />下载次数：{item.download_times}</span>
+														<span><Icon type="file-text" />类型：{item.exam_type_name}</span>
+													</p>
+												</div>
 											</div>
-										</div>
-										<Button icon='download' type='primary' onClick={()=>this.props.history.push(`/downloadpage/${item.id}/exam`)}>下载</Button>
-									</li>
-								)
-							})
-						}
+											<Button icon='download' type='primary' onClick={()=>this.props.history.push(`/downloadpage/${item.id}/exam`)}>下载</Button>
+										</li>
+									)
+								})
+							}
 						</ul>
 					)
 				}

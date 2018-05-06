@@ -13,11 +13,12 @@ export default class SmallNavBar extends Component{
 
 	}
 	componentWillReceiveProps(nextprops){
-		if(this.state.data !== nextprops.data){
+		let data = this.state.data
+		if(data.length == 1){
 			this.setState({
 				data:nextprops.data
 			},this.initial)
-		}		
+		}
 	}
 
 	initial = ()=>{

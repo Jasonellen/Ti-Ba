@@ -1,8 +1,7 @@
 
 import React, { Component }from 'react';
-import { Icon, Tree,Button, Select } from 'antd';
+import { Button, Select } from 'antd';
 import './Sider.scss'
-const TreeNode = Tree.TreeNode;
 const Option = Select.Option;
 var Highcharts = require('highcharts');
 require('highcharts/modules/variable-pie')(Highcharts);
@@ -14,7 +13,7 @@ export default class Sider extends Component{
 		grade_id:''
 	};
 	componentDidMount(){
-		
+
 	}
 
 	render(){
@@ -36,11 +35,11 @@ export default class Sider extends Component{
 							placeholder="选择版本"
 							onChange={version_id=>this.setState({version_id})}
 						>
-						{
-							versions.length>0 && versions.map((item)=>{
-								return <Option key={item.id} value={item.id}>{item.name}</Option>
-							})
-						}
+							{
+								versions.length>0 && versions.map((item)=>{
+									return <Option key={item.id} value={item.id}>{item.name}</Option>
+								})
+							}
 						</Select>
 					</div>
 					<div>
@@ -60,7 +59,7 @@ export default class Sider extends Component{
 					</div>
 					<Button type='primary' onClick={()=>this.props.onSubmit && this.props.onSubmit(version_id, grade_id) }>确定</Button>
 				</div>
-			{/*
+				{/*
 				<div className="content">
 					<Tree
 						showLine

@@ -28,9 +28,11 @@ class Forget extends Component {
 		secondsText:'获取验证码',
 		seconds:59,
 	}
+	onOff=true
+	timer=null
 	handleGetCode = ()=>{
 		const form = this.props.form;
-		const { mobile } = form.getFieldValue('mobile')
+		const mobile = form.getFieldValue('mobile')
 		if(!mobile){
 			notification.error({
 				message: '通知提醒',
@@ -41,43 +43,37 @@ class Forget extends Component {
 		}
 		if(!this.onOff) return;
 		this.onOff = false;
-		
-		// _fetch(url.send_code,{mobile:mobile})
-		// 	.then(data=>{
-		// 		if(data.success){
-		// 			notification.success({
-		// 				message: '通知提醒',
-		// 				description: '验证码发送成功',
-		// 				duration:2
-		// 			});
-		// 			this.setState({code:data.code},()=>{
-		// 				this.setState({secondsText:`重新获取(${this.state.seconds+1})`},()=>{
-		// 					clearInterval(this.timer)
-		// 					this.timer=setInterval(()=>{
-		// 						if(this.state.seconds === 0){
-		// 							this.onOff = true;
-		// 							clearInterval(this.timer)
-		// 							this.setState({
-		// 								seconds:59,
-		// 								secondsText:'获取验证码',
-		// 							})
-		// 						}else{
-		// 							this.setState({
-		// 								seconds:this.state.seconds - 1,
-		// 								secondsText:`重新获取(${this.state.seconds})`
-		// 							})
-		// 						}
-		// 					},1000)
-		// 				})
-		// 			})
-		// 		}else{
-		// 			notification.error({
-		// 				message: '通知提醒',
-		// 				description: '验证码发送失败!',
-		// 				duration:2
-		// 			});
-		// 		}
-		// 	})
+		_axios.get(url.sms_new,{
+			type:'change_password',
+			mobile,
+		})
+			.then(data=>{
+				notification.success({
+					message: '通知提醒',
+					description: '验证码发送成功',
+					duration:2
+				});
+				this.setState({code:data.code},()=>{
+					this.setState({secondsText:`重新获取(${this.state.seconds+1})`},()=>{
+						clearInterval(this.timer)
+						this.timer=setInterval(()=>{
+							if(this.state.seconds === 0){
+								this.onOff = true;
+								clearInterval(this.timer)
+								this.setState({
+									seconds:59,
+									secondsText:'获取验证码',
+								})
+							}else{
+								this.setState({
+									seconds:this.state.seconds - 1,
+									secondsText:`重新获取(${this.state.seconds})`
+								})
+							}
+						},1000)
+					})
+				})
+			})
 	}
 	handleSubmit = (e) => {
 		e.preventDefault();
@@ -85,20 +81,19 @@ class Forget extends Component {
 			if (!err) {
 				console.log('Received values of form: ', values);
 			}
-			const {mobile,password,remember} = values
-
-			if(!remember)return false;
-			_axios.post(url.forget,{
+			const {mobile,password,code} = values
+			_axios.post(url.users_change,{
 				mobile,
 				password,
+				code
 			})
 				.then(()=>{
-					// this.props.changeRegisterModalShow(false)
-					// notification.success({
-					// 	message: '通知提醒',
-					// 	description: '恭喜注册成功！',
-					// 	duration:2
-					// });
+					notification.success({
+						message: '通知提醒',
+						description: '密码修改成功！',
+						duration:2
+					});
+					this.props.changeForgetModalShow(false)
 				})
 		});
 	}
@@ -130,10 +125,10 @@ class Forget extends Component {
 						{...formItemLayout}
 						label="验证码"
 					>
-						{getFieldDecorator('password', {
+						{getFieldDecorator('code', {
 							rules: [{ required: true, message: '请输入验证码!' }],
 						})(
-							<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="验证码" addonAfter={<span className='getYanzhenma'>{secondsText}</span>}/>
+							<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="验证码" addonAfter={<span onClick={this.handleGetCode} className='getYanzhenma'>{secondsText}</span>}/>
 						)}
 					</FormItem>
 					<FormItem

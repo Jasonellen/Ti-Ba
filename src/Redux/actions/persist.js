@@ -11,6 +11,7 @@ export const {
 	changeLogo,
 	changeSearchType,
 	changeExamClass,
+	changeAllClassName
 
 } = createActions(
 		'changeUser',
@@ -20,7 +21,8 @@ export const {
 		'changeKnowledges',
 		'changeLogo',
 		'changeSearchType',
-		'changeExamClass'
+		'changeExamClass',
+		'changeAllClassName'
 	)
 
 export const getUser = () => (dispatch) =>{
@@ -60,25 +62,12 @@ export const getEducations = () => (dispatch) =>{
 				item.id = item.value
 				item.name = item.label
 			})
-			let exam_types = data.exam_types
-			exam_types.map(function(item){
-				item.id = item.value
-				item.name = item.label
-			})
 			dispatch(changeEducations({
 				educations:data.educations,
 				levels,
 				test_point_counts,
 				exam_classes,
-				exam_types
 			}))
-
-			let edu = data.educations[0]
-			let sub = ''
-			if(edu) sub = edu.subjects[0];
-			if(sub){
-				dispatch(changeSubject(edu,sub))
-			}
 		})
 }
 export const changeSubject = (edu,sub) => (dispatch) =>{
@@ -91,7 +80,6 @@ export const changeSubject = (edu,sub) => (dispatch) =>{
 	dispatch(changeEducationsId({
 		education_id:edu.id,
 		subject_id:sub.id,
-		full_name:'当前：'+edu.name+sub.name,
 		versions:sub.versions,
 		topic_types:sub.topic_types,
 		topic_classes:edu.topic_classes,
@@ -108,8 +96,9 @@ export const changeSubject = (edu,sub) => (dispatch) =>{
 		.then(data=>{
 			dispatch(changeKnowledges(data.knowledge.children))
 		})
-
-	eventEmitter.emit('subjectChanged');
+	setTimeout(()=>{
+		eventEmitter.emit('subjectChanged'); //持久化时间
+	},400)
 }
 
 export const getLogo = () => (dispatch) =>{

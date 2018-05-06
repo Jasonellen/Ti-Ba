@@ -4,7 +4,7 @@ import {Icon, Button, Modal } from 'antd';
 import './index.scss'
 import ShiTiLan from '@/Components/ShiTiLan'
 import ShiTiItem from '@/Components/ShiTiItem'
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import * as otherAction from '@/Redux/actions/other.js';
 import { bindActionCreators } from 'redux'
