@@ -174,7 +174,7 @@ export default class Nav extends Component {
 									})
 			        }
 			        </SubMenu>
-			        <Menu.Item key="beike">备课中心</Menu.Item>
+			        {/*<Menu.Item key="beike">备课中心</Menu.Item>*/}
 				    </Menu>
 						{
 							alClassShow && (
