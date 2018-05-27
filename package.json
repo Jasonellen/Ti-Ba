@@ -6,8 +6,8 @@
     "start": "cross-env NODE_ENV=development node build/dev-server.js",
     "build": "cross-env NODE_ENV=production node build/build.js",
     "lint": "eslint --ext .js src",
-    "deploy-test": "npm run build && scp -r /Users/nannan/Desktop/Ti-Ba/dist  deploy@114.115.215.249:/data/www/development",
-    "deploy-build": "npm run build && scp -r /Users/nannan/Desktop/Ti-Ba/dist  tiba@120.78.173.52:/opt/www"
+    "deploy-test": "cross-env DEPLOY=deploy-test node build/build.js",
+    "deploy-build": "cross-env DEPLOY=deploy-build node build/build.js"
   },
   "keywords": [
     "webpack",
@@ -61,6 +61,7 @@
     "sass-resources-loader": "^1.3.0",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
+    "ssh-webpack-plugin": "^0.1.7",
     "style-loader": "^0.17.0",
     "svg-sprite-loader": "^0.3.1",
     "url-loader": "^0.5.8",

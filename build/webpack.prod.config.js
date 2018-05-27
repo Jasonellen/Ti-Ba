@@ -7,7 +7,32 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-
+var SshWebpackPlugin = require('ssh-webpack-plugin');
+var options = {}
+if(process.env.DEPLOY === 'deploy-test'){
+	options = {
+		host: '114.115.215.249',
+		port: '22',
+		username: 'deploy',
+		//password: 'Remote password',//or use privateKey login(privateKey: require('fs').readFileSync('/path/to/private/key')).
+		privateKey: require('fs').readFileSync('/Users/nannan/.ssh/id_rsa'),
+		from: 'dist',
+		to: '/data/www/development',//important: If the 'cover' of value is false,All files in this folder will be cleared before starting deployment.
+		cover:false, //覆盖形式
+	}
+}
+if(process.env.DEPLOY === 'deploy-build'){
+	options = {
+		host: '120.78.173.52',
+		port: '22',
+		username: 'tiba',
+		//password: 'Remote password',//or use privateKey login(privateKey: require('fs').readFileSync('/path/to/private/key')).
+		privateKey: require('fs').readFileSync('/Users/nannan/.ssh/id_rsa'),
+		from: 'dist',
+		to: '/opt/html/',//important: If the 'cover' of value is false,All files in this folder will be cleared before starting deployment.
+		cover:false, //覆盖形式
+	}
+}
 var webpackConfig = merge(baseWebpackConfig, {
 	output: {
 		//产出路径，后面的路径都是根据这个来的
@@ -77,7 +102,8 @@ var webpackConfig = merge(baseWebpackConfig, {
         to: config.build.staticPath,
         // ignore: ['.*']
       }
-    ])
+    ]),
+		process.env.DEPLOY && new SshWebpackPlugin(options)
   ]
 })
 
