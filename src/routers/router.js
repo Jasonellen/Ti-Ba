@@ -24,8 +24,8 @@ const HelpCenter = asyncComponent(() => import("~/HelpCenter"));
 // const OnlineTest = asyncComponent(() => import("~/OnlineTest"));
 // const TestResult = asyncComponent(() => import("~/OnlineTest/TestResult"));
 const BeiKeDetail = asyncComponent(() => import("~/BeiKeDetail"));
-// const Double = asyncComponent(() => import("~/Double"));
-// const DoubleDetail = asyncComponent(() => import("~/DoubleDetail"));
+const Double = asyncComponent(() => import("~/Double"));
+const DoubleDetail = asyncComponent(() => import("~/DoubleDetail"));
 const DownloadPage = asyncComponent(() => import("~/DownloadPage"));
 const PersonalCenter = asyncComponent(() => import("~/PersonalCenter"));
 const NoticeDetail = asyncComponent(() => import("~/NoticeDetail"));
@@ -55,8 +55,8 @@ export default function Routers(){
 						{/*<Route path="/OnlineTest/:id" component={OnlineTest}/>*/}
 						{/*<Route path="/TestResult/:id" component={TestResult}/>*/}
 						<Route path="/BeiKeDetail/:id" component={BeiKeDetail}/>
-						{/*<Route path="/Double" component={Double}/>*/}
-						{/*<Route path="/DoubleDetail/:id" component={DoubleDetail}/>*/}
+						<Route path="/Double" component={Double}/>
+						<Route path="/DoubleDetail/:id" component={DoubleDetail}/>
 						<Route exact path="/DownloadPage/:id" component={DownloadPage}/>
 						<Route exact path="/DownloadPage/:id/:type" component={DownloadPage}/>
 						<Route path="/PersonalCenter" component={PersonalCenter}/>

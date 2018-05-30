@@ -1,6 +1,6 @@
 
 let url={}  //导出url
-let __host__ = 'http://admin.gbtibawang.com/api/v1';  //正式
+let __host__ = 'http://admin.gdtibawang.com/api/v1';  //正式
 // __host__ = 'http://admin.imzzb.cn/api/v1'; //测试
 // __host__ = 'http://rqiang.s3.natapp.cc//api/v1';
 // __host__ = 'http://192.168.0.115:3008/api/v1';
@@ -46,6 +46,9 @@ Object.defineProperties(url, {
 	regions: {value: __host__ + '/regions'},  //适用地区
 	course_categories: {value: __host__ + '/course_categories'},  //备课类型
 	courses: {value: __host__ + '/courses'},  //备课列表
+	project_types: {value: __host__ + '/project_types'},  //细目表类型
+	projects: {value: __host__ + '/projects'},  //推荐细目表列表
+	owner_projects: {value: __host__ + '/owner/projects'},  //我的细目表列表
 
 });
 export default url

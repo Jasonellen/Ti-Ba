@@ -17,7 +17,7 @@ if(process.env.DEPLOY === 'deploy-test'){
 		//password: 'Remote password',//or use privateKey login(privateKey: require('fs').readFileSync('/path/to/private/key')).
 		privateKey: require('fs').readFileSync('/Users/nannan/.ssh/id_rsa'),
 		from: 'dist',
-		to: '/data/www/development',//important: If the 'cover' of value is false,All files in this folder will be cleared before starting deployment.
+		to: '/data/www/html',//important: If the 'cover' of value is false,All files in this folder will be cleared before starting deployment.
 		cover:false, //覆盖形式
 	}
 }
