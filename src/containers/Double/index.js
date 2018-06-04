@@ -37,9 +37,9 @@ export default class Double extends Component{
 		});
 	}
 	getProjecttypes = ()=>{
-		const { subject_id } = this.props.persist
+		const { education_id } = this.props.persist
 		_axios.get(url.project_types,{
-			subject_id
+			education_id
 		})
 			.then(data=>{
 				this.setState({
@@ -98,7 +98,7 @@ export default class Double extends Component{
 									return (
 										<div className="ximu-item" key={item.id}>
 											<div className="inner">
-												<h4><Link to={`/doubledetail${item.id}`} className="J_ToEditXimu" title={item.name}>{item.name}</Link></h4>
+												<h4><Link to={`/doubledetail/${item.id}`} className="J_ToEditXimu" title={item.name}>{item.name}</Link></h4>
 												<span className="used-ximu-num">使用人数：{item.users_count}人</span>
 											</div>
 										</div>

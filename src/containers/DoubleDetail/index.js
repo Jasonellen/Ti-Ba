@@ -3,8 +3,8 @@ import React, { Component }from 'react';
 import { Icon,Table, Select, Modal, Button,Input, Radio,message } from 'antd';
 import './index.scss'
 import { Link } from 'react-router-dom'
-var Highcharts = require('highcharts');
-require('highcharts/modules/variable-pie')(Highcharts);
+// var Highcharts = require('highcharts');
+// require('highcharts/modules/variable-pie')(Highcharts);
 const Option = Select.Option;
 const confirm = Modal.confirm;
 const RadioGroup = Radio.Group;
@@ -106,117 +106,128 @@ export default class DoubleDetail extends Component{
 
 
 	componentDidMount() {
-		Highcharts.chart('container',{
-			title: {
-				text: '大题体量分析'
-			},
-			xAxis: {
-				categories: ['非洲', '美洲','澳洲'],
-			},
-			yAxis: {
-				title: {
-					text: null
-				}
-			},
-			legend:{
-				enabled:false
-			},
-			tooltip: {
-				headerFormat: '<span style="font-size:10px">题量分析</span><table>',
-				pointFormat: '<tr><td style="color:{series.color};padding:0">{point.name} {point.y}</td></tr>',
-				footerFormat: '</table>',
-				useHTML: true
-			},
-			series: [{
-				type: 'bar',
-				data: [{
-					x: 0,
-					y: 1,
-					name: "困难",
-					color: "#00FF00"
-				}, {
-					x: 1,
-					y: 10,
-					name: "普通",
-					color: "#FF00FF"
-				}, {
-					x: 2,
-					y: 7,
-					name: "普通1",
-					color: "#FF00FF"
-				}]
-			}]
-		});
+		console.log(this.props,111)
+		this.getData()
+		// Highcharts.chart('container',{
+		// 	title: {
+		// 		text: '大题体量分析'
+		// 	},
+		// 	xAxis: {
+		// 		categories: ['非洲', '美洲','澳洲'],
+		// 	},
+		// 	yAxis: {
+		// 		title: {
+		// 			text: null
+		// 		}
+		// 	},
+		// 	legend:{
+		// 		enabled:false
+		// 	},
+		// 	tooltip: {
+		// 		headerFormat: '<span style="font-size:10px">题量分析</span><table>',
+		// 		pointFormat: '<tr><td style="color:{series.color};padding:0">{point.name} {point.y}</td></tr>',
+		// 		footerFormat: '</table>',
+		// 		useHTML: true
+		// 	},
+		// 	series: [{
+		// 		type: 'bar',
+		// 		data: [{
+		// 			x: 0,
+		// 			y: 1,
+		// 			name: "困难",
+		// 			color: "#00FF00"
+		// 		}, {
+		// 			x: 1,
+		// 			y: 10,
+		// 			name: "普通",
+		// 			color: "#FF00FF"
+		// 		}, {
+		// 			x: 2,
+		// 			y: 7,
+		// 			name: "普通1",
+		// 			color: "#FF00FF"
+		// 		}]
+		// 	}]
+		// });
 
-		Highcharts.chart('containerpie', {
-	    chart: {
-	      type: 'pie'
-	    },
-	    title: {
-	      text: '难度分析'
-	    },
-			tooltip: {
-				pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
-							'面积 (平方千米): <b>{point.y}</b><br/>' +
-							'人口密度 (每平方千米人数): <b>{point.z}</b><br/>'
-			},
-			plotOptions: {
-				pie: {
-					allowPointSelect: true,
-					cursor: 'pointer',
-					dataLabels: {
-						enabled: true
-					},
-					showInLegend: true
-				}
-			},
-	  	series: [{
-	      data: [
-					{color:'rgb(243, 156, 18)',name: '西班牙',y: 505370,z: 92.9},
-					{name: '法国',y: 551500,z: 118.7,color:'rgb(101, 198, 187)'},
-					{name: '波兰',y: 312685,z: 124.6,color:'rgb(68, 108, 179)'}]
-	  	}]
-		});
-
-
-		Highcharts.chart('containerbtm',{
-			title: {
-				text: '大题体量分析'
-			},
-			xAxis: {
-				categories: ['非洲', '美洲'],
-			},
-			yAxis: {
-				title: {
-					text: null
-				}
-			},
-			legend:{
-				enabled:false
-			},
-			tooltip: {
-				headerFormat: '<span style="font-size:10px">题量分析</span><table>',
-				pointFormat: '<tr><td style="color:{series.color};padding:0">{point.name} {point.y}</td></tr>',
-				footerFormat: '</table>',
-				useHTML: true
-			},
-			series: [{
-				type: 'bar',
-				data: [{
-					x: 0,
-					y: 1,
-					name: "困难",
-					color: "#00FF00"
-				}, {
-					x: 1,
-					y: 10,
-					name: "普通",
-					color: "#FF00FF"
-				}]
-			}]
-		});
+		// Highcharts.chart('containerpie', {
+	  //   chart: {
+	  //     type: 'pie'
+	  //   },
+	  //   title: {
+	  //     text: '难度分析'
+	  //   },
+		// 	tooltip: {
+		// 		pointFormat: '<span style="color:{point.color}">\u25CF</span> <b> {point.name}</b><br/>' +
+		// 					'面积 (平方千米): <b>{point.y}</b><br/>' +
+		// 					'人口密度 (每平方千米人数): <b>{point.z}</b><br/>'
+		// 	},
+		// 	plotOptions: {
+		// 		pie: {
+		// 			allowPointSelect: true,
+		// 			cursor: 'pointer',
+		// 			dataLabels: {
+		// 				enabled: true
+		// 			},
+		// 			showInLegend: true
+		// 		}
+		// 	},
+	  // 	series: [{
+	  //     data: [
+		// 			{color:'rgb(243, 156, 18)',name: '西班牙',y: 505370,z: 92.9},
+		// 			{name: '法国',y: 551500,z: 118.7,color:'rgb(101, 198, 187)'},
+		// 			{name: '波兰',y: 312685,z: 124.6,color:'rgb(68, 108, 179)'}]
+	  // 	}]
+		// });
+		//
+		//
+		// Highcharts.chart('containerbtm',{
+		// 	title: {
+		// 		text: '大题体量分析'
+		// 	},
+		// 	xAxis: {
+		// 		categories: ['非洲', '美洲'],
+		// 	},
+		// 	yAxis: {
+		// 		title: {
+		// 			text: null
+		// 		}
+		// 	},
+		// 	legend:{
+		// 		enabled:false
+		// 	},
+		// 	tooltip: {
+		// 		headerFormat: '<span style="font-size:10px">题量分析</span><table>',
+		// 		pointFormat: '<tr><td style="color:{series.color};padding:0">{point.name} {point.y}</td></tr>',
+		// 		footerFormat: '</table>',
+		// 		useHTML: true
+		// 	},
+		// 	series: [{
+		// 		type: 'bar',
+		// 		data: [{
+		// 			x: 0,
+		// 			y: 1,
+		// 			name: "困难",
+		// 			color: "#00FF00"
+		// 		}, {
+		// 			x: 1,
+		// 			y: 10,
+		// 			name: "普通",
+		// 			color: "#FF00FF"
+		// 		}]
+		// 	}]
+		// });
 	}
-
+	getData = ()=>{
+		_axios.get(url.projects+'/'+this.props.match.params.id)
+			.then(data=>{
+				// this.setState({
+				// 	data:data.projects,
+				// 	total_pages:data.meta.total_pages,
+				// 	total_count:data.meta.total_count,
+				// })
+			})
+	}
 	handleDelConfirm = ()=>{
 		confirm({
 	    title: '删除试题',
@@ -245,7 +256,7 @@ export default class DoubleDetail extends Component{
 						<div className="lbtn left" onClick={this.saveDetail}>马上出题</div>
 						<div className="rbtn right" onClick={()=>this.setState({visible1:true})}>保存细目表</div>
 					</div>
-					<h2>双向细目标分析</h2>
+					{/* <h2>双向细目标分析</h2>
 					<div className="htable">
 						<div>
 							<div id="container" style={{width:200,height:200,margin:'0 auto'}}></div>
@@ -270,7 +281,7 @@ export default class DoubleDetail extends Component{
 								</li>
 							</ul>
 						</div>
-					</div>
+					</div> */}
 				</div>
 				<div className="right rightwrap">
 					<h1>2017年江苏省镇江市中考数学试卷</h1>
@@ -338,7 +349,7 @@ export default class DoubleDetail extends Component{
 				      <Option value="Yiminghe">yiminghe</Option>
 				    </Select>
 			    </div>
-			    
+
         </Modal>
         <Modal
           title="Modal"
@@ -359,7 +370,7 @@ export default class DoubleDetail extends Component{
 			        <Radio value={3}>期末试卷</Radio>
 			        <Radio value={4}>其他</Radio>
 			      </RadioGroup>
-          </div>			    
+          </div>
         </Modal>
 			</div>
 		)

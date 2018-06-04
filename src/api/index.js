@@ -1,7 +1,7 @@
 
 let url={}  //导出url
 let __host__ = 'http://admin.gdtibawang.com/api/v1';  //正式
-// __host__ = 'http://admin.imzzb.cn/api/v1'; //测试
+__host__ = 'http://admin.imzzb.cn/api/v1'; //测试
 // __host__ = 'http://rqiang.s3.natapp.cc//api/v1';
 // __host__ = 'http://192.168.0.115:3008/api/v1';
 
@@ -25,6 +25,7 @@ Object.defineProperties(url, {
 	exam_records: {value: __host__ + '/exam_records'},  //+id 生成试卷详情
 	packages: {value: __host__ + '/packages'},  //VIP套餐列表
 	owner_star_topics: {value: __host__ + '/owner/star/topics'},  //试题收藏
+	owner_star_exams: {value: __host__ + '/owner/star/exams'},  //试卷收藏
 	owner_users: {value: __host__ + '/owner/users/'},  //获取个人信息
 	orders: {value: __host__ + '/orders'},  //创建订单
 	owner_orders: {value: __host__ + '/owner/orders'},  //获取我的订单

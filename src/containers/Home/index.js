@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import { Icon } from 'antd';
 import {connect} from 'react-redux';
 import './index.scss'
+import * as persistAction from '@/Redux/actions/persist.js';
+import { bindActionCreators } from 'redux'
 
 @connect(
 	state => state.persist,
-	null
+	dispatch => bindActionCreators(persistAction, dispatch)
 )
 export default class Home extends Component {
 	constructor(props){
@@ -135,6 +137,15 @@ export default class Home extends Component {
 			},
 		});
 	}
+	//课程导航点击
+	handleCNav = (item,iitem, type)=>{
+		this.props.changeSubject(item,iitem)
+		this.props.changeAllClassName('当前：'+item.name+iitem.name)
+		this.props.changeSearchType(type)
+		setTimeout(()=>{
+			this.props.history.push({pathname:'/searchpage',query:{key:type}})
+		},300)
+	}
 	render() {
 		const { carousels, educations, features, School,notices, Zujuan } = this.state
 		return (
@@ -166,7 +177,15 @@ export default class Home extends Component {
 									<ul className='list clearfix'>
 										{
 											item.subjects.length>0 && item.subjects.map((iitem,i)=>{
-												return <li className={`${i%2 == 0 ? 'left' : 'right'}`} key={iitem.id}>{iitem.name}:<span>试题</span>|<span>试卷</span></li>
+												return (
+													<li
+														className={`${i%2 == 0 ? 'left' : 'right'}`}
+														key={iitem.id}
+													>{iitem.name}:
+														<span onClick={()=>this.handleCNav(item,iitem,'topic')}>试题</span>|
+														<span onClick={()=>this.handleCNav(item,iitem,'exam')}>试卷</span>
+												</li>
+												)
 											})
 										}
 									</ul>

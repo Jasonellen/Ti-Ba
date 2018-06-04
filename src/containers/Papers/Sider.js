@@ -3,8 +3,8 @@ import React, { Component }from 'react';
 import { Button, Select } from 'antd';
 import './Sider.scss'
 const Option = Select.Option;
-var Highcharts = require('highcharts');
-require('highcharts/modules/variable-pie')(Highcharts);
+// var Highcharts = require('highcharts');
+// require('highcharts/modules/variable-pie')(Highcharts);
 
 export default class Sider extends Component{
 	state = {

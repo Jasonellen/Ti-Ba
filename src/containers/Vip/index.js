@@ -116,6 +116,7 @@ export default class VIP extends Component{
 						modalshow:true
 					},()=>{
 						setTimeout(function(){
+							document.querySelector('#qrcode').innerHTML = ''
 							new QRCode('qrcode', {
 								text: data.data.qr_code_url,
 								width: 350,
@@ -209,7 +210,7 @@ export default class VIP extends Component{
         	</div>
 				</div>
 				<Modal
-					title='登陆'
+					title='扫码支付'
 					visible={modalshow}
 					footer={null}
 					width={400}
