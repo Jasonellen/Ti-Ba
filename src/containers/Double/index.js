@@ -21,6 +21,7 @@ export default class Double extends Component{
 	state={
 		sort:1,
 		data:[],
+		project_types:[],
 		tab_id:1,
 		project_type_id:'',
 		page:1,
@@ -43,7 +44,7 @@ export default class Double extends Component{
 		})
 			.then(data=>{
 				this.setState({
-					data:data.project_types
+					project_types:data.project_types
 				})
 			})
 	}
@@ -73,13 +74,12 @@ export default class Double extends Component{
 		this.setState({page},this.getListData)
 	}
 	render(){
-		const { topic_classes } = this.props.persist
-		const { data, total_pages, page, total_count} = this.state
+		const { data, total_pages, page, total_count, project_types} = this.state
 		return (
 			<div className='Double contentCenter'>
 				<div className="bar">
 					<SmallNavBar noall title='选择细目表' data={[{id:1,title:'推荐细目表'},{id:2,title:'我的细目表'},]} width='140px' onChange={this.handleTab}/>
-					<SmallNavBar title='选择细目表' data={topic_classes} width='140px' onChange={this.handleTab}/>
+					<SmallNavBar title='细目表类型' data={project_types} width='140px' onChange={this.handleTab}/>
 				</div>
 				<div className="ximu-list-count clearfix">
 	        {/*<div className="order-type left">

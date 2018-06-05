@@ -77,6 +77,12 @@ export default class Nav extends Component {
 	}
 
 	NavLinkTo = (page)=>{
+		if(page == 'double'){
+			if(!this.props.persist.user.token){
+				eventEmitter.emit('notLogin');
+				return
+			}
+		}
 		this.props.persistAction.changeExamClass(page)
 		if(page == 'synchronous'){
 			page = 'Papers'
@@ -132,7 +138,7 @@ export default class Nav extends Component {
 											<Link to='/PersonalCenter/Pshiti'>我的收藏</Link>
 										</Menu.Item>
 										<Menu.Item key="personalcenter">
-											<Link to='/PersonalCenter/personalcenter'>个人信息</Link>
+											<Link to='/PersonalCenter/PersonalInfo'>个人信息</Link>
 										</Menu.Item>
 										<Menu.Divider />
 										<Menu.Item key="exit">

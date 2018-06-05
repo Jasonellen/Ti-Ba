@@ -4,7 +4,16 @@ import { Icon, Button } from 'antd';
 import { Link } from 'react-router-dom'
 import './index.scss'
 import moment from 'moment'
+import {connect} from 'react-redux';
 
+@connect(
+	state => {
+		return {
+			persist:state.persist,
+		}
+	},
+	null
+)
 export default class BeiKeDetail extends Component{
 	state={
 		data:{
@@ -20,6 +29,16 @@ export default class BeiKeDetail extends Component{
 	}
 	handleChange = (value)=>{
 		console.log(value)
+	}
+	checkLogin = (_sort, id)=>{
+		if(!this.props.persist.user.token){
+			eventEmitter.emit('notLogin');
+			return
+		}else if(_sort == 1){
+			this.props.history.push(`/ShiJuanDetail/${id}/exam`)
+		}else{
+			this.props.history.push(`/downloadpage/${id}/exam`)
+		}
 	}
 	render(){
 		const { data } = this.state
@@ -57,14 +76,14 @@ export default class BeiKeDetail extends Component{
 											item.exams.length>0 && item.exams.map((iitem)=>{
 												return (
 													<li className='clearfix' key={iitem.id}>
-														<div className="left">
+														<div className="left" onClick={()=>this.checkLogin(1,iitem.id)}>
 															{/*<Checkbox onChange={this.handleChange}></Checkbox>*/}
-															<Link to='/ShiJuanDetail/1'><span>{iitem.title}{/*<small>(14道题)</small>*/}</span></Link>
+															<div><span>{iitem.title}{/*<small>(14道题)</small>*/}</span></div>
 														</div>
 														<div className="right">
 															{/*	<span>平均分：暂无测试</span>
 															<span><Icon type="edit" /> <Link to='/OnlineTest/1'>开始测试</Link></span>*/}
-															<Button type="primary" icon="download" onClick={()=>this.props.history.push(`/downloadpage/${iitem.id}/exam`)}>下载</Button>
+															<Button type="primary" icon="download" onClick={()=>this.checkLogin(2,iitem.id)}>下载</Button>
 														</div>
 													</li>
 												)

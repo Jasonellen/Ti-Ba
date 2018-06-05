@@ -28,6 +28,7 @@ Object.defineProperties(url, {
 	owner_star_exams: {value: __host__ + '/owner/star/exams'},  //试卷收藏
 	owner_users: {value: __host__ + '/owner/users/'},  //获取个人信息
 	orders: {value: __host__ + '/orders'},  //创建订单
+	orders_check: {value: __host__ + '/orders/check'},  //创建订单
 	owner_orders: {value: __host__ + '/owner/orders'},  //获取我的订单
 	correct_records: {value: __host__ + '/correct_records'},  //试题纠错
 	owner_correct_records: {value: __host__ + '/owner/correct_records'},  //纠错记录
@@ -50,6 +51,5 @@ Object.defineProperties(url, {
 	project_types: {value: __host__ + '/project_types'},  //细目表类型
 	projects: {value: __host__ + '/projects'},  //推荐细目表列表
 	owner_projects: {value: __host__ + '/owner/projects'},  //我的细目表列表
-
 });
 export default url

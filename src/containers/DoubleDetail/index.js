@@ -1,112 +1,100 @@
 
 import React, { Component }from 'react';
-import { Icon,Table, Select, Modal, Button,Input, Radio,message } from 'antd';
+// import { Icon,Table, Select, Modal, Button,Input, Radio,message } from 'antd';
+import { Table, Button,message } from 'antd';
 import './index.scss'
 import { Link } from 'react-router-dom'
 // var Highcharts = require('highcharts');
 // require('highcharts/modules/variable-pie')(Highcharts);
-const Option = Select.Option;
-const confirm = Modal.confirm;
-const RadioGroup = Radio.Group;
+// const Option = Select.Option;
+// const confirm = Modal.confirm;
+// const RadioGroup = Radio.Group;
 
-let children = [];
-for (let i = 10; i < 36; i++) {
-	children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+const _level = {
+	easy:'简单',
+	normal:'普通',
+	difficult:'困难',
 }
-const columns = [{
-	title: '题序',
-	dataIndex: 'name',
-	key: 'name',
-}, {
-	title: '题型',
-	dataIndex: 'age',
-	key: 'age',
-	render: text => (
-		<Select defaultValue={text} style={{ width: 100 }} dropdownMatchSelectWidth={false}>
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="disabled" disabled>Disabled</Option>
-      <Option value="Yiminghe">yiminghe</Option>
-    </Select>
-	),
-}, {
-	title: '关联知识点（最多选5个）',
-	dataIndex: 'address',
-	key: 'address',
-	render: text => (
+
+const columns = [
+	{
+		title: '题序',
+		dataIndex: 'index',
+		key: 'index',
+	},
+	{
+		title: '题型',
+		dataIndex: 'topic_type_name',
+		key: 'topic_type_name',
+		render: text => text,
+		// render: text => (
+		// 	<Select defaultValue={text} style={{ width: 100 }} dropdownMatchSelectWidth={false}>
+	  //     <Option value="jack">Jack</Option>
+	  //     <Option value="lucy">Lucy</Option>
+	  //     <Option value="disabled" disabled>Disabled</Option>
+	  //     <Option value="Yiminghe">yiminghe</Option>
+	  //   </Select>
+		// ),
+	},
+	{
+		title: '关联知识点（最多选5个）',
+		dataIndex: 'knowledges',
+		key: 'knowledges',
+		render: text => (
 		<div>
-			<Button className='SelectBtn'>算数平方根<Icon type="close" /></Button>
-			<Button type="dashed">+ 添加知识点</Button>
+			{
+				text.map((item)=>{
+					return 	<Button key={item.id} className='SelectBtn'>{item.name}{/*<Icon type="close" />*/}</Button>
+				})
+			}
+			{/* <Button className='SelectBtn'>算数平方根<Icon type="close" /></Button> */}
+			{/* <Button type="dashed">+ 添加知识点</Button> */}
 		</div>
 	),
-}, {
-	title: '难度',
-	dataIndex: 'nandu',
-	key: 'nandu',
-	render: text => (
-		<Select defaultValue={text} style={{ width: 60 }} dropdownMatchSelectWidth={false}>
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="disabled" disabled>Disabled</Option>
-      <Option value="Yiminghe">yiminghe</Option>
-    </Select>
-	),
-}, {
-	title: '操作',
-	dataIndex: 'caozuo',
-	key: 'caozuo',
-	render: text => <Icon type='delete' className='delicon' onClick={()=>{
-		confirm({
-	    title: '删除试题',
-	    content: '你是否要删除该试题？',
-	    onOk() {
-	      console.log('OK');
-	    },
-	    onCancel() {
-	      console.log('Cancel');
-	    },
-	  });
-	}}></Icon>,
-}];
+	},
+	{
+		title: '难度',
+		dataIndex: 'level',
+		key: 'level',
+		render: text => _level[text],
+		// render: text => (
+		// 	<Select defaultValue={text} style={{ width: 60 }} dropdownMatchSelectWidth={false}>
+	  //     <Option value="jack">Jack</Option>
+	  //     <Option value="lucy">Lucy</Option>
+	  //     <Option value="disabled" disabled>Disabled</Option>
+	  //     <Option value="Yiminghe">yiminghe</Option>
+	  //   </Select>
+		// ),
+	},
+	// {
+	// 	title: '操作',
+	// 	dataIndex: 'caozuo',
+	// 	key: 'caozuo',
+	// 	render: text => <Icon type='delete' className='delicon' onClick={()=>{
+	// 		confirm({
+	//     title: '删除试题',
+	//     content: '你是否要删除该试题？',
+	//     onOk() {
+	//       console.log('OK');
+	//     },
+	//     onCancel() {
+	//       console.log('Cancel');
+	//     },
+	//   });
+	// 	}}></Icon>,
+	// }
+];
 
-const data = [{
-	key: '1',
-	name: '1',
-	age: '选择题',
-	address: 'New York No. 1 Lake Park',
-	nandu:1,
-	caozuo:12
-}, {
-	key: '2',
-	name: '2',
-	age: '填空题',
-	address: 'London No. 1 Lake Park',
-	nandu:1,
-	caozuo:12
-}, {
-	key: '3',
-	name: '3',
-	age: 32,
-	address: 'Sidney No. 1 Lake Park',
-	nandu:1,
-	caozuo:12
-}, {
-	key: '4',
-	name: '4',
-	age: 32,
-	address: 'Sidney No. 1 Lake Park',
-	nandu:1,
-	caozuo:12
-}];
 export default class DoubleDetail extends Component{
 	state={
 		visible:false,
-		visible1:false
+		visible1:false,
+		data:{
+			datas:[]
+		}
 	}
 
-
 	componentDidMount() {
-		console.log(this.props,111)
 		this.getData()
 		// Highcharts.chart('container',{
 		// 	title: {
@@ -221,40 +209,58 @@ export default class DoubleDetail extends Component{
 	getData = ()=>{
 		_axios.get(url.projects+'/'+this.props.match.params.id)
 			.then(data=>{
-				// this.setState({
-				// 	data:data.projects,
-				// 	total_pages:data.meta.total_pages,
-				// 	total_count:data.meta.total_count,
-				// })
+				this.setState({
+					data:data.project,
+				})
 			})
 	}
-	handleDelConfirm = ()=>{
-		confirm({
-	    title: '删除试题',
-	    content: '你是否要删除该试题？',
-	    onOk() {
-	      console.log('OK');
-	    },
-	    onCancel() {
-	      console.log('Cancel');
-	    },
-	  });
-	}
+	// handleDelConfirm = ()=>{
+	// 	confirm({
+	//     title: '删除试题',
+	//     content: '你是否要删除该试题？',
+	//     onOk() {
+	//       console.log('OK');
+	//     },
+	//     onCancel() {
+	//       console.log('Cancel');
+	//     },
+	//   });
+	// }
 
 	saveDetail = () => {
-	  const hide = message.loading('系统正在出题，请耐心等待', 0);
-	  // Dismiss manually and asynchronously
-	  setTimeout(hide, 2500);
+	  const hide = message.loading('系统正在出题，请耐心等待',0);
+	  // // Dismiss manually and asynchronously
+	  // setTimeout(hide, 2500);
+		_axios.post(url.group_exam_smart_exams,{
+			project_id:this.state.data.id
+		})
+			.then(data=>{
+				hide()
+				// this.setState({
+				// 	data:data.project,
+				// })
+			})
 	};
-
+	toUpperCase = {
+		1:'一',
+		2:'二',
+		3:'三',
+		4:'四',
+		5:'五',
+		6:'六',
+		7:'七',
+		8:'八',
+		9:'九',
+		10:'十',
+	}
 	render(){
-
+		const { data } = this.state
 		return (
 			<div className='DoubleDetail contentCenter clearfix'>
 				<div className="left leftwrap clearfix">
 					<div className="top">
-						<div className="lbtn left" onClick={this.saveDetail}>马上出题</div>
-						<div className="rbtn right" onClick={()=>this.setState({visible1:true})}>保存细目表</div>
+						<div className="lbtn left" style={{width:'100%'}} onClick={this.saveDetail}>马上出题</div>
+						{/* <div className="rbtn right" onClick={()=>this.setState({visible1:true})}>保存细目表</div> */}
 					</div>
 					{/* <h2>双向细目标分析</h2>
 					<div className="htable">
@@ -284,37 +290,36 @@ export default class DoubleDetail extends Component{
 					</div> */}
 				</div>
 				<div className="right rightwrap">
-					<h1>2017年江苏省镇江市中考数学试卷</h1>
-					<div className="title">
-						一、填空题
-						<div className="subtitle">
-							<span onClick={this.handleDelConfirm}><Icon type='delete'></Icon>删除</span>
-							<span onClick={()=>this.setState({visible:true})}>+添加小标题</span>
-						</div>
-					</div>
-					<Table
-						columns={columns}
-						dataSource={data}
-						bordered={true}
-						pagination={false}
-					/>
-					<div className="title">
-						一、填空题
-						<div className="subtitle">
-							<span><Icon type='delete'></Icon>删除</span>
-							<span>+添加小标题</span>
-						</div>
-					</div>
-					<Table
-						columns={columns}
-						dataSource={data}
-						bordered={true}
-						pagination={false}
-					/>
-					<div className="addNew" onClick={()=>this.setState({visible:true})}>+添加新大区</div>
+					<h1>{data.name}</h1>
+					{
+						data.datas.length>0 && 	data.datas.map((item,i)=>{
+							item.data.map((_item,ii)=>{
+								_item.index = ii+1
+							})
+							return (
+								<div key={i}>
+									<div className="title">
+										{this.toUpperCase[i+1]}、{item.title}
+										{/* <div className="subtitle">
+											<span onClick={this.handleDelConfirm}><Icon type='delete'></Icon>删除</span>
+											<span onClick={()=>this.setState({visible:true})}>+添加小标题</span>
+										</div> */}
+									</div>
+									<Table
+										columns={columns}
+										dataSource={item.data}
+										bordered={true}
+										pagination={false}
+									/>
+								</div>
+							)
+						})
+					}
+
+					{/* <div className="addNew" onClick={()=>this.setState({visible:true})}>+添加新大区</div> */}
 				</div>
 
-				<Modal
+				{/* <Modal
           title="Modal"
           visible={this.state.visible}
           onOk={()=>alert('删除成功')}
@@ -349,9 +354,9 @@ export default class DoubleDetail extends Component{
 				      <Option value="Yiminghe">yiminghe</Option>
 				    </Select>
 			    </div>
+        </Modal> */}
 
-        </Modal>
-        <Modal
+        {/* <Modal
           title="Modal"
           visible={this.state.visible1}
           onOk={()=>alert('保存成功')}
@@ -371,7 +376,7 @@ export default class DoubleDetail extends Component{
 			        <Radio value={4}>其他</Radio>
 			      </RadioGroup>
           </div>
-        </Modal>
+        </Modal> */}
 			</div>
 		)
 	}

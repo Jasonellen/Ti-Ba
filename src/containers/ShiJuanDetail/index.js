@@ -57,7 +57,7 @@ export default class ShiJuanDetail extends Component{
 
 	//获取购物车信息
 	getCarts = ()=>{
-		const { subject_id } = this.state.data.topics[0].children[0]
+		const { subject_id } = this.state.data.topics[0] && this.state.data.topics[0].children[0] || ''
 		_axios.get(url.owner_carts,{
 			subject_id
 		})

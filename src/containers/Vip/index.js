@@ -17,6 +17,7 @@ export default class VIP extends Component{
 		subject_id:'',
 		packages:[],
 		vip_introduction:'',
+		single_price:0,
 
 		checked:false,
 		id:'',
@@ -61,6 +62,7 @@ export default class VIP extends Component{
 				if(_data[0]){
 					_data[0].checked = true
 					id = _data[0].id
+					this.setState({single_price:_data[0].price})
 				}
 				this.setState({
 					packages:data.packages,
@@ -74,6 +76,7 @@ export default class VIP extends Component{
 		packages.map(function(item){
 			if(item.id == id){
 				item.checked = true
+				this.setState({single_price:item.price})
 			}else{
 				item.checked = false
 			}
@@ -95,7 +98,9 @@ export default class VIP extends Component{
 				to_user_name,
 				mobile,
 				address,
-				checked
+				checked,
+				education_id,
+				subject_id,
 			} = this.state
 			let options = {
 				type:'package',
@@ -106,6 +111,8 @@ export default class VIP extends Component{
 				to_user_name,
 				mobile,
 				address,
+				education_id,
+				subject_id,
 			}
 			if(checked){
 				options.require_ticket = true
@@ -115,7 +122,7 @@ export default class VIP extends Component{
 					this.setState({
 						modalshow:true
 					},()=>{
-						setTimeout(function(){
+						setTimeout(()=>{
 							document.querySelector('#qrcode').innerHTML = ''
 							new QRCode('qrcode', {
 								text: data.data.qr_code_url,
@@ -124,13 +131,37 @@ export default class VIP extends Component{
 								colorDark: '#000000',
 								colorLight: '#ffffff',
 							});
+							clearInterval(this.check_status)
+							this.check_status = setInterval(()=>{
+								this.checkStatus(data.data.order_no)
+							},1000)
 						},0)
 					})
 				})
 		}
 	}
+	checkStatus = (order_no)=>{
+		_axios.get(url.orders_check,{order_no})
+			.then(data=>{
+				var _this = this
+				if(data.data.status == 'paid'){
+					clearInterval(this.check_status)
+					Modal.success({
+						title: 'This is a notification message',
+						content: 'This modal will be destroyed after 1 second',
+						okText:'确定',
+						onOk:()=>{
+							_this.setState({modalshow:false},()=>{
+								_this.props.history.push('/PersonalCenter/PersonalInfo')
+							})
+						}
+					});
+				}
+			})
+
+	}
 	render(){
-		const { checked, educations, subjects, education_id, packages, vip_introduction, modalshow } = this.state
+		const { checked, single_price, educations, subjects, education_id, packages, vip_introduction, modalshow } = this.state
 		return (
 			<div className='VIP'>
 				<div className="top contentCenter box-shadow">
@@ -197,7 +228,7 @@ export default class VIP extends Component{
 							&gt;&gt; 激活VIP体验卡
 						</Link>*/}
 						<div className="right">
-							金额：<span className='price'>16</span> 元<Button type='primary' onClick={this.handleSubmit}>立即支付</Button>
+							金额：<span className='price'>{checked ? 20 + Number(single_price) : Number(single_price)}</span> 元<Button type='primary' onClick={this.handleSubmit}>立即支付</Button>
 						</div>
 					</div>
 				</div>

@@ -44,10 +44,10 @@ export default class PersonalInfo extends Component{
       			<span className="name">用户身份：</span>
       			<strong className="value">{user.user_type == 'teacher'?'老师': user.user_type == 'student'?'学生':user.user_type == 'family'?'家人':'未知'}</strong>
       		</li>
-      		<li>
+      		{/* <li>
       			<span className="name">真实姓名：</span>
       			<strong className="value">{user.name}</strong>
-      		</li>
+      		</li> */}
       		<li>
       			<span className="name">绑定手机：</span>
       			<strong className="value">{user.mobile}</strong>
@@ -60,7 +60,7 @@ export default class PersonalInfo extends Component{
 							return (
 								<div key={item.id} className="user-item left">
 									<p><span>学段学科：</span>{item.education_name+item.subject_name}</p>
-									<p><span>到期时间：</span>{moment(item.end_at).format('YYYY-YY-DD')}</p>
+									<p><span>到期时间：</span>{moment(item.end_at).format('YYYY-MM-DD')}</p>
 									<p><span>剩余下载次数：</span>{item.total_download_no - item.download_no}</p>
 									<Link to="/vip">续费</Link>
 								</div>
