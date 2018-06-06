@@ -170,7 +170,7 @@ export default class DownloadPage extends Component{
 					{ CheckedList.indexOf('1') !== -1 && <div className="left editing"><img src="/static/editing.png" alt=""/></div>}
 					<div className="left rightpage">
 						{
-							CheckedList.indexOf('3') !== -1 && <div style={{textAlign:'center'}}><h1 className='h1' contentEditable={contentEditable}>{data.title}</h1></div>
+							CheckedList.indexOf('3') !== -1 && <div style={{textAlign:'center'}}><h1 className='h1' contentEditable={contentEditable}>{data.title || data.name}</h1></div>
 						}
 						{/*
 							CheckedList.indexOf('5') !== -1 && <div style={{textAlign:'center'}}><h2 className='h2' contentEditable={contentEditable}>数学考试</h2></div>

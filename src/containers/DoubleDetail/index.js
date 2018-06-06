@@ -229,16 +229,12 @@ export default class DoubleDetail extends Component{
 
 	saveDetail = () => {
 	  const hide = message.loading('系统正在出题，请耐心等待',0);
-	  // // Dismiss manually and asynchronously
-	  // setTimeout(hide, 2500);
 		_axios.post(url.group_exam_smart_exams,{
 			project_id:this.state.data.id
 		})
 			.then(data=>{
 				hide()
-				// this.setState({
-				// 	data:data.project,
-				// })
+				this.props.history.push(`/downloadpage/${data.exam_record_id}`)
 			})
 	};
 	toUpperCase = {
@@ -295,6 +291,7 @@ export default class DoubleDetail extends Component{
 						data.datas.length>0 && 	data.datas.map((item,i)=>{
 							item.data.map((_item,ii)=>{
 								_item.index = ii+1
+								_item.key = ii+1
 							})
 							return (
 								<div key={i}>

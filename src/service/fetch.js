@@ -14,7 +14,7 @@ export default {
 						notification.error({
 							message: '通知提醒',
 							description: data.msg,
-							duration:2
+							duration:3
 						});
 						throw new Error('没有返回正确的数据')
 					}else if(data.status === 'success'){
@@ -38,7 +38,7 @@ export default {
 							notification.error({
 								message: '通知提醒',
 								description: data.msg,
-								duration:2
+								duration:3
 							});
 							throw new Error('没有返回正确的数据')
 						}
@@ -60,7 +60,7 @@ export default {
 						notification.error({
 							message: '通知提醒',
 							description: data.msg,
-							duration:2
+							duration:3
 						});
 					}else if(data.status === 'success'){
 						return data
@@ -80,7 +80,7 @@ export default {
 						notification.error({
 							message: '通知提醒',
 							description: data.msg,
-							duration:2
+							duration:3
 						});
 					}else if(data.status === 'success'){
 						return data
@@ -104,7 +104,7 @@ export default {
 						notification.error({
 							message: '通知提醒',
 							description: data.msg,
-							duration:2
+							duration:3
 						});
 					}else if(data.status === 'success'){
 						return data
