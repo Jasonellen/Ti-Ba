@@ -1,6 +1,6 @@
 
 import React, { Component }from 'react';
-import { Icon, Button } from 'antd';
+import { Icon, Button, Modal } from 'antd';
 import { Link } from 'react-router-dom'
 import './index.scss'
 import moment from 'moment'
@@ -31,9 +31,18 @@ export default class BeiKeDetail extends Component{
 		console.log(value)
 	}
 	checkLogin = (_sort, id)=>{
+		const { subject_id, vips } = this.props.persist
+		let is_vip = vips.find(function(item){
+			return item.subject_id == subject_id
+		})
 		if(!this.props.persist.user.token){
 			eventEmitter.emit('notLogin');
 			return
+		}else if(!is_vip){
+			Modal.error({
+				title: '温馨提醒',
+				content: '该功能仅限VIP用户使用',
+			});
 		}else if(_sort == 1){
 			this.props.history.push(`/ShiJuanDetail/${id}/exam`)
 		}else{

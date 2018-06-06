@@ -1,6 +1,6 @@
 
 import React, { Component }from 'react';
-import { Pagination, Icon } from 'antd';
+import { Pagination, Icon, Modal } from 'antd';
 import './index.scss'
 import SmallNavBar from '@/Components/SmallNavBar'
 import { Link } from 'react-router-dom'
@@ -73,6 +73,20 @@ export default class Double extends Component{
 	handlePage = (page)=>{
 		this.setState({page},this.getListData)
 	}
+	handleToDetail = (page)=>{
+		const { subject_id, vips } = this.props.persist
+		let is_vip = vips.find(function(item){
+			return item.subject_id == subject_id
+		})
+		if(is_vip){
+			this.props.history.push(page)
+		}else{
+			Modal.error({
+				title: '温馨提醒',
+				content: '该功能仅限VIP用户使用',
+			});
+		}
+	}
 	render(){
 		const { data, total_pages, page, total_count, project_types} = this.state
 		return (
@@ -98,7 +112,7 @@ export default class Double extends Component{
 									return (
 										<div className="ximu-item" key={item.id}>
 											<div className="inner">
-												<h4><Link to={`/doubledetail/${item.id}`} className="J_ToEditXimu" title={item.name}>{item.name}</Link></h4>
+												<h4 style={{cursor:'pointer'}} onClick={()=>this.handleToDetail(`/doubledetail/${item.id}`)}>{item.name}</h4>
 												<span className="used-ximu-num">使用人数：{item.users_count}人</span>
 											</div>
 										</div>

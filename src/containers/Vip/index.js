@@ -158,7 +158,9 @@ export default class VIP extends Component{
 					});
 				}
 			})
-
+	}
+	componentWillUnmount() {
+		clearInterval(this.check_status)
 	}
 	render(){
 		const { checked, single_price, educations, subjects, education_id, packages, vip_introduction, modalshow } = this.state

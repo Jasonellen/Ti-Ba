@@ -11,8 +11,8 @@ export const {
 	changeLogo,
 	changeSearchType,
 	changeExamClass,
-	changeAllClassName
-
+	changeAllClassName,
+	changeVips,
 } = createActions(
 		'changeUser',
 		'changeEducations',
@@ -22,7 +22,8 @@ export const {
 		'changeLogo',
 		'changeSearchType',
 		'changeExamClass',
-		'changeAllClassName'
+		'changeAllClassName',
+		'changeVips',
 	)
 
 export const getUser = () => (dispatch) =>{
@@ -30,12 +31,20 @@ export const getUser = () => (dispatch) =>{
 		.then(data=>{
 			if(data.user){
 				dispatch(changeUser(data.user))
+				dispatch(getVips(data.user))
 				notification.success({
 					message: '通知提醒',
 					description: '恭喜登录成功！',
 					duration:2
 				});
+
 			}
+		})
+}
+export const getVips = (user) => (dispatch) =>{
+	_axios.get(url.owner_users+user.id)
+		.then((data)=>{
+			dispatch(changeVips(data.user.vips))
 		})
 }
 export const exitUser = (history) => (dispatch) =>{

@@ -18,7 +18,7 @@ let initialState = {
 	exam_classes:[], //试卷大类
 	exam_class:'', //试卷大类id
 	allClassName:'全部课程',
-
+	vips:[],
 }
 const persist = handleActions({
 	changeUser: (state, action) => ({
@@ -65,8 +65,10 @@ const persist = handleActions({
 		...state,
 		allClassName: action.payload,
 	}),
-
-
+	changeVips: (state, action) => ({
+		...state,
+		vips: action.payload,
+	}),
 }, initialState);
 
 
