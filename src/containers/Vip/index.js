@@ -147,12 +147,12 @@ export default class VIP extends Component{
 				if(data.data.status == 'paid'){
 					clearInterval(this.check_status)
 					Modal.success({
-						title: 'This is a notification message',
-						content: 'This modal will be destroyed after 1 second',
+						title: '微信支付',
+						content: '支付成功',
 						okText:'确定',
 						onOk:()=>{
 							_this.setState({modalshow:false},()=>{
-								_this.props.history.push('/PersonalCenter/PersonalInfo')
+								location.href = '/PersonalCenter/PersonalInfo'
 							})
 						}
 					});

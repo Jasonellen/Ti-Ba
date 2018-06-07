@@ -87,51 +87,36 @@ export default class DownloadPage extends Component{
 				})
 			})
 	}
-	//开始下载
-	handleDownload = ()=>{
 
-		const { subject_id,education_id, vips } = this.props.persist
-		let is_vip = vips.find(function(item){
-			return item.subject_id == subject_id
+	needWxPay = ()=>{
+		const { subject_id,education_id } = this.props.persist
+		_axios.post(url.orders,{
+			type:'exam_record',
+			pay_way:'wechat_qr_pay',
+			subject_id,
+			education_id,
+			id:this.props.match.params.id,
 		})
-		if(!this.props.persist.user.token){
-			eventEmitter.emit('notLogin');
-			return
-		}else if(!is_vip){
-			//非vip
-			_axios.post(url.orders,{
-				type:'exam_record',
-				pay_way:'wechat_qr_pay',
-				subject_id,
-				education_id,
-				id:this.props.match.params.id,
-			})
-				.then(data=>{
-					this.setState({
-						modalshow:true
-					},()=>{
-						setTimeout(()=>{
-							document.querySelector('#qrcode').innerHTML = ''
-							new QRCode('qrcode', {
-								text: data.data.qr_code_url,
-								width: 350,
-								height: 350,
-								colorDark: '#000000',
-								colorLight: '#ffffff',
-							});
-							clearInterval(this.check_status)
-							this.check_status = setInterval(()=>{
-								this.checkStatus(data.data.order_no)
-							},1000)
-						},0)
-					})
+			.then(data=>{
+				this.setState({
+					modalshow:true
+				},()=>{
+					setTimeout(()=>{
+						document.querySelector('#qrcode').innerHTML = ''
+						new QRCode('qrcode', {
+							text: data.data.qr_code_url,
+							width: 350,
+							height: 350,
+							colorDark: '#000000',
+							colorLight: '#ffffff',
+						});
+						clearInterval(this.check_status)
+						this.check_status = setInterval(()=>{
+							this.checkStatus(data.data.order_no)
+						},1000)
+					},0)
 				})
-		}else{
-			//是vip 直接下载
-			this.beginDownload()
-		}
-
-		// this.props.changeDownloadShow(true)
+			})
 	}
 	checkStatus = (order_no)=>{
 		_axios.get(url.orders_check,{order_no})
@@ -142,22 +127,31 @@ export default class DownloadPage extends Component{
 				}
 			})
 	}
+	//开始下载
 	beginDownload = ()=>{
+		if(!this.props.persist.user.token){
+			eventEmitter.emit('notLogin');
+			return
+		}
 		_axios.post(url.download_records,{
 			type : 'exam_record',
 			id : this.props.match.params.id
 		})
-			.then(()=>{
-				var _this = this
-				Modal.info({
-					title: '下载提示',
-					content: <div>请点击 <span style={{color:'#ff9600'}}>保存</span> 下载,点击 <span style={{color:'#ff9600'}}>更多设置</span> 可以选择纸张</div>,
-					onOk(){
-						_this.download_exam.id = 'download_exam'
-						window.print()
-						_this.download_exam.id = ''
-					},
-				});
+			.then((data)=>{
+				if(data.paid){
+					var _this = this
+					Modal.info({
+						title: '下载提示',
+						content: <div>请点击 <span style={{color:'#ff9600'}}>保存</span> 下载,点击 <span style={{color:'#ff9600'}}>更多设置</span> 可以选择纸张</div>,
+						onOk(){
+							_this.download_exam.id = 'download_exam'
+							window.print()
+							_this.download_exam.id = ''
+						},
+					});
+				}else{
+					this.needWxPay()
+				}
 			})
 	}
 	componentWillUnmount() {
@@ -182,7 +176,7 @@ export default class DownloadPage extends Component{
 				<div className="left leftBar">
 					<div className="pad">
 						{/* onClick={()=>this.props.changeDownloadShow(true)} 打开下载modal*/}
-						<Button type="primary" icon="download" size='large' onClick={this.handleDownload}>下载试卷</Button>
+						<Button type="primary" icon="download" size='large' onClick={this.beginDownload}>下载试卷</Button>
 						{/*<div className="clearfix small_title">
 							<div className="left" onClick={()=>this.props.changeAnswerSheetShow(true)}><Icon type="file-word" style={{color:'#ff9600'}}/> 下载答题卡</div>
 							<div className="left" onClick={()=>this.props.changeAnalyzeShow(true)}><Icon type="line-chart" style={{color:'#ff9600',cursor:'pointer'}}/> 分析试卷</div>
