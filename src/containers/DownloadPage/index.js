@@ -87,50 +87,58 @@ export default class DownloadPage extends Component{
 				})
 			})
 	}
+	//开始下载
 	handleDownload = ()=>{
-		// this.props.changeDownloadShow(true)
-		const { subject_id, education_id } = this.props.persist
-		_axios.post(url.orders,{
-			type:'exam_record',
-			pay_way:'wechat_qr_pay',
-			subject_id,
-			education_id,
+
+		const { subject_id,education_id, vips } = this.props.persist
+		let is_vip = vips.find(function(item){
+			return item.subject_id == subject_id
 		})
-			.then(data=>{
-				this.setState({
-					modalshow:true
-				},()=>{
-					setTimeout(()=>{
-						document.querySelector('#qrcode').innerHTML = ''
-						new QRCode('qrcode', {
-							text: data.data.qr_code_url,
-							width: 350,
-							height: 350,
-							colorDark: '#000000',
-							colorLight: '#ffffff',
-						});
-						clearInterval(this.check_status)
-						this.check_status = setInterval(()=>{
-							this.checkStatus(data.data.order_no)
-						},1000)
-					},0)
-				})
+		if(!this.props.persist.user.token){
+			eventEmitter.emit('notLogin');
+			return
+		}else if(!is_vip){
+			//非vip
+			_axios.post(url.orders,{
+				type:'exam_record',
+				pay_way:'wechat_qr_pay',
+				subject_id,
+				education_id,
+				id:this.props.match.params.id,
 			})
+				.then(data=>{
+					this.setState({
+						modalshow:true
+					},()=>{
+						setTimeout(()=>{
+							document.querySelector('#qrcode').innerHTML = ''
+							new QRCode('qrcode', {
+								text: data.data.qr_code_url,
+								width: 350,
+								height: 350,
+								colorDark: '#000000',
+								colorLight: '#ffffff',
+							});
+							clearInterval(this.check_status)
+							this.check_status = setInterval(()=>{
+								this.checkStatus(data.data.order_no)
+							},1000)
+						},0)
+					})
+				})
+		}else{
+			//是vip 直接下载
+			this.beginDownload()
+		}
+
+		// this.props.changeDownloadShow(true)
 	}
 	checkStatus = (order_no)=>{
 		_axios.get(url.orders_check,{order_no})
 			.then(data=>{
-				var _this = this
 				if(data.data.status == 'paid'){
 					clearInterval(this.check_status)
-					Modal.success({
-						title: 'This is a notification message',
-						content: 'This modal will be destroyed after 1 second',
-						okText:'确定',
-						onOk:()=>{
-							_this.setState({modalshow:false},_this.beginDownload)
-						}
-					});
+					this.setState({modalshow:false},this.beginDownload)
 				}
 			})
 	}
