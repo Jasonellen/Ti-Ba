@@ -77,6 +77,12 @@ export const getEducations = () => (dispatch) =>{
 				test_point_counts,
 				exam_classes,
 			}))
+			//选中第一项
+			if(data.educations.length>0 && data.educations[0].subjects.length>0){
+				dispatch(changeSubject(data.educations[0],data.educations[0].subjects[0]) )
+				dispatch(changeAllClassName('当前：'+data.educations[0].name+data.educations[0].subjects[0].name) )
+			}
+			
 		})
 }
 export const changeSubject = (edu,sub) => (dispatch) =>{

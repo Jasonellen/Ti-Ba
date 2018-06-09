@@ -57,6 +57,7 @@ export default class Nav extends Component {
 
 		this.props.persistAction.getEducations()
 		this.props.persistAction.getLogo()
+
 	}
 
 	//全部课程hover
@@ -104,7 +105,7 @@ export default class Nav extends Component {
 
 	render() {
 		const { alClassShow } = this.state
-		const { user,educations,allClassName,web, exam_classes } = this.props.persist
+		const { user,educations,allClassName,web, exam_classes, searchType } = this.props.persist
 		return (
 			<div className="Nav">
 				<div className="head">
@@ -212,7 +213,7 @@ export default class Nav extends Component {
 								onPressEnter = {this.handleSearch}
 							 	placeholder='请输入关键词'
 							 	addonBefore={
-							 		<Select defaultValue="topic" style={{ width: 90 }} onChange={(x)=>this.props.persistAction.changeSearchType(x)}>
+							 		<Select defaultValue={searchType} style={{ width: 90 }} onChange={(x)=>this.props.persistAction.changeSearchType(x)}>
 									   <Option value="topic">试题</Option>
 									   <Option value="exam">试卷</Option>
 									</Select>}

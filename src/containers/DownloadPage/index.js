@@ -129,13 +129,14 @@ export default class DownloadPage extends Component{
 	}
 	//开始下载
 	beginDownload = ()=>{
+		const { id,type } = this.props.match.params
 		if(!this.props.persist.user.token){
 			eventEmitter.emit('notLogin');
 			return
 		}
 		_axios.post(url.download_records,{
-			type : 'exam_record',
-			id : this.props.match.params.id
+			type : type == 'exam_record' ? 'exam_record' : 'exam',
+			id : id
 		})
 			.then((data)=>{
 				if(data.paid){

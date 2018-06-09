@@ -73,7 +73,7 @@ export default class VIP extends Component{
 	}
 	handlePackageChange = (id)=>{
 		const { packages } = this.state
-		packages.map(function(item){
+		packages.map((item)=>{
 			if(item.id == id){
 				item.checked = true
 				this.setState({single_price:item.price})
