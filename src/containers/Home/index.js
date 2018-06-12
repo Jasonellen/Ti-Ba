@@ -6,7 +6,7 @@ import * as persistAction from '@/Redux/actions/persist.js';
 import { bindActionCreators } from 'redux'
 
 @connect(
-	state => state.persist,
+	null,
 	dispatch => bindActionCreators(persistAction, dispatch)
 )
 export default class Home extends Component {
@@ -14,7 +14,7 @@ export default class Home extends Component {
 		super(props)
 		this.state={
 			carousels:[],
-			educations:this.props.educations,
+			educations:[],
 			features:[],
 			Course:[],
 			School:[],
@@ -23,12 +23,19 @@ export default class Home extends Component {
 		}
 	}
 	componentDidMount() {
+		this.getEducations()
 		this.getCarousels()
 		this.getFeatures()
 		this.getRecommends('School')
 		this.getRecommends('Course')
 		this.getNotices()
 		this.getZujuanData()
+	}
+	getEducations = ()=>{
+		_axios.get(url.educations)
+			.then(data=>{
+				this.setState({educations:data.educations})
+			})
 	}
 	//获取轮播图
 	getCarousels = ()=>{
@@ -181,7 +188,7 @@ export default class Home extends Component {
 													<li
 														className={`${i%2 == 0 ? 'left' : 'right'}`}
 														key={iitem.id}
-													>{iitem.name}:
+													><strong>{iitem.name}:</strong>
 														<span onClick={()=>this.handleCNav(item,iitem,'topic')}>试题</span>|
 														<span onClick={()=>this.handleCNav(item,iitem,'exam')}>试卷</span>
 												</li>

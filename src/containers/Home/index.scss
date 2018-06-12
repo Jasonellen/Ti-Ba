@@ -2,6 +2,9 @@
 .Home{
 	background: $f;
   padding-top: 20px;
+	strong{
+		font-weight: bold;
+	}
 	.swiper{
     height: 400px;
 		text-align: center;
@@ -71,6 +74,9 @@
 		}
 		.swiper-slide:hover{
 			color: $f;
+			h2{
+				color: $f;
+			}
 			p{
 				color: $f;
 			}
@@ -103,6 +109,8 @@
 			height: 452px;
 			margin-right: 44px;
 			padding: 20px;
+			font-size: 18px;
+			font-weight: bold;
 			.title{
 				margin-top: 25px;
 				margin-bottom: 15px;
@@ -114,7 +122,8 @@
 				}
 			}
 			.list{
-				font-size: 14px;
+				font-size: 15px;
+				font-weight: normal;
 				li{
 					line-height: 2;
 					span{

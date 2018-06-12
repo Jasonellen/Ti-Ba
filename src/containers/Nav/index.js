@@ -110,7 +110,6 @@ export default class Nav extends Component {
 			<div className="Nav">
 				<div className="head">
 					<div className="contentCenter clearfix">
-						<img src={web.avatar_data.original} alt="" className="left"/>
 						<div className="right">
 							<img src={phone_in_talk} alt=""/>
 							{web.telephone}
@@ -118,17 +117,31 @@ export default class Nav extends Component {
 					</div>
 				</div>
 				<div className="login contentCenter clearfix">
-					<div className="right">
+					<img src={web.avatar_data.original} alt="" className="logo"/>
+					<div className="search">
+						<Input
+							onChange = {(e)=>this.setState({searchkey:e.target.value})}
+							onPressEnter = {this.handleSearch}
+							placeholder='请输入关键词'
+							addonBefore={
+								<Select defaultValue={searchType} style={{ width: 90 }} onChange={(x)=>this.props.persistAction.changeSearchType(x)}>
+									 <Option value="topic">试题</Option>
+									 <Option value="exam">试卷</Option>
+								</Select>}
+							addonAfter={<Icon type="search" onClick={this.handleSearch}/>}
+						 />
+					</div>
+					<div style={{position: 'absolute',right: 0}}>
 						{
 							!user.token
 								?
 								<div>
-									<span onClick={()=>this.props.navAction.changeLoginModalShow(true)}>登陆</span>
-									<span onClick={()=>this.props.navAction.changeRegisterModalShow(true)}>注册</span>
+									<span className='logi' onClick={()=>this.props.navAction.changeLoginModalShow(true)}>登陆</span>
+									<span className='logi' onClick={()=>this.props.navAction.changeRegisterModalShow(true)}>注册</span>
 								</div>
 								:
 								<Dropdown overlay={
-									<Menu>
+									<Menu style={{width:100}}>
 										<Menu.Item key="download">
 											<Link to='/PersonalCenter/download'>下载记录</Link>
 										</Menu.Item>
@@ -154,6 +167,8 @@ export default class Nav extends Component {
 								</Dropdown>
 						}
 					</div>
+
+
 				</div>
 				{/* 导航菜单 */}
 				<div className='NavBarWarp'>
@@ -206,20 +221,6 @@ export default class Nav extends Component {
 								</div>
 							)
 						}
-
-				    <div className="right search">
-							<Input
-								onChange = {(e)=>this.setState({searchkey:e.target.value})}
-								onPressEnter = {this.handleSearch}
-							 	placeholder='请输入关键词'
-							 	addonBefore={
-							 		<Select defaultValue={searchType} style={{ width: 90 }} onChange={(x)=>this.props.persistAction.changeSearchType(x)}>
-									   <Option value="topic">试题</Option>
-									   <Option value="exam">试卷</Option>
-									</Select>}
-							 	addonAfter={<Icon type="search" onClick={this.handleSearch}/>}
-							 />
-					  </div>
 				  </div>
 				</div>
 				{/* 固定导航 */}
