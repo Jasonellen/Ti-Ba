@@ -3,7 +3,7 @@ import React, { Component }from 'react';
 // import { Icon,Table, Select, Modal, Button,Input, Radio,message } from 'antd';
 import { Table, Button,message } from 'antd';
 import './index.scss'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 // var Highcharts = require('highcharts');
 // require('highcharts/modules/variable-pie')(Highcharts);
 // const Option = Select.Option;

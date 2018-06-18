@@ -38,8 +38,8 @@ export default class Papers extends Component{
 		_axios.post(url.exams,{
 			education_id,
 			subject_id,
-			grade_id,
-			version_id,
+			grade_id:grade_id||'',
+			version_id:version_id||'',
 			exam_class,
 			page,
 			per_page,
@@ -52,9 +52,7 @@ export default class Papers extends Component{
 			})
 	}
 	handleSideChange = (version_id, grade_id)=>{
-		this.setState({
-			version_id,grade_id
-		},this.getData)
+		this.setState({version_id,grade_id},this.getData)
 	}
 	//翻页
 	handlePage = (page)=>{

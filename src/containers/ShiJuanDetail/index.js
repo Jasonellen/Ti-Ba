@@ -14,7 +14,8 @@ const confirm = Modal.confirm;
 @connect(
 	state => {
 		return {
-			other:state.other
+			other:state.other,
+			persist:state.persist,
 		}
 	},
 	dispatch => bindActionCreators(otherAction, dispatch),
@@ -27,7 +28,8 @@ export default class ShiJuanDetail extends Component{
 			topics:[],
 			star:''
 		},
-		cart_data:[]
+		cart_data:[],
+		modalshow:false,
 	};
 	componentDidMount(){
 		this.getData()
@@ -57,7 +59,7 @@ export default class ShiJuanDetail extends Component{
 
 	//获取购物车信息
 	getCarts = ()=>{
-		const { subject_id } = this.state.data.topics[0] && this.state.data.topics[0].children[0] || ''
+		const { subject_id } = this.state.data
 		_axios.get(url.owner_carts,{
 			subject_id
 		})
@@ -165,13 +167,81 @@ export default class ShiJuanDetail extends Component{
 				});
 			})
 	}
+	//检查支付状态
+	checkStatus = (order_no)=>{
+		_axios.get(url.orders_check,{order_no})
+			.then(data=>{
+				if(data.data.status == 'paid'){
+					clearInterval(this.check_status)
+					this.setState({modalshow:false},this.handleDownload)
+				}
+			})
+	}
+	//需要支付
+	needWxPay = ()=>{
+		const { subject_id,education_id } = this.props.persist
+		_axios.post(url.orders,{
+			type:'exam',
+			pay_way:'wechat_qr_pay',
+			subject_id,
+			education_id,
+			id:this.props.match.params.id,
+		})
+			.then(data=>{
+				this.setState({
+					modalshow:true
+				},()=>{
+					setTimeout(()=>{
+						document.querySelector('#qrcode').innerHTML = ''
+						new QRCode('qrcode', {
+							text: data.data.qr_code_url,
+							width: 350,
+							height: 350,
+							colorDark: '#000000',
+							colorLight: '#ffffff',
+						});
+						clearInterval(this.check_status)
+						this.check_status = setInterval(()=>{
+							this.checkStatus(data.data.order_no)
+						},1000)
+					},0)
+				})
+			})
+	}
+	//开始下载
+	handleDownload = ()=>{
+		const { id,type } = this.props.match.params
+		if(type=='exam_record'){
+			this.props.history.push(`/downloadpage/${id}/${type}`)
+		}else{
+			// 检查是否登录并下载
+			if(!this.props.persist.user.token){
+				eventEmitter.emit('notLogin');
+				return
+			}else{
+				_axios.post(url.download_records,{
+					type : 'exam',
+					id : id
+				})
+					.then((data)=>{
+						if(data.paid){
+							location.href = data.url
+						}else{
+							this.needWxPay()
+						}
+					})
+			}
+		}
+	}
 	handleReload = (id)=>{
 		this.props.history.push(`/ShiJuanDetail/${id+1}/exam`)
 		location.reload()
 	}
+	componentWillUnmount() {
+		clearInterval(this.check_status)
+	}
 	render(){
-		const { data, cart_data } = this.state
-		const { id,type } = this.props.match.params
+		const { data, cart_data, modalshow } = this.state
 		return (
 			<div className='ShiJuanDetail contentCenter'>
 				<div className="warp clearfix">
@@ -207,7 +277,7 @@ export default class ShiJuanDetail extends Component{
 					</div>
 					<div className="rightSide">
 						<div className="top">
-							<Button type="primary" icon="download" size='large' onClick={()=>this.props.history.push(`/downloadpage/${id}/${type}`)}>下载试卷</Button>
+							<Button type="primary" icon="download" size='large' onClick={this.handleDownload}>下载试卷</Button>
 							{/*<div className="clearfix">
 								<div className="left" style={{cursor:'pointer'}} onClick={()=>this.props.changeAnswerSheetShow(true)}><Icon type="file-word" style={{color:'#ff9600'}}/> 答题卡下载</div>
 								<Link to='/onlineTest/1' style={{color:'rgba(0, 0, 0, 0.65)'}}><div className="right"><Icon type="edit" style={{color:'#ff9600'}}/> 在线测试</div></Link>
@@ -234,6 +304,17 @@ export default class ShiJuanDetail extends Component{
 					onDel = {this.handleDelShiTiLan}
 					onSubmit = {this.handleSubmit}
 				/>
+				<Modal
+					title='扫码支付'
+					visible={modalshow}
+					footer={null}
+					width={400}
+					maskClosable={false}
+					onCancel={()=>this.setState({modalshow:false})}
+				>
+					<p style={{textAlign:'center',marginBottom:15}}>请使用 <span style={{color:'red'}}>微信</span> 扫一扫二维码完成支付</p>
+					<div id="qrcode"></div>
+				</Modal>
 			</div>
 		)
 	}

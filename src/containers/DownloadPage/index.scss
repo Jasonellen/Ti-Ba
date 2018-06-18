@@ -1,6 +1,30 @@
 .DownloadPage{
 	background: $f;
 	margin-top: 20px;
+	.drag_space_wrap{
+		position: relative;
+    display: inline-block;
+		margin-left: 200px;
+		font-size: 10px;
+		color: #dcdcdc;
+		textarea{
+			border:none;
+			outline: none;
+			resize: both;
+			background: transparent;
+			margin: 0px;
+			position: relative;
+			z-index: 1;
+			min-width: 150px;
+		}
+		img{
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			z-index: 0;
+			width: 20px;
+		}
+	}
 	strong{
 		font-weight: bold;
 	}
@@ -21,7 +45,7 @@
 	*[contenteditable=true]:focus{
     background: #f0e1d8;
     border: 1px solid $c;
-    min-width: 200px;
+    min-width: 100px;
     line-height: 1.5;
 	}
 	.pad{

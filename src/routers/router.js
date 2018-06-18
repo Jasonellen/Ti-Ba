@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 const supportsHistory = 'pushState' in window.history
 import asyncComponent from "@/components/AsyncComponent";
-const Nav = asyncComponent(() => import("~/Nav"));
+import Nav from "~/Nav";
 const Footer = asyncComponent(() => import("~/Footer"));
 const Home = asyncComponent(() => import("~/Home"));
 const Beike = asyncComponent(() => import("~/Beike"));

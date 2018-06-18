@@ -18,7 +18,7 @@ export default class Sider extends Component{
 
 	render(){
 		const { versions=[], grades=[] } = this.props
-		const { version_id, grade_id } = this.props
+		const { version_id, grade_id } = this.state
 		return (
 			<div className="Sider">
 				<div className="title clearfix" onClick={()=>this.setState({title_select:!this.state.title_select})}>

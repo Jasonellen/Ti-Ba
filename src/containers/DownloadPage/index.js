@@ -1,13 +1,15 @@
 
 import React, { Component }from 'react';
-import { Modal, Button, Radio,Checkbox, Anchor, InputNumber } from 'antd';
+import { Modal, Button, Radio,Checkbox, Anchor } from 'antd';
 import './index.scss'
 import {connect} from 'react-redux';
 import * as otherAction from '@/Redux/actions/other.js';
 import { bindActionCreators } from 'redux'
+import move_diagonal from 'static/move-diagonal.svg'
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 const { Link } = Anchor;
+
 
 @connect(
 	state => {
@@ -21,7 +23,7 @@ const { Link } = Anchor;
 export default class DownloadPage extends Component{
 	state={
 		modalshow:false,
-		contentEditable:false,
+		contentEditable:true,
 		plainOptions:[
 			{ label: '密封线', value: '1', },
 			{ label: '大题评分区', value: '2' },
@@ -135,19 +137,27 @@ export default class DownloadPage extends Component{
 			return
 		}
 		_axios.post(url.download_records,{
-			type : type == 'exam_record' ? 'exam_record' : 'exam',
+			type : type == 'exam' ? 'exam': 'exam_record',
 			id : id
 		})
 			.then((data)=>{
 				if(data.paid){
-					var _this = this
+					let resize = document.querySelectorAll('.drag_space_wrap')
+					let length = resize.length
+					let _this = this
 					Modal.info({
 						title: '下载提示',
 						content: <div>请点击 <span style={{color:'#ff9600'}}>保存</span> 下载,点击 <span style={{color:'#ff9600'}}>更多设置</span> 可以选择纸张</div>,
 						onOk(){
 							_this.download_exam.id = 'download_exam'
+							for(let i=0;i<length;i++){
+								resize[i].style.opacity = 0
+							}
 							window.print()
 							_this.download_exam.id = ''
+							for(let i=0;i<length;i++){
+								resize[i].style.opacity = 1
+							}
 						},
 					});
 				}else{
@@ -316,7 +326,7 @@ export default class DownloadPage extends Component{
 											    		<b className="t-order">{this.toUpperCase[index+1]}</b>
 											    		、<span contentEditable={contentEditable}>{item.name}</span>
 											    		{
-																CheckedList.indexOf('10') !== -1 && <span>(共<b className="t-num">{item.children.length}</b>题；共<b className="t-score">{item.score_count}</b>分)</span>
+																CheckedList.indexOf('10') !== -1 && <span>(共<b className="t-num">{item.children.length}</b>题；共<b contentEditable={contentEditable} className="t-score">{item.score_count}</b>分)</span>
 															}
 											    	</strong>
 											    </p>
@@ -337,7 +347,7 @@ export default class DownloadPage extends Component{
 														<div style={{overflow:'hidden',position:'relative'}}>
 															<div className="question-num" style={{position:'absolute'}}>
 																<span className="q-sn">{i+1}.</span>
-																<span className="q-scoreval">（{iitem.remark.score}分）</span>
+																<span contentEditable={contentEditable} className="q-scoreval">（{iitem.remark.score}分）</span>
 															</div>
 															<div dangerouslySetInnerHTML={{__html: iitem.content }}></div>
 														</div>
@@ -349,6 +359,11 @@ export default class DownloadPage extends Component{
 											        <span onClick={()=>this.props.changeCorrectErrorShow(true)}><Icon type="form" />纠错</span>
 											        <span onClick={()=>{}}><Icon type="delete" />删除</span>
 												    </div>*/}
+														<div className="drag_space_wrap">
+															<textarea value="拖动增加空白区域" disabled></textarea>
+															<img src={move_diagonal} alt=""/>
+														</div>
+
 											    </div>
 												)
 											})
