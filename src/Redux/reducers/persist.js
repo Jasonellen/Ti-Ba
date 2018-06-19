@@ -40,6 +40,7 @@ const persist = handleActions({
 		versions:action.payload.versions,
 		topic_classes:action.payload.topic_classes,
 		grades:action.payload.grades,
+		topic_types:action.payload.topic_types,
 	}),
 	changeChapters: (state, action) => ({
 		...state,

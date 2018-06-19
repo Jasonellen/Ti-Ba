@@ -56,6 +56,7 @@ export default class ZNZJ extends Component{
 	}
 	//提交
 	huandleSubmit = ()=>{
+		const { chapter,knowledges } = this.props.persist
 		const {
 			education_id,
 			subject_id,
@@ -64,8 +65,18 @@ export default class ZNZJ extends Component{
 			chapter_ids,
 			knowledge_ids,
 			grade:grade_ids,
-			topic_data
+			topic_data,
+			side
 		} = this.props.znzj
+
+		let d_chapter = [],d_knowledges=[];
+		chapter.map(function(item){
+			d_chapter.push(String(item.id))
+		})
+		knowledges.map(function(item){
+			d_knowledges.push(String(item.id))
+		})
+
 		let topic_types = topic_data.filter(function(item){
 			return item.show == true
 		})
@@ -74,8 +85,8 @@ export default class ZNZJ extends Component{
 			subject_id,
 			level,
 			group_method,
-			chapter_ids,
-			knowledge_ids,
+			chapter_ids:side == '/znzj/zj' && chapter_ids.length==0 ? d_chapter : chapter_ids,
+			knowledge_ids:side != '/znzj/zj' && knowledge_ids.length==0 ? d_knowledges : knowledge_ids,
 			grade_ids,
 			topic_types
 		})
@@ -87,7 +98,6 @@ export default class ZNZJ extends Component{
 		const { levels, chapter,knowledges } = this.props.persist
 		const { grades, chapter_ids, knowledge_ids, level, group_method, side, topic_data } = this.props.znzj
 		const _levels = [{label:"不限",value:""}].concat(levels)
-
 		let select_grades=[]
 		grades.map(function(item){
 			if(item.checked == true){
@@ -187,20 +197,19 @@ export default class ZNZJ extends Component{
 													</li>
 												)
 											}
-
 										})
 									}
     						</ul>
 								<div className="right">
 									{
-										topic_data.length>0 && topic_data.map((item)=>{
+										topic_data.length>0 && topic_data.map((item,i)=>{
 											return <Button disabled={item.show} key={item.topic_type_id} type='primary' onClick={()=>this.props.handleTopicDataAdd(item.topic_type_id)}>{item.topic_type_name}</Button>
 										})
 									}
 								</div>
 							</div>
 						</Card>
-						<div className="submit" onClick={this.huandleSubmit}><Button type='primary' size='large'>生成试卷</Button></div>
+						<div className="submit"><Button onClick={this.huandleSubmit} type='primary' size='large'>生成试卷</Button></div>
 					</div>
 				</div>
 			</div>

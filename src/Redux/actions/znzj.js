@@ -16,20 +16,24 @@ export const beginSearch = () => (dispatch,getState) =>{
 		knowledge_ids,
 		topic_data
 	} = getState().znzj
-
+	const {
+		education_id,
+		subject_id,
+	} = getState().persist
 	let _ids = side == '/znzj/zj' ? chapter_ids : knowledge_ids
 	let ids = _ids.join(',')
 	let _grade = grade.join(',')
 	let type = side == '/znzj/zj' ? 'chapters' : 'knowledges'
 	_axios.get(url.group_exam_subjects,{
-		type,ids,level,grade:_grade
+		type,ids,level,grade:_grade,
+		education_id,
+		subject_id,
 	})
 		.then(data=>{
 			topic_data.map(function(iitem,i){
-				iitem.show=false
 				iitem.topics_count = 0
 				data.data.map(function(item){
-					item.show = true
+					item.show=true
 					if(item.topic_type_id == iitem.topic_type_id){
 						topic_data.splice(i,1,item)
 					}

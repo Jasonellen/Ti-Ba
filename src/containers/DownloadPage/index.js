@@ -360,7 +360,7 @@ export default class DownloadPage extends Component{
 											        <span onClick={()=>{}}><Icon type="delete" />删除</span>
 												    </div>*/}
 														<div className="drag_space_wrap">
-															<textarea value="拖动增加空白区域" disabled></textarea>
+															<textarea value="拖动增加空白区域"></textarea>
 															<img src={move_diagonal} alt=""/>
 														</div>
 
