@@ -47,7 +47,6 @@ class Login extends Component {
 				})
 					.then(data=>{
 						this.props.navAction.changeLoginModalShow(false)
-						console.log(data.token,1234567)
 						setCookie('tiba_key',data.token)
 						this.props.persistAction.getUser()
 					})

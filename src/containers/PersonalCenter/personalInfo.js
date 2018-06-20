@@ -3,18 +3,23 @@
 import React,{ Component } from 'react'
 import { Link } from 'react-router-dom'
 import {connect} from 'react-redux';
+import { Icon, Input, notification } from 'antd'
 import moment from 'moment'
+import * as persistAction from '@/Redux/actions/persist.js';
+import { bindActionCreators } from 'redux'
+const Search = Input.Search;
 
 @connect(
 	state => state.persist,
-	null
+	dispatch => bindActionCreators(persistAction, dispatch)
 )
 export default class PersonalInfo extends Component{
 	state={
 		user:{
 			avatar_data:{},
 			vips:[]
-		}
+		},
+		edit:false
 	}
 	componentDidMount(){
 		this.getUserInfo()
@@ -28,8 +33,22 @@ export default class PersonalInfo extends Component{
 				})
 			})
 	}
+	handleChangeName = (name)=>{
+		_axios.patch(url.owner_users+'/'+this.state.user.id,{name})
+			.then(()=>{
+				this.getUserInfo()
+				this.props.changeUserName(name)
+				notification.success({
+					message: '通知提醒',
+					description: '用户名更新成功！',
+					duration:3
+				});
+				this.setState({edit:false})
+				eventEmitter.emit('user_name_changed');
+			})
+	}
 	render(){
-		const { user } = this.state
+		const { user, edit } = this.state
 		//teacher, student, :family
 		return (
 			<div className="personalInfo">
@@ -38,7 +57,22 @@ export default class PersonalInfo extends Component{
       	<ul>
       		<li>
       			<span className="name">用户名：</span>
-      			<strong className="value">{user.login}</strong>
+      			<strong className="value">{user.name || user.login}</strong>
+						{
+							edit
+							?
+							<span>
+								<Search
+									style={{width:200,marginLeft: 10}}
+									placeholder="请修改用户名"
+									enterButton="确定"
+									onSearch={this.handleChangeName}
+								/>
+								<Icon type="backward" style={{ marginLeft:10,cursor:'pointer',fontSize: 16, color: '#ff9600' }} onClick={()=>this.setState({edit:false})}/>
+							</span>
+							:
+							<Icon type="edit" style={{ marginLeft:10,cursor:'pointer',fontSize: 16, color: '#ff9600' }} onClick={()=>this.setState({edit:true})}/>
+						}
       		</li>
       		<li>
       			<span className="name">用户身份：</span>

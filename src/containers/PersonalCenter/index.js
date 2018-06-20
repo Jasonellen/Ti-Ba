@@ -18,36 +18,19 @@ const SubMenu = Menu.SubMenu;
 	null
 )
 export default class PersonalCenter extends Component{
-	state={
-
-	}
-	state={
-		user:{
-			avatar_data:{},
-			vips:[]
-		}
-	}
-
+	state={}
 	componentDidMount() {
 		let index = location.href.lastIndexOf('/')
 		let str = location.href.slice(index+1)
 		this.setState({
 			defaultSelectedKeys:[str]
 		})
-
-		this.getUserInfo()
-	}
-	getUserInfo = ()=>{
-		const { user } = this.props
-		_axios.get(url.owner_users+user.id)
-			.then((data)=>{
-				this.setState({
-					user:data.user
-				})
-			})
+		eventEmitter.on('user_name_changed',()=>{
+			this.forceUpdate()
+		});
 	}
 	render(){
-		const { user } = this.state
+		const { user,vips } = this.props
 		return (
 			<div className="PersonalCenter contentCenter">
 				<div className="left">
@@ -60,8 +43,8 @@ export default class PersonalCenter extends Component{
 					      </div>
   						</div>
 							<div className="user-id">
-								<p className="user-idname">{user.login}</p>
-								<p className="user-level">{user.vips.length>0 ? <span><img src={vip} alt=""/>VIP用户</span> : '普通用户'}</p>
+								<p className="user-idname">{user.name || user.login}</p>
+								<p className="user-level">{vips.length>0 ? <span><img src={vip} alt=""/>VIP用户</span> : '普通用户'}</p>
 							</div>
 						</div>
 					  {/*<div className="points clearfix">

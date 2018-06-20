@@ -25,6 +25,12 @@ const persist = handleActions({
 		...state,
 		user: action.payload
 	}),
+	changeUserName: (state, action) => {
+		state.user.name = action.payload
+		return {
+			...state
+		}
+	},
 	changeEducations: (state, action) => ({
 		...state,
 		educations: action.payload.educations,

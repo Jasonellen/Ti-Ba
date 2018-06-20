@@ -197,7 +197,8 @@
 			}
 			.stu-info{
 				line-height: 18px;
-    		margin-top: 20px;
+				margin-top: 20px;
+    		margin-bottom: 20px;
 		    overflow: hidden;
 		    li{
 		    	float: left;
@@ -312,14 +313,14 @@
 			}
 		}
 	}
-	#download_exam{
-		width: 100%;
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: 1000000;
-		background: #fff;
-		min-height: 100vh;
-		margin: 0;
-	}
+	// #download_exam{
+	// 	width: 100%;
+	// 	position: absolute;
+	// 	top: 0;
+	// 	left: 0;
+	// 	z-index: 1000000;
+	// 	background: #fff;
+	// 	min-height: 100vh;
+	// 	margin: 0;
+	// }
 }

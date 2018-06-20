@@ -23,7 +23,7 @@ const { Link } = Anchor;
 export default class DownloadPage extends Component{
 	state={
 		modalshow:false,
-		contentEditable:true,
+		contentEditable:false,
 		plainOptions:[
 			{ label: '密封线', value: '1', },
 			{ label: '大题评分区', value: '2' },
@@ -36,7 +36,7 @@ export default class DownloadPage extends Component{
 			{ label: '总评分', value: '9' },
 			{ label: '大题注释', value: '10' },
 		],
-		CheckedList:['3', '8','10'],
+		CheckedList:['3','4','6','7', '8','10'],
 		redioCheck:JSON.stringify(['3', '8','10']),
 		sortOptions:[
 			{ label: '选择题', value: '1' },
@@ -130,40 +130,44 @@ export default class DownloadPage extends Component{
 			})
 	}
 	//开始下载
-	beginDownload = ()=>{
-		const { id,type } = this.props.match.params
-		if(!this.props.persist.user.token){
-			eventEmitter.emit('notLogin');
-			return
-		}
-		_axios.post(url.download_records,{
-			type : type == 'exam' ? 'exam': 'exam_record',
-			id : id
-		})
-			.then((data)=>{
-				if(data.paid){
-					let resize = document.querySelectorAll('.drag_space_wrap')
-					let length = resize.length
-					let _this = this
-					Modal.info({
-						title: '下载提示',
-						content: <div>请点击 <span style={{color:'#ff9600'}}>保存</span> 下载,点击 <span style={{color:'#ff9600'}}>更多设置</span> 可以选择纸张</div>,
-						onOk(){
-							_this.download_exam.id = 'download_exam'
-							for(let i=0;i<length;i++){
-								resize[i].style.opacity = 0
-							}
-							window.print()
-							_this.download_exam.id = ''
-							for(let i=0;i<length;i++){
-								resize[i].style.opacity = 1
-							}
-						},
-					});
-				}else{
-					this.needWxPay()
-				}
-			})
+	beginDownload = (title)=>{
+		jQuery(document).googoose({
+			filename: `123.doc`,
+			area:'#download_exam'
+		});
+		// const { id,type } = this.props.match.params
+		// if(!this.props.persist.user.token){
+		// 	eventEmitter.emit('notLogin');
+		// 	return
+		// }
+		// _axios.post(url.download_records,{
+		// 	type : type == 'exam' ? 'exam': 'exam_record',
+		// 	id : id
+		// })
+		// 	.then((data)=>{
+		// 		if(data.paid){
+		// 			let resize = document.querySelectorAll('.drag_space_wrap')
+		// 			let length = resize.length
+		// 			let _this = this
+		// 			Modal.info({
+		// 				title: '下载提示',
+		// 				content: <div>请点击 <span style={{color:'#ff9600'}}>保存</span> 下载,点击 <span style={{color:'#ff9600'}}>更多设置</span> 可以选择纸张</div>,
+		// 				onOk(){
+		// 					_this.download_exam.id = 'download_exam'
+		// 					for(let i=0;i<length;i++){
+		// 						resize[i].style.opacity = 0
+		// 					}
+		// 					window.print()
+		// 					_this.download_exam.id = ''
+		// 					for(let i=0;i<length;i++){
+		// 						resize[i].style.opacity = 1
+		// 					}
+		// 				},
+		// 			});
+		// 		}else{
+		// 			this.needWxPay()
+		// 		}
+		// 	})
 	}
 	componentWillUnmount() {
 		clearInterval(this.check_status)
@@ -187,7 +191,7 @@ export default class DownloadPage extends Component{
 				<div className="left leftBar">
 					<div className="pad">
 						{/* onClick={()=>this.props.changeDownloadShow(true)} 打开下载modal*/}
-						<Button type="primary" icon="download" size='large' onClick={this.beginDownload}>下载试卷</Button>
+						<Button type="primary" icon="download" size='large' onClick={()=>this.beginDownload(data.title)}>下载试卷</Button>
 						{/*<div className="clearfix small_title">
 							<div className="left" onClick={()=>this.props.changeAnswerSheetShow(true)}><Icon type="file-word" style={{color:'#ff9600'}}/> 下载答题卡</div>
 							<div className="left" onClick={()=>this.props.changeAnalyzeShow(true)}><Icon type="line-chart" style={{color:'#ff9600',cursor:'pointer'}}/> 分析试卷</div>
@@ -230,7 +234,8 @@ export default class DownloadPage extends Component{
 					  </div>
 					</Anchor>
 				</div>
-				<div className="right rightContent clearfix" id='' ref={x=>this.download_exam = x}>
+				<div className="right rightContent clearfix" id='download_exam' ref={x=>this.download_exam = x}>
+					<div className='googoose header'>题霸网</div>
 					{ CheckedList.indexOf('1') !== -1 && <div className="left editing"><img src="/static/editing.png" alt=""/></div>}
 					<div className="left rightpage">
 						{
@@ -248,11 +253,9 @@ export default class DownloadPage extends Component{
 						}
 						{
 							CheckedList.indexOf('7') !== -1 && (
-								<ul className="stu-info">
-									<li>姓名：<span>____________</span></li>
-									<li>班级：<span>____________</span></li>
-									<li>学号：<span>____________</span></li>
-								</ul>
+								<p className="stu-info">
+									姓名：<span>____________</span>班级：<span>____________</span>学号：<span>____________</span>
+								</p>
 							)
 						}
 
@@ -359,10 +362,10 @@ export default class DownloadPage extends Component{
 											        <span onClick={()=>this.props.changeCorrectErrorShow(true)}><Icon type="form" />纠错</span>
 											        <span onClick={()=>{}}><Icon type="delete" />删除</span>
 												    </div>*/}
-														<div className="drag_space_wrap">
+														{/* <div className="drag_space_wrap">
 															<textarea value="拖动增加空白区域"></textarea>
 															<img src={move_diagonal} alt=""/>
-														</div>
+														</div> */}
 
 											    </div>
 												)
@@ -405,7 +408,7 @@ export default class DownloadPage extends Component{
 												item.children.length>0 && item.children.map(function(iitem, i){
 													return (
 														<div key={iitem.id}>
-															<span style={{textIndent: '1em',display:'inline-block'}}>{i+1+' . '}</span>
+															<span>{i+1+' . '}</span>
 															<span style={{color:'#ff9600'}}>【答案】</span>
 															<span style={{textIndent: '5em'}} dangerouslySetInnerHTML={{__html: iitem.remark.right_answer }}></span>
 															<div style={{color:'#ff9600',textIndent: '2em'}}>【解析】</div>
@@ -421,13 +424,11 @@ export default class DownloadPage extends Component{
 								})
 							}
 						</div>
-
-						<div id="download">
-
+						<div className='googoose footer'>
+							Page <span className='googoose currentpage'></span>
+        			of <span className='googoose totalpage'></span>
 						</div>
-						<img id='test' src='' alt=""/>
 					</div>
-
 				</div>
 
 				 {/* <Modal

@@ -163,7 +163,7 @@ export default class Nav extends Component {
 										</Menu.Item>
 									</Menu>
 								}>
-									<div>欢迎，{user.login}<Icon type="down" /></div>
+									<div>欢迎，{user.name || user.login}<Icon type="down" /></div>
 								</Dropdown>
 						}
 					</div>

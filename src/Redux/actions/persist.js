@@ -13,6 +13,7 @@ export const {
 	changeExamClass,
 	changeAllClassName,
 	changeVips,
+	changeUserName
 } = createActions(
 		'changeUser',
 		'changeEducations',
@@ -24,6 +25,7 @@ export const {
 		'changeExamClass',
 		'changeAllClassName',
 		'changeVips',
+		'changeUserName',
 	)
 
 export const getUser = () => (dispatch) =>{
@@ -82,7 +84,7 @@ export const getEducations = () => (dispatch) =>{
 				dispatch(changeSubject(data.educations[0],data.educations[0].subjects[0]) )
 				dispatch(changeAllClassName('当前：'+data.educations[0].name+data.educations[0].subjects[0].name) )
 			}
-			
+
 		})
 }
 export const changeSubject = (edu,sub) => (dispatch) =>{

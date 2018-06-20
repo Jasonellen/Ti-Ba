@@ -40,6 +40,7 @@ module.exports = {
         "_history":true,
 				"log":true,
 				"QRCode":true,
+        "jQuery":true
     },
     rules: {
 			'indent': ['error', 'tab'],
