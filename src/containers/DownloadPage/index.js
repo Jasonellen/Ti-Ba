@@ -131,43 +131,26 @@ export default class DownloadPage extends Component{
 	}
 	//开始下载
 	beginDownload = (title)=>{
-		jQuery(document).googoose({
-			filename: `123.doc`,
-			area:'#download_exam'
-		});
-		// const { id,type } = this.props.match.params
-		// if(!this.props.persist.user.token){
-		// 	eventEmitter.emit('notLogin');
-		// 	return
-		// }
-		// _axios.post(url.download_records,{
-		// 	type : type == 'exam' ? 'exam': 'exam_record',
-		// 	id : id
-		// })
-		// 	.then((data)=>{
-		// 		if(data.paid){
-		// 			let resize = document.querySelectorAll('.drag_space_wrap')
-		// 			let length = resize.length
-		// 			let _this = this
-		// 			Modal.info({
-		// 				title: '下载提示',
-		// 				content: <div>请点击 <span style={{color:'#ff9600'}}>保存</span> 下载,点击 <span style={{color:'#ff9600'}}>更多设置</span> 可以选择纸张</div>,
-		// 				onOk(){
-		// 					_this.download_exam.id = 'download_exam'
-		// 					for(let i=0;i<length;i++){
-		// 						resize[i].style.opacity = 0
-		// 					}
-		// 					window.print()
-		// 					_this.download_exam.id = ''
-		// 					for(let i=0;i<length;i++){
-		// 						resize[i].style.opacity = 1
-		// 					}
-		// 				},
-		// 			});
-		// 		}else{
-		// 			this.needWxPay()
-		// 		}
-		// 	})
+		const { id,type } = this.props.match.params
+		if(!this.props.persist.user.token){
+			eventEmitter.emit('notLogin');
+			return
+		}
+		_axios.post(url.download_records,{
+			type : type == 'exam' ? 'exam': 'exam_record',
+			id : id
+		})
+			.then((data)=>{
+				if(data.paid){
+					jQuery(document).googoose({
+						filename: `${title}.doc`,
+						size:'8.5in',
+						area:'#download_exam'
+					});
+				}else{
+					this.needWxPay()
+				}
+			})
 	}
 	componentWillUnmount() {
 		clearInterval(this.check_status)
@@ -191,14 +174,14 @@ export default class DownloadPage extends Component{
 				<div className="left leftBar">
 					<div className="pad">
 						{/* onClick={()=>this.props.changeDownloadShow(true)} 打开下载modal*/}
-						<Button type="primary" icon="download" size='large' onClick={()=>this.beginDownload(data.title)}>下载试卷</Button>
+						<Button type="primary" icon="download" size='large' onClick={()=>this.beginDownload(data.title || data.name)}>下载试卷</Button>
 						{/*<div className="clearfix small_title">
 							<div className="left" onClick={()=>this.props.changeAnswerSheetShow(true)}><Icon type="file-word" style={{color:'#ff9600'}}/> 下载答题卡</div>
 							<div className="left" onClick={()=>this.props.changeAnalyzeShow(true)}><Icon type="line-chart" style={{color:'#ff9600',cursor:'pointer'}}/> 分析试卷</div>
 							<div className="left"><Icon type="save" style={{color:'#ff9600'}}/> 保存组卷</div>
 						</div>*/}
 					</div>
-					<h3 className='h3'>试卷结构调整<span>收起</span></h3>
+					{/*<h3 className='h3'>试卷结构调整<span>收起</span></h3>
 					<div className="group">
 						<RadioGroup onChange={this.handleRedioGroupClick} value={redioCheck} size='small'>
 			        <Radio value={JSON.stringify(['3', '8','10'])}>简易模办</Radio>
@@ -208,7 +191,7 @@ export default class DownloadPage extends Component{
 					</div>
 					<div className="checkgroup pad">
 						<CheckboxGroup options={this.state.plainOptions} value={CheckedList} onChange={this.handleSingleCheck}/>
-					</div>
+					</div>*/}
 					<h3 className='h3'>试题统计{/*<span>收起</span>*/}</h3>
 					<Anchor>
 						<div className="answer-number">
@@ -235,7 +218,7 @@ export default class DownloadPage extends Component{
 					</Anchor>
 				</div>
 				<div className="right rightContent clearfix" id='download_exam' ref={x=>this.download_exam = x}>
-					<div className='googoose header'>题霸网</div>
+					<div className='googoose header'>题霸网 http://www.gdtibawang.com/</div>
 					{ CheckedList.indexOf('1') !== -1 && <div className="left editing"><img src="/static/editing.png" alt=""/></div>}
 					<div className="left rightpage">
 						{
@@ -247,7 +230,7 @@ export default class DownloadPage extends Component{
 						{
 							CheckedList.indexOf('6') !== -1 && (
 								<div className="test-time">
-									考试时间：<span contentEditable={true} className='total_time'>* *</span>分钟 <span contentEditable={true}>* *</span>分
+									考试时间：<span contentEditable={contentEditable} className='total_time'>* *</span>分钟 <span contentEditable={contentEditable}>* *</span>分
 								</div>
 							)
 						}
@@ -288,7 +271,7 @@ export default class DownloadPage extends Component{
 							CheckedList.indexOf('4') !== -1 && (
 								<div className="warning">
 									<p>* 注意事项：</p>
-									<div className="warningText" contentEditable={true}>
+									<div className="warningText" contentEditable={contentEditable}>
 										1、填写答题卡的内容用2B铅笔填写<br/>
 										2、提前 xx 分钟收取答题卡;
 									</div>
@@ -408,12 +391,11 @@ export default class DownloadPage extends Component{
 												item.children.length>0 && item.children.map(function(iitem, i){
 													return (
 														<div key={iitem.id}>
-															<span>{i+1+' . '}</span>
-															<span style={{color:'#ff9600'}}>【答案】</span>
-															<span style={{textIndent: '5em'}} dangerouslySetInnerHTML={{__html: iitem.remark.right_answer }}></span>
-															<div style={{color:'#ff9600',textIndent: '2em'}}>【解析】</div>
+															<div>{i+1+' . '}<span style={{color:'#ff9600'}}>【答案】</span></div>
+															<div style={{textIndent: '5em'}} dangerouslySetInnerHTML={{__html: iitem.remark.right_answer }}></div>
+															<div style={{color:'#ff9600',textIndent: '1em'}}>【解析】</div>
 															<div style={{textIndent: '5em'}} dangerouslySetInnerHTML={{__html: iitem.remark.answer_analysis }}></div>
-															<div style={{color:'#ff9600',textIndent: '2em'}}>【知识点】</div>
+															<div style={{color:'#ff9600',textIndent: '1em'}}>【知识点】</div>
 															<div style={{textIndent: '5em'}} dangerouslySetInnerHTML={{__html: iitem.remark.test_point }}></div>
 														</div>
 													)
