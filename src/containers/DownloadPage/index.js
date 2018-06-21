@@ -1,13 +1,10 @@
 
 import React, { Component }from 'react';
-import { Modal, Button, Radio,Checkbox, Anchor } from 'antd';
+import { Modal, Button, Anchor } from 'antd';
 import './index.scss'
 import {connect} from 'react-redux';
 import * as otherAction from '@/Redux/actions/other.js';
 import { bindActionCreators } from 'redux'
-import move_diagonal from 'static/move-diagonal.svg'
-const RadioGroup = Radio.Group;
-const CheckboxGroup = Checkbox.Group;
 const { Link } = Anchor;
 
 
@@ -168,7 +165,7 @@ export default class DownloadPage extends Component{
 		10:'十',
 	}
 	render(){
-		const { CheckedList,redioCheck,contentEditable, data, modalshow } = this.state
+		const { CheckedList,contentEditable, data, modalshow } = this.state
 		return (
 			<div className='DownloadPage contentCenter clearfix'>
 				<div className="left leftBar">

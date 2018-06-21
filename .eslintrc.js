@@ -28,11 +28,6 @@ module.exports = {
     ],
 		"globals": {
         "url": true,
-        "_DEV_": true,
-        "IScroll":true,
-        "fetchJsonp":true,
-        "WeixinJSBridge":true,
-        "wx":true,
         "Swiper":true,
         "axios":true,
         "_axios": true,
