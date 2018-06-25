@@ -55,7 +55,12 @@ export default class XuanTi extends Component{
 	//排序
 	handleSort = (key,value)=>{
 		let x = value == 'asc' ? 'desc' : 'asc'
-		this.props.handleOptionChange(key,x)
+		if(key == 'created_at'){
+			this.props.handleOptionChange('created_at',x,'created_at')
+		}else{
+			this.props.handleOptionChange('mix_times',x,'mix_times')
+		}
+
 	}
 	//章节选择
 	handleC = (x)=>{
@@ -134,7 +139,7 @@ export default class XuanTi extends Component{
 	}
 	render(){
 		const { versions, topic_types,topic_classes,levels, test_point_counts, chapter,knowledges } = this.props.persist
-		const { grades, data,current_page, total_pages, total_count, created_at, mix_times } = this.props.zjzujuan
+		const { grades, data,current_page, total_pages, total_count, created_at, mix_times, order_option } = this.props.zjzujuan
 		const { cart_data } = this.state
 		let select_grades=[]
 		grades.map(function(item){
@@ -202,8 +207,8 @@ export default class XuanTi extends Component{
 							</div>
 						</div>
 						<div className="selectMain">
-							排序：<span onClick={()=>this.handleSort('created_at',created_at)}>时间<Icon type={ created_at ==='asc' ? "arrow-up" : 'arrow-down'} /></span>
-							<span onClick={()=>this.handleSort('mix_times',mix_times)}>组卷次数<Icon type={ mix_times ==='asc' ? "arrow-up" : 'arrow-down'}/></span>
+							排序：<span className={order_option=='created_at'?'active':''} onClick={()=>this.handleSort('created_at',created_at)}>时间<Icon type={ created_at ==='asc' ? "arrow-up" : 'arrow-down'} /></span>
+							<span className={order_option=='mix_times'?'active':''} onClick={()=>this.handleSort('mix_times',mix_times)}>组卷次数<Icon type={ mix_times ==='asc' ? "arrow-up" : 'arrow-down'}/></span>
 							{/*<span>去除已使用的试题</span>*/}
 							{/*<span className='right active all'>选择本页全部试题</span>*/}
 							<span className="right notHover">共计：{total_count}题</span>

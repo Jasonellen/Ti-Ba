@@ -23,13 +23,12 @@ export const beginSearch = () => (dispatch,getState) =>{
 		current_page:page,
 		per_page,
 		chapters,
-		knowledges
+		knowledges,
+		order_option
 	} = getState().zjzujuan
 
-	const order = {
-		created_at,
-		mix_times
-	}
+	const order = order_option == 'created_at' ? {created_at} : {mix_times}
+
 	_axios.post(url.topics,{
 		education_id,
 		subject_id,
@@ -72,8 +71,9 @@ export const initParamsAndSearch = () => (dispatch,getState) =>{
 }
 
 //搜索条件改变
-export const handleOptionChange = (key,value) => (dispatch) =>{
+export const handleOptionChange = (key,value,option) => (dispatch) =>{
 	dispatch(zjzujuanChangeSubmitId({key,value}))
+	dispatch(zjzujuanChangeSubmitId({key:'order_option',value:option}))
 	dispatch(zjzujuanChangeSubmitId({key:'current_page',value:1}))
 	dispatch(beginSearch())
 }

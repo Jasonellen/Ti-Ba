@@ -23,6 +23,8 @@ let initialState = {
 	total_count:0,
 	chapters:[],
 	knowledges:[],
+
+	order_option:'created_at'
 }
 const zjzujuan = handleActions({
 	zjzujuanChangeSubmitId: (state, action) => ({

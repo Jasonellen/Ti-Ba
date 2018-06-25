@@ -1,7 +1,7 @@
 import React,{ Component } from 'react'
 import { Menu, Icon } from 'antd';
 import './index.scss'
-import vip from 'static/vip.jpg'
+import VIP from 'static/VIP.svg'
 import { Route } from 'react-router-dom'
 import Pdownload from './download'
 import Pzujuanrecord from './zujuanrecord'
@@ -44,7 +44,7 @@ export default class PersonalCenter extends Component{
   						</div>
 							<div className="user-id">
 								<p className="user-idname">{user.name || user.login}</p>
-								<p className="user-level">{vips.length>0 ? <span><img src={vip} alt=""/>VIP用户</span> : '普通用户'}</p>
+								<p className="user-level">{vips.length>0 ? <span style={{color:'#ff9600'}}><img src={VIP} style={{    marginTop: -4}} width={20} alt=""/>VIP用户</span> : '普通用户'}</p>
 							</div>
 						</div>
 					  {/*<div className="points clearfix">

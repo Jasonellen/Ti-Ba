@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Menu, Dropdown, Icon, Input, Select, BackTop } from 'antd';
 import './index.scss'
 import phone_in_talk from 'static/phone-in-talk.svg'
+import VIP from 'static/VIP.svg'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -105,7 +106,7 @@ export default class Nav extends Component {
 
 	render() {
 		const { alClassShow } = this.state
-		const { user,educations,allClassName,web, exam_classes, searchType } = this.props.persist
+		const { user,educations,allClassName,web, exam_classes, searchType,vips } = this.props.persist
 		return (
 			<div className="Nav">
 				<div className="head">
@@ -163,7 +164,14 @@ export default class Nav extends Component {
 										</Menu.Item>
 									</Menu>
 								}>
-									<div>欢迎，{user.name || user.login}<Icon type="down" /></div>
+									<div>
+										{
+											vips.length>0
+											?
+												<strong>欢迎，<strong style={{color:'#ff9600'}}>{user.name || user.login} <img src={VIP} width={20} alt=""/></strong><Icon type="down" /></strong>
+											: <span>欢迎，{user.name || user.login}<Icon type="down" /></span>
+										}
+										</div>
 								</Dropdown>
 						}
 					</div>
@@ -179,24 +187,24 @@ export default class Nav extends Component {
 							onMouseOut={()=>this.handleAllClass(false)}
 						>{allClassName} <Icon type="down" /></div>
 						<Menu mode="horizontal" onClick={(item)=>this.NavLinkTo(item.key)}>
-			        <Menu.Item key="home">网站首页</Menu.Item>
-			        <SubMenu title={<span>手动组卷</span>}>
+			        <Menu.Item key="home"><span className='self_nav'>网站首页</span></Menu.Item>
+			        <SubMenu title={<span  className='self_nav' onClick={(item)=>this.NavLinkTo("XuanTi/tb")}>手动组卷</span>}>
 		          	<Menu.Item key="XuanTi/tb">章节同步选题</Menu.Item>
 								<Menu.Item key="XuanTi/zsd">知识点选题</Menu.Item>
 			        </SubMenu>
-			        <SubMenu title={<span>自动组卷</span>}>
+			        <SubMenu title={<span  className='self_nav' onClick={(item)=>this.NavLinkTo("znzj/zj")}>自动组卷</span>}>
 								<Menu.Item key="znzj/zj">章节智能组卷</Menu.Item>
 								<Menu.Item key="znzj/zsd">知识点智能组卷</Menu.Item>
 								<Menu.Item key="double">双向细目表组卷</Menu.Item>
 			        </SubMenu>
-			        <SubMenu title={<span>试卷库</span>}>
+			        <SubMenu title={<span className='self_nav' onClick={(item)=>this.NavLinkTo("synchronous")}>试卷库</span>}>
 			        {
 									exam_classes.length>0 && exam_classes.map((item)=>{
 										return <Menu.Item key={item.value}>{item.label}</Menu.Item>
 									})
 			        }
 			        </SubMenu>
-			        <Menu.Item key="beike">备课中心</Menu.Item>
+			        <Menu.Item key="beike"><span className='self_nav'>备课中心</span></Menu.Item>
 				    </Menu>
 						{
 							alClassShow && (
