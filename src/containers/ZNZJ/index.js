@@ -69,27 +69,20 @@ export default class ZNZJ extends Component{
 			side
 		} = this.props.znzj
 
-		let d_chapter = [],d_knowledges=[];
-		chapter.map(function(item){
-			d_chapter.push(String(item.id))
-		})
-		knowledges.map(function(item){
-			d_knowledges.push(String(item.id))
-		})
-
 		let topic_types = topic_data.filter(function(item){
 			return item.show == true
 		})
-		_axios.post(url.group_exam_smart_exams,{
-			education_id,
-			subject_id,
-			level,
-			group_method,
-			chapter_ids:side == '/znzj/zj' && chapter_ids.length==0 ? d_chapter : chapter_ids,
-			knowledge_ids:side != '/znzj/zj' && knowledge_ids.length==0 ? d_knowledges : knowledge_ids,
-			grade_ids,
-			topic_types
-		})
+		_axios.post(url.group_exam_smart_exams,
+			Object.assign({},{
+				education_id,
+				subject_id,
+				level,
+				group_method,
+				grade_ids,
+				topic_types,
+				type:side == '/znzj/zj'?'chapter':"knowledge"
+			},side == '/znzj/zj'?{chapter_ids}:{knowledge_ids})
+		)
 			.then(data=>{
 				_history.push('/downloadpage/'+data.exam_record_id)
 			})
@@ -160,7 +153,7 @@ export default class ZNZJ extends Component{
 									}
 								</RadioGroup>
 							</div>
-							<div style={{marginBottom:10}}>
+							{/*<div style={{marginBottom:10}}>
 	    					出题方式：
 								<RadioGroup onChange={this.handleGLChange} value={group_method}>
 									<Radio value={'relevance'}>关联出题&nbsp;
@@ -174,7 +167,7 @@ export default class ZNZJ extends Component{
 										</Tooltip>
 									</Radio>
 								</RadioGroup>
-							</div>
+							</div>*/}
 							<div>
 								试用年级：
 								<CheckboxGroup options={grades} value={select_grades} onChange={(x)=>this.props.handleCheckGroup(x)} />

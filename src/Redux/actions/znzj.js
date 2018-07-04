@@ -34,6 +34,7 @@ export const beginSearch = () => (dispatch,getState) =>{
 				iitem.topics_count = 0
 				data.data.map(function(item){
 					item.show=true
+					item.topics_count_show=0
 					if(item.topic_type_id == iitem.topic_type_id){
 						topic_data.splice(i,1,item)
 					}
@@ -99,7 +100,7 @@ export const hanldeInputChange = (num, id) => (dispatch, getState) =>{
 	let topic_data = getState().znzj.topic_data
 	topic_data.map(function(item){
 		if(item.topic_type_id == id){
-			item.topics_count =num
+			item.topics_count_show =num
 		}
 	})
 	//dispatch(znzjChangeSingle({key:'topic_data',value:topic_data})) //这里不做渲染，就不会改变 最大值，实际值是变的
