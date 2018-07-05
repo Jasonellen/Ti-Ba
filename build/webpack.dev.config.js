@@ -3,7 +3,6 @@ var config = require('../config')
 var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.config')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 //将热更新添加到入口文件
@@ -14,7 +13,7 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 //合并配置文件
 module.exports = merge(baseWebpackConfig, {
   // cheap-module-eval-source-map is faster for development
-  devtool: '#cheap-module-eval-source-map',
+  devtool: 'cheap-module-eval-source-map',
   plugins: [
 		//设置全局变量，比如npm start -> cross-env NODE_ENV=development这里只是将development传给了webpack
 		//process.env.NODE_ENV=='"development"'仅在webpack中有用，在其他文件中无效，通过下面设为全局变量
