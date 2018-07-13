@@ -104,15 +104,19 @@ export default class ZNZJ extends Component{
 					<Breadcrumb.Item>初中数学</Breadcrumb.Item>
 			  </Breadcrumb>*/}
 				<div className="oneBar">
-					<SmallNavBar
-						noall
-						title='教材'
-						data={versions}
-						onChange={(x)=>{
-							this.props.handleOptionChange('version_id',x)
-							this.props.getTrees()
-						}}
-					/>
+					{
+						side == '/znzj/zj' && (
+							<SmallNavBar
+								noall
+								title='教材'
+								data={versions}
+								onChange={(x)=>{
+									this.props.handleOptionChange('version_id',x)
+									this.props.getTrees()
+								}}
+							/>
+						)
+					}
 				</div>
 				<div className="warp clearfix">
 					<div className="leftSide">

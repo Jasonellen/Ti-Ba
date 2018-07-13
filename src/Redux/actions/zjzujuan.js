@@ -159,9 +159,9 @@ export const getTrees = () => (dispatch,getState) =>{
 			})
 	}else{
 		//根据subject_id获取知识点树状数据
-		_axios.get(url.knowledges+'?subject_id='+subject_id+'&version_id='+version_id)
+		_axios.get(url.knowledges+'?subject_id='+subject_id)
 			.then(data=>{
-				dispatch(changeKnowledges(data.knowledge))
+				dispatch(changeKnowledges(data.knowledge.children))
 				dispatch(beginSearch())
 			})
 	}

@@ -160,15 +160,20 @@ export default class XuanTi extends Component{
 				</div>
 
 				<div className="oneBar">
-					<SmallNavBar
-						noall
-						title='教材'
-						data={versions}
-						onChange={(x)=>{
-							this.props.handleOptionChange('version_id',x)
-							this.props.getTrees()
-						}}
-					/>
+					{
+						side == '/xuanti/tb' && (
+							<SmallNavBar
+								noall
+								title='教材'
+								data={versions}
+								onChange={(x)=>{
+									this.props.zjzujuanChangeSubmitId({key:'version_id',value:x})
+									this.props.getTrees()
+								}}
+							/>
+						)
+					}
+
 				</div>
 				{/*<div className="oneBar">
 					<SmallNavBar />

@@ -83,7 +83,6 @@ export const handleOptionChange = (key,value) => (dispatch) =>{
 }
 //Menu改变
 export const handleMenuChange = (side) => (dispatch) =>{
-	console.log(1)
 	dispatch(znzjChangeSingle({key:'side',value:side}))
 	dispatch(getTrees())
 }
@@ -136,8 +135,8 @@ export const handleTopicDataAdd = (id) => (dispatch, getState) =>{
 
 //获取 trees 树状数据
 export const getTrees = () => (dispatch,getState) =>{
-	console.log(2)
 	const { subject_id, version_id, side} = getState().znzj
+
 	if(side == '/znzj/zj'){
 		//根据subject_id获取章节树状数据
 		_axios.get(url.chapters+'?subject_id='+subject_id+'&version_id='+version_id)
@@ -147,9 +146,9 @@ export const getTrees = () => (dispatch,getState) =>{
 			})
 	}else{
 		//根据subject_id获取知识点树状数据
-		_axios.get(url.knowledges+'?subject_id='+subject_id+'&version_id='+version_id)
+		_axios.get(url.knowledges+'?subject_id='+subject_id)
 			.then(data=>{
-				dispatch(changeKnowledges(data.knowledge))
+				dispatch(changeKnowledges(data.knowledge.children))
 				dispatch(beginSearch())
 			})
 	}
