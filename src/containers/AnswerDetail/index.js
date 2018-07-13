@@ -29,6 +29,9 @@ export default class AnswerDetail extends Component{
 	};
 	componentDidMount(){
 		this.getData()
+		eventEmitter.on('subjectChanged',()=>{
+			this.getCarts()
+		});
 	}
 	getData = ()=>{
 		_axios.get(url.topics+'/'+this.props.match.params.id)

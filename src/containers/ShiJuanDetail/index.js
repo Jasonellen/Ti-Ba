@@ -33,6 +33,9 @@ export default class ShiJuanDetail extends Component{
 	};
 	componentDidMount(){
 		this.getData()
+		eventEmitter.on('subjectChanged',()=>{
+			this.getCarts()
+		});
 	}
 	getData = ()=>{
 		const { id,type } = this.props.match.params
@@ -56,7 +59,6 @@ export default class ShiJuanDetail extends Component{
 		9:'九',
 		10:'十',
 	}
-
 	//获取购物车信息
 	getCarts = ()=>{
 		const { subject_id } = this.state.data

@@ -4,7 +4,20 @@ import { Select, Checkbox, Button, Modal,Input } from 'antd';
 const Option = Select.Option;
 import {connect} from 'react-redux';
 import './index.scss'
-
+const toUpperCase = {
+	1:'一',
+	2:'二',
+	3:'三',
+	4:'四',
+	5:'五',
+	6:'六',
+	7:'七',
+	8:'八',
+	9:'九',
+	10:'十',
+	11:'十一',
+	12:'十二',
+}
 @connect(
 	state => state.persist,
 	null
@@ -200,7 +213,7 @@ export default class VIP extends Component{
 								packages.length>0 && packages.map((item)=>{
 									return (
 										<div key={item.id} className={`box left ${item.checked && 'active'}`} onClick={()=>this.handlePackageChange(item.id)}>
-											<h2>{item.name}</h2>
+											<h2>{toUpperCase[item.duration]+'个月'}</h2>
 											<p>(可下载${item.download_no}份试卷)</p>
 											<span>售价：{item.price}元</span>
 										</div>

@@ -2,8 +2,12 @@ import { createActions } from 'redux-actions';
 
 export const {
 	znzjChangeSingle,
+	changeChapters,
+	changeKnowledges,
 } = createActions(
-		'znzjChangeSingle'
+		'znzjChangeSingle',
+		'changeChapters',
+		'changeKnowledges',
 	)
 
 export const beginSearch = () => (dispatch,getState) =>{
@@ -67,17 +71,21 @@ export const InitParams = (side) => (dispatch,getState) =>{
 	dispatch(znzjChangeSingle({key:'subject_id',value:data.subject_id}))
 	dispatch(znzjChangeSingle({key:'grade',value:defaultGradesId}))
 	dispatch(znzjChangeSingle({key:'grades',value:grades}))
-	dispatch(znzjChangeSingle({key:'chapters',value:[]}))
-	dispatch(znzjChangeSingle({key:'knowledges',value:[]}))
 	dispatch(znzjChangeSingle({key:'side',value:side}))
 	dispatch(znzjChangeSingle({key:'topic_data',value:topic_data}))
-	dispatch(beginSearch())
+	dispatch(getTrees())
 }
 
 //搜索条件改变
 export const handleOptionChange = (key,value) => (dispatch) =>{
 	dispatch(znzjChangeSingle({key,value}))
 	dispatch(beginSearch())
+}
+//Menu改变
+export const handleMenuChange = (side) => (dispatch) =>{
+	console.log(1)
+	dispatch(znzjChangeSingle({key:'side',value:side}))
+	dispatch(getTrees())
 }
 //年级点击
 export const handleCheckGroup = (x) => (dispatch, getState) =>{
@@ -124,4 +132,25 @@ export const handleTopicDataAdd = (id) => (dispatch, getState) =>{
 		}
 	})
 	dispatch(znzjChangeSingle({key:'topic_data',value:topic_data}))
+}
+
+//获取 trees 树状数据
+export const getTrees = () => (dispatch,getState) =>{
+	console.log(2)
+	const { subject_id, version_id, side} = getState().znzj
+	if(side == '/znzj/zj'){
+		//根据subject_id获取章节树状数据
+		_axios.get(url.chapters+'?subject_id='+subject_id+'&version_id='+version_id)
+			.then(data=>{
+				dispatch(changeChapters(data.chapter.children))
+				dispatch(beginSearch())
+			})
+	}else{
+		//根据subject_id获取知识点树状数据
+		_axios.get(url.knowledges+'?subject_id='+subject_id+'&version_id='+version_id)
+			.then(data=>{
+				dispatch(changeKnowledges(data.knowledge))
+				dispatch(beginSearch())
+			})
+	}
 }

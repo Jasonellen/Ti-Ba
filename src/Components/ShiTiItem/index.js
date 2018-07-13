@@ -43,7 +43,7 @@ export default class ShiTiItem extends Component{
 				<Card
 					hoverable={true}
 					type="inner"
-					title={header && <div><span>题型：{data.topic_type_title}</span><span>题类：{data.topic_class_title}</span><span className='noborder'>难易度：{ease_type[data.level]}</span></div>}
+					title={header && <div><span>ID:{data.id}</span><span>题型：{data.topic_type_title}</span><span>题类：{data.topic_class_title}</span><span className='noborder'>难易度：{ease_type[data.level]}</span></div>}
 					actions={[
 						<div key='0' >{!nodetail && <Link to={`/AnswerDetail/${data.id}`} className='cardLeft' ><Icon type="eye-o" />查看答案解析</Link>}</div>,
 						<div onClick={()=>this.props.onCollect && this.props.onCollect(data.id,data.star)} className='cardLeft' key='1' >{data.star ? <Icon type="heart" style={{color:'#ff9600'}}/> : <Icon type="heart-o"/>}{data.star ? '已收藏' : '收藏'}</div>,

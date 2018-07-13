@@ -304,7 +304,7 @@ export default class DownloadPage extends Component{
 											}
 											{
 												CheckedList.indexOf('8') !== -1 && (
-													<p>
+													<p style={{lineHeight: '90px'}}>
 											    	<strong>
 											    		<b className="t-order">{this.toUpperCase[index+1]}</b>
 											    		、<span contentEditable={contentEditable}>{item.name}</span>
@@ -328,7 +328,7 @@ export default class DownloadPage extends Component{
 												return (
 													<div key={iitem.id} className="selectQ types" id={item.name+iitem.id}>
 														<div style={{overflow:'hidden',position:'relative'}}>
-															<div className="question-num" style={{position:'absolute'}}>
+															<div className="question-num">
 																<span className="q-sn">{i+1}.</span>
 																<span contentEditable={contentEditable} className="q-scoreval">（{iitem.remark.score}分）</span>
 															</div>
@@ -377,7 +377,8 @@ export default class DownloadPage extends Component{
 				        <span onClick={()=>{}}><Icon type="delete" />删除</span>
 					    </div>
 				    </div>*/}
-
+						<hr/>
+						<h1 style={{fontSize: 24,textAlign: 'center'}}>参考答案</h1>
 						<div className="answer" style={{fontSize:14}}>
 							{
 								data.topics.length> 0 && data.topics.map((item, index)=>{
@@ -388,11 +389,11 @@ export default class DownloadPage extends Component{
 												item.children.length>0 && item.children.map(function(iitem, i){
 													return (
 														<div key={iitem.id}>
-															<div>{i+1+' . '}<span style={{color:'#ff9600'}}>【答案】</span></div>
+															<div>{i+1+'. '}<span style={{color:'#ff9600'}}>【答案】</span></div>
 															<div style={{textIndent: '5em'}} dangerouslySetInnerHTML={{__html: iitem.remark.right_answer }}></div>
 															<div style={{color:'#ff9600',textIndent: '1em'}}>【解析】</div>
 															<div style={{textIndent: '5em'}} dangerouslySetInnerHTML={{__html: iitem.remark.answer_analysis }}></div>
-															<div style={{color:'#ff9600',textIndent: '1em'}}>【知识点】</div>
+															<div style={{color:'#ff9600',textIndent: '1em'}}>【考点】</div>
 															<div style={{textIndent: '5em'}} dangerouslySetInnerHTML={{__html: iitem.remark.test_point }}></div>
 														</div>
 													)

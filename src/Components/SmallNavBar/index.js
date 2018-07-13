@@ -10,7 +10,6 @@ export default class SmallNavBar extends Component{
 	}
 	componentDidMount(){
 		this.initial()
-
 	}
 	componentWillReceiveProps(nextprops){
 		let data = this.state.data
@@ -29,6 +28,7 @@ export default class SmallNavBar extends Component{
 		if(this.props.noall){
 			if(newData.length>0){
 				newData[0].checked = true
+				this.handleClick(newData[0].id)
 			}
 			this.setState({
 				data:newData

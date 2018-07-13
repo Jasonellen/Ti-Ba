@@ -103,24 +103,28 @@ export default class Nav extends Component {
 			eventEmitter.emit('beginSearch',searchkey)
 		}
 	}
-
+	handleDefaultMenu = (key)=>{
+		this.props.persistAction.changeDefaultKeys(key)
+		this.NavLinkTo(key)
+	}
 	render() {
 		const { alClassShow } = this.state
-		const { user,educations,allClassName,web, exam_classes, searchType,vips } = this.props.persist
+		const { user,educations,allClassName,web, exam_classes, searchType,vips, defaultKeys } = this.props.persist
 		return (
 			<div className="Nav">
 				<div className="head">
 					<div className="contentCenter clearfix">
 						<div className="right">
 							<img src={phone_in_talk} alt=""/>
-							{web.telephone}
+							{web && web.telephone}
 						</div>
 					</div>
 				</div>
 				<div className="login contentCenter clearfix">
-					<img src={web.avatar_data.original} alt="" className="logo"/>
+					<img src={web && web.avatar_data && web.avatar_data.original} alt="" className="logo"/>
 					<div className="search">
 						<Input
+							size='large'
 							onChange = {(e)=>this.setState({searchkey:e.target.value})}
 							onPressEnter = {this.handleSearch}
 							placeholder='请输入关键词'
@@ -175,8 +179,6 @@ export default class Nav extends Component {
 								</Dropdown>
 						}
 					</div>
-
-
 				</div>
 				{/* 导航菜单 */}
 				<div className='NavBarWarp'>
@@ -186,18 +188,18 @@ export default class Nav extends Component {
 							onMouseOver={()=>this.handleAllClass(true)}
 							onMouseOut={()=>this.handleAllClass(false)}
 						>{allClassName} <Icon type="down" /></div>
-						<Menu mode="horizontal" onClick={(item)=>this.NavLinkTo(item.key)}>
+						<Menu key={defaultKeys} mode="horizontal" onClick={(item)=>this.NavLinkTo(item.key)} defaultSelectedKeys={[defaultKeys]}>
 			        <Menu.Item key="home"><span className='self_nav'>网站首页</span></Menu.Item>
-			        <SubMenu title={<span  className='self_nav' onClick={(item)=>this.NavLinkTo("XuanTi/tb")}>手动组卷</span>}>
+			        <SubMenu key='ab' title={<span  className='self_nav' onClick={()=>this.handleDefaultMenu('XuanTi/tb')}>手动组卷</span>}>
 		          	<Menu.Item key="XuanTi/tb">章节同步选题</Menu.Item>
 								<Menu.Item key="XuanTi/zsd">知识点选题</Menu.Item>
 			        </SubMenu>
-			        <SubMenu title={<span  className='self_nav' onClick={(item)=>this.NavLinkTo("znzj/zj")}>自动组卷</span>}>
+			        <SubMenu title={<span  className='self_nav' onClick={()=>this.handleDefaultMenu('znzj/zj')}>自动组卷</span>}>
 								<Menu.Item key="znzj/zj">章节智能组卷</Menu.Item>
 								<Menu.Item key="znzj/zsd">知识点智能组卷</Menu.Item>
 								<Menu.Item key="double">双向细目表组卷</Menu.Item>
 			        </SubMenu>
-			        <SubMenu title={<span className='self_nav' onClick={(item)=>this.NavLinkTo("synchronous")}>试卷库</span>}>
+			        <SubMenu title={<span className='self_nav' onClick={()=>this.handleDefaultMenu('synchronous')}>试卷库</span>}>
 			        {
 									exam_classes.length>0 && exam_classes.map((item)=>{
 										return <Menu.Item key={item.value}>{item.label}</Menu.Item>

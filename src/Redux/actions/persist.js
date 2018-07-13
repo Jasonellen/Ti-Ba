@@ -6,26 +6,24 @@ export const {
 	changeUser,
 	changeEducations,
 	changeEducationsId,
-	changeChapters,
-	changeKnowledges,
 	changeLogo,
 	changeSearchType,
 	changeExamClass,
 	changeAllClassName,
 	changeVips,
-	changeUserName
+	changeUserName,
+	changeDefaultKeys
 } = createActions(
 		'changeUser',
 		'changeEducations',
 		'changeEducationsId',
-		'changeChapters',
-		'changeKnowledges',
 		'changeLogo',
 		'changeSearchType',
 		'changeExamClass',
 		'changeAllClassName',
 		'changeVips',
 		'changeUserName',
+		'changeDefaultKeys'
 	)
 
 export const getUser = () => (dispatch) =>{
@@ -80,11 +78,19 @@ export const getEducations = () => (dispatch) =>{
 				exam_classes,
 			}))
 			//选中第一项
-			if(data.educations.length>0 && data.educations[0].subjects.length>0){
-				dispatch(changeSubject(data.educations[0],data.educations[0].subjects[0]) )
-				dispatch(changeAllClassName('当前：'+data.educations[0].name+data.educations[0].subjects[0].name) )
+			if(data && data.educations){
+				let def_edu = data.educations.find(function(item){
+					return item.name == '初中'
+				})
+				let def_subj = {}
+				if(def_edu && def_edu.subjects){
+					def_subj = def_edu.subjects.find(function(item){
+						return item.name == '数学'
+					})
+				}
+				dispatch(changeSubject(def_edu,def_subj) )
+				dispatch(changeAllClassName('当前：'+def_edu.name+def_subj.name) )
 			}
-
 		})
 }
 export const changeSubject = (edu,sub) => (dispatch) =>{
@@ -102,17 +108,6 @@ export const changeSubject = (edu,sub) => (dispatch) =>{
 		topic_classes:edu.topic_classes,
 		grades:newG
 	}))
-
-	//根据subject_id获取章节树状数据
-	_axios.get(url.chapters+'?subject_id='+sub.id)
-		.then(data=>{
-			dispatch(changeChapters(data.chapter.children))
-		})
-	//根据subject_id获取知识点树状数据
-	_axios.get(url.knowledges+'?subject_id='+sub.id)
-		.then(data=>{
-			dispatch(changeKnowledges(data.knowledge.children))
-		})
 	setTimeout(()=>{
 		eventEmitter.emit('subjectChanged'); //持久化时间
 	},400)

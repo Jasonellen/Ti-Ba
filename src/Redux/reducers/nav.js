@@ -3,7 +3,7 @@ import { handleActions } from 'redux-actions';
 let initialState = {
 	registerModal:false,
 	loginModal:false,
-	forgetModal:false
+	forgetModal:false,
 }
 const nav = handleActions({
 	changeRegisterModalShow: (state, action) => ({

@@ -12,7 +12,7 @@ let initialState = {
 	grade_id:'',
 
 	//order
-	created_at:'asc', // desc
+	created_at:'desc', // desc
 	mix_times:'asc',
 	per_page:10,
 
@@ -24,6 +24,9 @@ let initialState = {
 	chapters:[],
 	knowledges:[],
 
+	chapter_ids:[],
+	knowledge_ids:[],
+
 	order_option:'created_at'
 }
 const zjzujuan = handleActions({
@@ -31,7 +34,14 @@ const zjzujuan = handleActions({
 		...state,
 		[action.payload.key]: action.payload.value,
 	}),
-
+	changeChapters: (state, action) => ({
+		...state,
+		chapters: action.payload,
+	}),
+	changeKnowledges: (state, action) => ({
+		...state,
+		knowledges: action.payload,
+	}),
 }, initialState);
 
 

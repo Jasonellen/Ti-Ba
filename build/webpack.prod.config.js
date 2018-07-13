@@ -40,7 +40,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     filename: config.build.jsPath+'/[name].[chunkhash:5].js',
     chunkFilename: config.build.jsPath+'/[name].[chunkhash:5].js'
   },
-  devtool: 'cheap-module-source-map',
+  devtool: 'cheap-module-source-map', //显示报错文件，'cheap-module-eval-source-map' 显示报错行，正式环境用这个tool报错
   plugins: [
 		//设置全局变量，比如npm start -> cross-env NODE_ENV=development这里只是将development传给了webpack
 		//process.env.NODE_ENV==‘development’仅在webpack中有用，在其他文件中无效，通过下面设为全局变量

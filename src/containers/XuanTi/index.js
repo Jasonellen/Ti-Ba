@@ -24,19 +24,20 @@ const confirm = Modal.confirm;
 
 export default class XuanTi extends Component{
 	state = {
-		side:this.props.location.pathname.toLowerCase(),
 		cart_data:[]
 	};
 	componentDidMount(){
+		let side = location.pathname.toLowerCase()
 		this.props.history.listen((location)=>{
-			this.setState({
-				side:location.pathname.toLowerCase()
-			})
+			if(location.pathname.toLowerCase() !== this.props.zjzujuan.side){
+				this.props.handleMenuChange(location.pathname.toLowerCase())
+			}
 		})
 
-		this.props.initParamsAndSearch()
+		this.props.initParamsAndSearch(side)
 		eventEmitter.on('subjectChanged',()=>{
-			this.props.initParamsAndSearch()
+			this.props.initParamsAndSearch(side)
+			this.getCarts()
 		});
 
 		this.getCarts()
@@ -60,19 +61,18 @@ export default class XuanTi extends Component{
 		}else{
 			this.props.handleOptionChange('mix_times',x,'mix_times')
 		}
-
 	}
 	//章节选择
 	handleC = (x)=>{
 		this.props.zjzujuanChangeSubmitId({key:'chapter_ids',value:x})
 		this.props.zjzujuanChangeSubmitId({key:'knowledge_ids',value:[]})
-		this.props.beginSearch()
+		this.props.getTrees()
 	}
 	//知识点选择
 	handleK = (x)=>{
 		this.props.zjzujuanChangeSubmitId({key:'chapter_ids',value:[]})
 		this.props.zjzujuanChangeSubmitId({key:'knowledge_ids',value:x})
-		this.props.beginSearch()
+		this.props.getTrees()
 	}
 	//选题点击
 	handleSelect = (topic_id,subject_id,in_cart)=>{
@@ -138,8 +138,11 @@ export default class XuanTi extends Component{
 		}
 	}
 	render(){
-		const { versions, topic_types,topic_classes,levels, test_point_counts, chapter,knowledges } = this.props.persist
-		const { grades, data,current_page, total_pages, total_count, created_at, mix_times, order_option } = this.props.zjzujuan
+		const { versions, topic_types,topic_classes,levels, test_point_counts } = this.props.persist
+		const {
+			grades, data,current_page, total_pages, total_count,
+			created_at, mix_times, order_option, chapters,knowledges, side
+		} = this.props.zjzujuan
 		const { cart_data } = this.state
 		let select_grades=[]
 		grades.map(function(item){
@@ -158,9 +161,13 @@ export default class XuanTi extends Component{
 
 				<div className="oneBar">
 					<SmallNavBar
+						noall
 						title='教材'
 						data={versions}
-						onChange={(x)=>this.props.handleOptionChange('version_id',x)}
+						onChange={(x)=>{
+							this.props.handleOptionChange('version_id',x)
+							this.props.getTrees()
+						}}
 					/>
 				</div>
 				{/*<div className="oneBar">
@@ -169,9 +176,9 @@ export default class XuanTi extends Component{
 				<div className="warp clearfix">
 					<div className="leftSide">
 						{
-							this.state.side == '/xuanti/tb'
+							side == '/xuanti/tb'
 								?
-								<ZuJuanSider data={chapter} title='选择章节' onSelect={(x)=>this.handleC(x)}/>
+								<ZuJuanSider data={chapters} title='选择章节' onSelect={(x)=>this.handleC(x)}/>
 								: <ZuJuanSider data={knowledges} title='选择知识点' onSelect={(x)=>this.handleK(x)}/>
 						}
 					</div>
@@ -228,7 +235,7 @@ export default class XuanTi extends Component{
 								})
 							}
 						</ul>
-						{ !!total_pages && <Pagination current={current_page} total={total_pages*10} onChange={x=>this.props.handleOptionChange('current_page',x)}/> }
+						{ !!total_pages && <Pagination current={current_page} total={total_pages*10} onChange={x=>this.props.handlePage(x)}/> }
 					</div>
 				</div>
 				<ShiTiLan

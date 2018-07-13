@@ -11,8 +11,6 @@ let initialState = {
 	levels:[], //难易程度
 	test_point_counts:[], //知识点
 	grades:[], //适用年级
-	chapter:[], //章节树形数据 ------data
-	knowledges:[],
 	web:{avatar_data:{}},
 	searchType:'topic',
 	exam_classes:[], //试卷大类
@@ -48,14 +46,6 @@ const persist = handleActions({
 		grades:action.payload.grades,
 		topic_types:action.payload.topic_types,
 	}),
-	changeChapters: (state, action) => ({
-		...state,
-		chapter: action.payload,
-	}),
-	changeKnowledges: (state, action) => ({
-		...state,
-		knowledges: action.payload,
-	}),
 	changeLogo: (state, action) => ({
 		...state,
 		web: action.payload,
@@ -75,6 +65,10 @@ const persist = handleActions({
 	changeVips: (state, action) => ({
 		...state,
 		vips: action.payload,
+	}),
+	changeDefaultKeys: (state, action) => ({
+		...state,
+		defaultKeys: action.payload
 	}),
 }, initialState);
 

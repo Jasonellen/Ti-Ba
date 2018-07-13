@@ -29,7 +29,7 @@ export default function ZuJuanSider(props){
 															{
 																iitem.children.length>0 && iitem.children.map(function(iiitem){
 																	return (
-																		<TreeNode title={iiitem.name} key={iitem.id} >
+																		<TreeNode title={iiitem.name} key={iiitem.id} >
 																			{
 																				iiitem.children.length>0 && iiitem.children.map(function(iiiitem){
 																					return (

@@ -29,3 +29,4 @@ persistStore(store, {
 		</Provider>
 	), document.getElementById('root'))
 })
+//.purge() 错误数据清空

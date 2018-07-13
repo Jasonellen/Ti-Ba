@@ -29,7 +29,7 @@ export default class Home extends Component {
 		this.getRecommends('School')
 		this.getRecommends('Course')
 		this.getNotices()
-		this.getZujuanData()
+		// this.getZujuanData()
 	}
 	getEducations = ()=>{
 		_axios.get(url.educations)
@@ -254,7 +254,7 @@ export default class Home extends Component {
 					</ul>
 				</div>
 				*/}
-				<div className="moudleTitle">
+				{/* <div className="moudleTitle">
 					<h3>数据展示</h3>
 					<p>Data display</p>
 				</div>
@@ -306,7 +306,7 @@ export default class Home extends Component {
 						<div className="swiper-button-next next1"></div>
 						<div className="swiper-button-prev prev1"></div>
 				  </div>
-				</div>
+				</div> */}
 				<div className="moudleTitle">
 					<h3>网站公告</h3>
 					<p>Website Bulletin</p>

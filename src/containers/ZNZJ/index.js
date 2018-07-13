@@ -1,11 +1,12 @@
 
 import React, { Component }from 'react';
-import { Icon, Tooltip, Checkbox, Card, InputNumber, Radio,Button } from 'antd';
+import { Icon, Checkbox, Card, InputNumber, Radio,Button } from 'antd';
 import './index.scss'
 import ZuJuanSider from '@/Components/ZuJuanSider'
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux'
 import * as znzjAction from '@/Redux/actions/znzj.js';
+import SmallNavBar from '@/Components/SmallNavBar'
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
 
@@ -24,7 +25,7 @@ export default class ZNZJ extends Component{
 		let side = this.props.location.pathname.toLowerCase()
 		this.props.history.listen((location)=>{
 			if(location.pathname.toLowerCase() !== this.props.znzj.side){
-				this.props.handleOptionChange('side',location.pathname.toLowerCase())
+				this.props.handleMenuChange(location.pathname.toLowerCase())
 			}
 		})
 
@@ -45,7 +46,7 @@ export default class ZNZJ extends Component{
 	handleK = (x)=>{
 		this.props.znzjChangeSingle({key:'chapter_ids',value:[]})
 		this.props.znzjChangeSingle({key:'knowledge_ids',value:x})
-		this.props.beginSearch()
+		this.props.getTrees()
 	}
 
 	handleRadioGroup = (e)=>{
@@ -56,7 +57,6 @@ export default class ZNZJ extends Component{
 	}
 	//提交
 	huandleSubmit = ()=>{
-		const { chapter,knowledges } = this.props.persist
 		const {
 			education_id,
 			subject_id,
@@ -88,8 +88,8 @@ export default class ZNZJ extends Component{
 			})
 	}
 	render(){
-		const { levels, chapter,knowledges } = this.props.persist
-		const { grades, chapter_ids, knowledge_ids, level, group_method, side, topic_data } = this.props.znzj
+		const { levels, versions } = this.props.persist
+		const { grades, chapter_ids, knowledge_ids, level, side, topic_data, chapters,knowledges, } = this.props.znzj
 		const _levels = [{label:"不限",value:""}].concat(levels)
 		let select_grades=[]
 		grades.map(function(item){
@@ -103,13 +103,24 @@ export default class ZNZJ extends Component{
 			    <Breadcrumb.Item href="/"><Icon type="home" />当前位置：首页</Breadcrumb.Item>
 					<Breadcrumb.Item>初中数学</Breadcrumb.Item>
 			  </Breadcrumb>*/}
+				<div className="oneBar">
+					<SmallNavBar
+						noall
+						title='教材'
+						data={versions}
+						onChange={(x)=>{
+							this.props.handleOptionChange('version_id',x)
+							this.props.getTrees()
+						}}
+					/>
+				</div>
 				<div className="warp clearfix">
 					<div className="leftSide">
 						{
 							side == '/znzj/zj'
 								?
 								<ZuJuanSider
-									data={chapter}
+									data={chapters}
 									title='选择章节'
 									onCheck={(x)=>this.handleC(x)}
 									checkable

@@ -40,6 +40,9 @@ export default class Pshiti extends Component{
 		},()=>{
 			this.getList()
 		})
+		eventEmitter.on('subjectChanged',()=>{
+			this.getCarts()
+		});
 	}
 	handleE = (x)=>{
 		const { educations } = this.props

@@ -48,6 +48,7 @@ export default class SearchPage extends Component{
 		});
 		eventEmitter.on('subjectChanged',()=>{
 			this.getList()
+			this.getCarts()
 		});
 
 	}
