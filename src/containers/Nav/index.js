@@ -188,8 +188,8 @@ export default class Nav extends Component {
 							onMouseOver={()=>this.handleAllClass(true)}
 							onMouseOut={()=>this.handleAllClass(false)}
 						>{allClassName} <Icon type="down" /></div>
-						<Menu key={defaultKeys} mode="horizontal" onClick={(item)=>this.NavLinkTo(item.key)} defaultSelectedKeys={[defaultKeys]}>
-			        <Menu.Item key="home"><span className='self_nav'>网站首页</span></Menu.Item>
+						<Menu key={defaultKeys} mode="horizontal" defaultSelectedKeys={[defaultKeys]}>
+			        <Menu.Item key="home"><span className='self_nav' onClick={()=>this.handleDefaultMenu('home')}>网站首页</span></Menu.Item>
 			        <SubMenu key='ab' title={<span  className='self_nav' onClick={()=>this.handleDefaultMenu('XuanTi/tb')}>手动组卷</span>}>
 		          	<Menu.Item key="XuanTi/tb">章节同步选题</Menu.Item>
 								<Menu.Item key="XuanTi/zsd">知识点选题</Menu.Item>
@@ -206,7 +206,7 @@ export default class Nav extends Component {
 									})
 			        }
 			        </SubMenu>
-			        <Menu.Item key="beike"><span className='self_nav'>备课中心</span></Menu.Item>
+			        <Menu.Item key="beike"><span className='self_nav' onClick={()=>this.handleDefaultMenu('beike')}>备课中心</span></Menu.Item>
 				    </Menu>
 						{
 							alClassShow && (

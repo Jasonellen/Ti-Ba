@@ -133,7 +133,7 @@
 
 	.item-list{
 		width: 224px;
-		height: 400px;
+		height: 300px;
 		padding: 14px 18px 10px;
 		background: rgba(0,0,0,.5);
 		z-index: 10;
@@ -144,6 +144,7 @@
 		z-index: 2000;
 		h3{
 			color: $f;
+			font-size:20px;
 		}
 		span{
 			display: inline-block;

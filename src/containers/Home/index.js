@@ -154,7 +154,7 @@ export default class Home extends Component {
 		},300)
 	}
 	render() {
-		const { carousels, educations, features, School,notices, Zujuan } = this.state
+		const { carousels, educations, features, School,notices } = this.state
 		return (
 			<div className="Home">
 				<div className="swiper-container swiper">

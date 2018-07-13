@@ -210,7 +210,7 @@ export default class ZNZJ extends Component{
     						</ul>
 								<div className="right">
 									{
-										topic_data.length>0 && topic_data.map((item,i)=>{
+										topic_data.length>0 && topic_data.map((item)=>{
 											return <Button disabled={item.show} key={item.topic_type_id} type='primary' onClick={()=>this.props.handleTopicDataAdd(item.topic_type_id)}>{item.topic_type_name}</Button>
 										})
 									}

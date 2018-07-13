@@ -44,13 +44,13 @@ export const beginSearch = () => (dispatch,getState) =>{
 	if(chapter_ids.length == 0){
 		chapters.map((item)=>{
 			chapter_ids.push(item.id)
-			Recursion(item, chapter_ids)
+			// Recursion(item, chapter_ids)
 		})
 	}
 	if(knowledge_ids.length == 0){
 		knowledges.map((item)=>{
 			knowledge_ids.push(item.id)
-			Recursion(item, knowledge_ids)
+			// Recursion(item, knowledge_ids)
 		})
 	}
 	let options = {
@@ -167,11 +167,11 @@ export const getTrees = () => (dispatch,getState) =>{
 	}
 }
 //对象递归取id
-function Recursion(item = {}, arr = []){
-	if(item.children && item.children.length>0){
-		item.children.map(function(iitem){
-			arr.push(iitem.id)
-			Recursion(iitem,arr)
-		})
-	}
-}
+// function Recursion(item = {}, arr = []){
+// 	if(item.children && item.children.length>0){
+// 		item.children.map(function(iitem){
+// 			arr.push(iitem.id)
+// 			Recursion(iitem,arr)
+// 		})
+// 	}
+// }
