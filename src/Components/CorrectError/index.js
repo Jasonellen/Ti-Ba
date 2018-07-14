@@ -33,14 +33,16 @@ export default class CorrectError extends Component{
 			topic_id,
 			content
 		})
-			.then(()=>{
-				this.props.changeCorrectErrorShow({modal:false})
-				this.setState({
-					content:''
-				})
-				Modal.success({
-					title:'试题纠错成功！'
-				})
+			.then((data)=>{
+				if(data.status == 'success'){
+					this.props.changeCorrectErrorShow({modal:false})
+					this.setState({
+						content:''
+					})
+					Modal.success({
+						title:'试题纠错成功！'
+					})
+				}
 			})
 	}
 	render(){

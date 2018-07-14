@@ -29,7 +29,7 @@ export const {
 export const getUser = () => (dispatch) =>{
 	_axios.get(url.get_users)
 		.then(data=>{
-			if(data.user){
+			if(data && data.user){
 				dispatch(changeUser(data.user))
 				dispatch(getVips(data.user))
 				notification.success({

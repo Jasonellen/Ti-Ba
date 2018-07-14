@@ -150,7 +150,7 @@ export default class Home extends Component {
 		this.props.changeAllClassName('当前：'+item.name+iitem.name)
 		this.props.changeSearchType(type)
 		setTimeout(()=>{
-			this.props.history.push({pathname:'/searchpage',query:{key:type}})
+			this.props.history.push({pathname:'/searchpage'})
 		},300)
 	}
 	render() {

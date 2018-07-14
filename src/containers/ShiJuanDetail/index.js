@@ -61,7 +61,7 @@ export default class ShiJuanDetail extends Component{
 	}
 	//获取购物车信息
 	getCarts = ()=>{
-		const { subject_id } = this.state.data
+		const { subject_id } = this.props.persist
 		_axios.get(url.owner_carts,{
 			subject_id
 		})
@@ -244,6 +244,7 @@ export default class ShiJuanDetail extends Component{
 	}
 	render(){
 		const { data, cart_data, modalshow } = this.state
+		const { type } = this.props.match.params
 		return (
 			<div className='ShiJuanDetail contentCenter'>
 				<div className="warp clearfix">
@@ -284,10 +285,15 @@ export default class ShiJuanDetail extends Component{
 								<div className="left" style={{cursor:'pointer'}} onClick={()=>this.props.changeAnswerSheetShow(true)}><Icon type="file-word" style={{color:'#ff9600'}}/> 答题卡下载</div>
 								<Link to='/onlineTest/1' style={{color:'rgba(0, 0, 0, 0.65)'}}><div className="right"><Icon type="edit" style={{color:'#ff9600'}}/> 在线测试</div></Link>
 							</div>*/}
-							<div className="clearfix">
-								<div className="left" style={{cursor:'pointer',color:'#ff9600'}} onClick={this.handleExamCollect}>{data.star ? <Icon type="heart" style={{color:'#ff9600'}}/> : <Icon type="heart-o"/>} {data.star ? '试卷已收藏' : '收藏试卷'}</div>
-								{/*<div className="right" style={{cursor:'pointer'}} onClick={()=>this.props.changeAnalyzeShow(true)}><Icon type="line-chart" style={{color:'#ff9600',cursor:'pointer'}}/> 分析试卷</div>*/}
-							</div>
+							{
+								type != 'exam_record' && (
+									<div className="clearfix">
+										<div className="left" style={{cursor:'pointer',color:'#ff9600'}} onClick={this.handleExamCollect}>{data.star ? <Icon type="heart" style={{color:'#ff9600'}}/> : <Icon type="heart-o"/>} {data.star ? '试卷已收藏' : '收藏试卷'}</div>
+										{/*<div className="right" style={{cursor:'pointer'}} onClick={()=>this.props.changeAnalyzeShow(true)}><Icon type="line-chart" style={{color:'#ff9600',cursor:'pointer'}}/> 分析试卷</div>*/}
+									</div>
+								)
+							}
+
 						</div>
 						<div className="bottom">
 							<h4>相关试卷</h4>

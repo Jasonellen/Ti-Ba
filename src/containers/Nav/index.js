@@ -108,7 +108,7 @@ export default class Nav extends Component {
 		this.NavLinkTo(key)
 	}
 	render() {
-		const { alClassShow } = this.state
+		const { alClassShow, searchkey } = this.state
 		const { user,educations,allClassName,web, exam_classes, searchType,vips, defaultKeys } = this.props.persist
 		return (
 			<div className="Nav">
@@ -129,7 +129,7 @@ export default class Nav extends Component {
 							onPressEnter = {this.handleSearch}
 							placeholder='请输入关键词'
 							addonBefore={
-								<Select defaultValue={searchType} style={{ width: 90 }} onChange={(x)=>this.props.persistAction.changeSearchType(x)}>
+								<Select defaultValue={searchType} style={{ width: 90 }} onChange={(x)=>{this.props.persistAction.changeSearchType(x);eventEmitter.emit('beginSearch',searchkey)}}>
 									 <Option value="topic">试题</Option>
 									 <Option value="exam">试卷</Option>
 								</Select>}
@@ -141,7 +141,7 @@ export default class Nav extends Component {
 							!user.token
 								?
 								<div>
-									<span className='logi' onClick={()=>this.props.navAction.changeLoginModalShow(true)}>登陆</span>
+									<span className='logi' onClick={()=>this.props.navAction.changeLoginModalShow(true)}>登录</span>
 									<span className='logi' onClick={()=>this.props.navAction.changeRegisterModalShow(true)}>注册</span>
 								</div>
 								:
@@ -191,18 +191,32 @@ export default class Nav extends Component {
 						<Menu key={defaultKeys} mode="horizontal" defaultSelectedKeys={[defaultKeys]}>
 			        <Menu.Item key="home"><span className='self_nav' onClick={()=>this.handleDefaultMenu('home')}>网站首页</span></Menu.Item>
 			        <SubMenu key='ab' title={<span  className='self_nav' onClick={()=>this.handleDefaultMenu('XuanTi/tb')}>手动组卷</span>}>
-		          	<Menu.Item key="XuanTi/tb">章节同步选题</Menu.Item>
-								<Menu.Item key="XuanTi/zsd">知识点选题</Menu.Item>
+		          	<Menu.Item key="XuanTi/tb">
+			          	<span onClick={()=>this.handleDefaultMenu('XuanTi/tb')}>章节同步选题</span>
+								</Menu.Item>
+								<Menu.Item key="XuanTi/zsd" >
+									<span onClick={()=>this.handleDefaultMenu('XuanTi/zsd')}>知识点选题</span>
+								</Menu.Item>
 			        </SubMenu>
 			        <SubMenu title={<span  className='self_nav' onClick={()=>this.handleDefaultMenu('znzj/zj')}>自动组卷</span>}>
-								<Menu.Item key="znzj/zj">章节智能组卷</Menu.Item>
-								<Menu.Item key="znzj/zsd">知识点智能组卷</Menu.Item>
-								<Menu.Item key="double">双向细目表组卷</Menu.Item>
+								<Menu.Item key="znzj/zj" >
+									<span onClick={()=>this.handleDefaultMenu('znzj/zj')}>章节智能组卷</span>
+								</Menu.Item>
+								<Menu.Item key="znzj/zsd" >
+									<span onClick={()=>this.handleDefaultMenu('znzj/zsd')}>知识点智能组卷</span>
+								</Menu.Item>
+								<Menu.Item key="double">
+									<span onClick={()=>this.handleDefaultMenu('double')}>双向细目表组卷</span>
+								</Menu.Item>
 			        </SubMenu>
 			        <SubMenu title={<span className='self_nav' onClick={()=>this.handleDefaultMenu('synchronous')}>试卷库</span>}>
 			        {
 									exam_classes.length>0 && exam_classes.map((item)=>{
-										return <Menu.Item key={item.value}>{item.label}</Menu.Item>
+										return (
+											<Menu.Item key={item.value}>
+												<span onClick={()=>this.handleDefaultMenu(item.value)}>{item.label}</span>
+											</Menu.Item>
+										)
 									})
 			        }
 			        </SubMenu>
@@ -242,7 +256,7 @@ export default class Nav extends Component {
 					<li onClick={()=>this.NavLinkTo('helpCenter')}><Icon type="flag" />帮助中心</li>
 					<li onClick={()=>this.NavLinkTo('SchoolService')} className='last'><Icon type="home" />学校服务</li>
 		    </ul>
-				{/* 登陆 */}
+				{/* 登录 */}
 				<Login/>
 				{/* 注册 */}
 				<Register/>

@@ -59,7 +59,7 @@ class Login extends Component {
 		const { loginModal } = this.props.state
 		return(
 			<Modal
-				title='登陆'
+				title='登录'
 				width={350}
 				visible={loginModal}
 				footer={null}
@@ -85,12 +85,12 @@ class Login extends Component {
 							valuePropName: 'checked',
 							initialValue: true,
 						})(
-							<Checkbox>自动登陆</Checkbox>
+							<Checkbox>自动登录</Checkbox>
 						)}
 						<span style={{float:'right',color:'#FE9600',cursor:'pointer'}} onClick={this.handleForget}>忘记密码</span>
-						<Button type="primary" htmlType="submit" className="login_button">登陆</Button>
+						<Button type="primary" htmlType="submit" className="login_button">登录</Button>
 						<div className='clearfix otherLogin'>
-							{/*<span className="left">其他登陆方式：<Icon type="wechat" style={{fontSize:25,marginRight:5}}/><Icon type="qq" style={{fontSize:25}}/></span>*/}
+							{/*<span className="left">其他登录方式：<Icon type="wechat" style={{fontSize:25,marginRight:5}}/><Icon type="qq" style={{fontSize:25}}/></span>*/}
 							<span className="right" onClick={this.handleRegister}>免费注册<Icon type="login" /></span>
 						</div>
 					</FormItem>

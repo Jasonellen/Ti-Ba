@@ -225,8 +225,13 @@
 				} else if( ab.test( src ) ) {
 					src = t + src;
 				} else {
-					var p = l.path.replace('/\/[^\/.]+$/', '/' );
-					src = t + p + src;
+					if(l.path){
+						var p = l.path.replace('/\/[^\/.]+$/', '/' );
+						src = t + p + src;
+					}else{
+						alert('试卷有误，请停止下载！！')
+						return false;
+					}
 				}
 				$(this).attr( 'src', src );
 			});

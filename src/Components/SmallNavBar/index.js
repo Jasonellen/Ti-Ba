@@ -12,7 +12,9 @@ export default class SmallNavBar extends Component{
 		this.initial()
 		let newData = this.state.data
 		if(this.props.noall){
-			this.handleClick(newData[0].id)
+			if(newData && newData[0]){
+				this.handleClick(newData[0].id)
+			}
 		}
 	}
 	componentWillReceiveProps(nextprops){

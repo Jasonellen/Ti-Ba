@@ -11,12 +11,12 @@ export default {
 			})
 				.then(({data})=>{
 					if(data.status === 'fail'){
-						notification.error({
-							message: '通知提醒',
-							description: data.msg,
-							duration:3
-						});
-						throw new Error('没有返回正确的数据')
+						// notification.error({
+						// 	message: '通知提醒',
+						// 	description: data.msg,
+						// 	duration:3
+						// });
+						throw new Error(data.msg)
 					}else if(data.status === 'success'){
 						return data
 					}
@@ -35,12 +35,12 @@ export default {
 						if(data.code == 100004){  //有提交操作时判断没有有登录
 							eventEmitter.emit('notLogin');
 						}else{
-							notification.error({
-								message: '通知提醒',
-								description: data.msg,
-								duration:3
-							});
-							throw new Error('没有返回正确的数据')
+							// notification.error({
+							// 	message: '通知提醒',
+							// 	description: data.msg,
+							// 	duration:3
+							// });
+							throw new Error(data.msg)
 						}
 					}else if(data.status === 'success'){
 						return data
@@ -57,11 +57,11 @@ export default {
 			const response = await axios.delete( url1,{data:Object.assign({},params,{token})} )
 				.then(({data})=>{
 					if(data.status === 'fail'){
-						notification.error({
-							message: '通知提醒',
-							description: data.msg,
-							duration:3
-						});
+						// notification.error({
+						// 	message: '通知提醒',
+						// 	description: data.msg,
+						// 	duration:3
+						// });
 					}else if(data.status === 'success'){
 						return data
 					}
@@ -77,11 +77,11 @@ export default {
 			const response = await axios.put( url1,{data:Object.assign({},params,{token})} )
 				.then(({data})=>{
 					if(data.status === 'fail'){
-						notification.error({
-							message: '通知提醒',
-							description: data.msg,
-							duration:3
-						});
+						// notification.error({
+						// 	message: '通知提醒',
+						// 	description: data.msg,
+						// 	duration:3
+						// });
 					}else if(data.status === 'success'){
 						return data
 					}
@@ -97,11 +97,11 @@ export default {
 			const response = await axios.put( url1,Object.assign({},params,{token}) )
 				.then(({data})=>{
 					if(data.status === 'fail'){
-						notification.error({
-							message: '通知提醒',
-							description: data.msg,
-							duration:3
-						});
+						// notification.error({
+						// 	message: '通知提醒',
+						// 	description: data.msg,
+						// 	duration:3
+						// });
 					}else if(data.status === 'success'){
 						return data
 					}
@@ -121,11 +121,11 @@ export default {
 			const response = await axios.post( url1+'?token='+token,fd)
 				.then(({data})=>{
 					if(data.status === 'fail'){
-						notification.error({
-							message: '通知提醒',
-							description: data.msg,
-							duration:3
-						});
+						// notification.error({
+						// 	message: '通知提醒',
+						// 	description: data.msg,
+						// 	duration:3
+						// });
 					}else if(data.status === 'success'){
 						return data
 					}

@@ -465,7 +465,7 @@ export default class DownloadPage extends Component{
 					footer={null}
 					width={400}
 					maskClosable={false}
-					onCancel={()=>this.setState({modalshow:false})}
+					onCancel={()=>this.setState({modalshow:false},()=>clearInterval(this.check_status))}
 				>
 					<p style={{textAlign:'center',marginBottom:15}}>请使用 <span style={{color:'red'}}>微信</span> 扫一扫二维码完成支付</p>
 					<div id="qrcode"></div>

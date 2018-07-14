@@ -18,7 +18,8 @@ export const beginSearch = () => (dispatch,getState) =>{
 		side,
 		chapter_ids,
 		knowledge_ids,
-		topic_data
+		topic_data,
+		version_id
 	} = getState().znzj
 	const {
 		education_id,
@@ -32,6 +33,7 @@ export const beginSearch = () => (dispatch,getState) =>{
 		type,ids,level,grade:_grade,
 		education_id,
 		subject_id,
+		version_id
 	})
 		.then(data=>{
 			topic_data.map(function(iitem,i){

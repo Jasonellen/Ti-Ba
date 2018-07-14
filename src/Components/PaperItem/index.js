@@ -89,7 +89,7 @@ export default class PaperItem extends Component{
 					{/*<img className='left' src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2204742496,833438369&fm=27&gp=0.jpg" alt=""/>*/}
 					<div className="title right">
 						<Link to={`/ShiJuanDetail/${data.id}/exam`}><h3>{data.title}</h3></Link>
-						<p><Icon type="clock-circle-o" /> 修改时间：{moment(data.updated_at).format('YYYY-MM-DD')} &nbsp;&nbsp;&nbsp;<Icon type="eye-o" /> 下载次数：{data.download_times} &nbsp;&nbsp;&nbsp;<Icon type="form" /> 类型：{data.exam_type_name}</p>
+						<p><Icon type="clock-circle-o" /> 修改时间：{moment(data.updated_at).format('YYYY-MM-DD')} &nbsp;&nbsp;&nbsp;<Icon type="eye-o" /> 下载次数：{data.download_times || 0} &nbsp;&nbsp;&nbsp;<Icon type="form" /> 类型：{data.exam_type_name}</p>
 					</div>
 				</div>
 				<div className="right fenxi">
@@ -101,7 +101,7 @@ export default class PaperItem extends Component{
 					footer={null}
 					width={400}
 					maskClosable={false}
-					onCancel={()=>this.setState({modalshow:false})}
+					onCancel={()=>this.setState({modalshow:false},()=>clearInterval(this.check_status))}
 				>
 					<p style={{textAlign:'center',marginBottom:15}}>请使用 <span style={{color:'red'}}>微信</span> 扫一扫二维码完成支付</p>
 					<div id="qrcode"></div>
