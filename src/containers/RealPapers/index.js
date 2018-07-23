@@ -10,10 +10,10 @@ import moment from 'moment'
 
 let now_year = +moment().format('YYYY')
 let years = [
+	{id:now_year,name:now_year},
 	{id:now_year-1,name:now_year-1},
 	{id:now_year-2,name:now_year-2},
 	{id:now_year-3,name:now_year-3},
-	{id:now_year-4,name:now_year-4},
 	{id:'ago',name:'ago'},
 ]
 @connect(

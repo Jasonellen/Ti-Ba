@@ -4,6 +4,9 @@ import {connect} from 'react-redux';
 import './index.scss'
 import * as persistAction from '@/Redux/actions/persist.js';
 import { bindActionCreators } from 'redux'
+import primary_school from 'static/primary_school.svg'
+import middle_school from 'static/middle_school.svg'
+import high_school from 'static/high_school.svg'
 
 @connect(
 	null,
@@ -175,32 +178,33 @@ export default class Home extends Component {
 					<h3>课程导航</h3>
 					<p>Course navigation</p>
 				</div>
-				<ul className="CourseNavi clearfix">
-					{
-						educations.length>0 && educations.map((item,index)=>{
-							return (
-								<li key={item.id} className={`left box ${index==0?'small':index==1?'middle':'height'}`}>
-									<div className="title"><Icon type="schedule"/>{item.name}资源导航</div>
-									<ul className='list clearfix'>
-										{
-											item.subjects.length>0 && item.subjects.map((iitem,i)=>{
-												return (
-													<li
-														className={`${i%2 == 0 ? 'left' : 'right'}`}
-														key={iitem.id}
-													><strong>{iitem.name}:</strong>
-														<span onClick={()=>this.handleCNav(item,iitem,'topic')}>试题</span>|
-														<span onClick={()=>this.handleCNav(item,iitem,'exam')}>试卷</span>
+				{
+					educations.length>0 && educations.map((item,index)=>{
+						return (
+							<session className='new_sub_nav' key={item.id}>
+								<h3><img src={index == 0 ? primary_school : index == 1 ? middle_school : high_school} alt=""/>{item.name}资源导航</h3>
+								<ul className='clearfix'>
+									{
+										item.subjects.length>0 && item.subjects.map((iitem)=>{
+											return (
+												<li className='clearfix left' key={iitem.id}>
+													<img src={iitem.avatar_data.original} className='left'/>
+													<div className="left">
+														<p>{item.name + iitem.name}</p>
+														<p>
+															<span onClick={()=>this.handleCNav(item,iitem,'topic')}>试题</span><i> | </i>
+															<span onClick={()=>this.handleCNav(item,iitem,'exam')}>试卷</span>
+														</p>
+													</div>
 												</li>
-												)
-											})
-										}
-									</ul>
-								</li>
-							)
-						})
-					}
-				</ul>
+											)
+										})
+									}
+								</ul>
+							</session>
+						)
+					})
+				}
 			{/*
 				<div className="moudleTitle">
 					<h3>专题推荐</h3>
