@@ -9,6 +9,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 var SshWebpackPlugin = require('ssh-webpack-plugin');
 var options = {}
+
 if(process.env.DEPLOY === 'deploy-test'){
 	options = {
 		host: '114.115.215.249',
@@ -103,10 +104,11 @@ var webpackConfig = merge(baseWebpackConfig, {
         // ignore: ['.*']
       }
     ]),
-		process.env.DEPLOY && new SshWebpackPlugin(options)
   ]
 })
-
+if(process.env.DEPLOY){
+	webpackConfig.plugins.push(SshWebpackPlugin(options))
+}
 //build完成后会在浏览器以可视化的形式展示使用了哪些文件，及大小
 if (config.build.bundleAnalyzerReport) {
   var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
